@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vp"
+        android:layout_margin="15dp"
+        android:background="@drawable/curved_bg_white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/shareImg"
+            style="@style/ControlPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:drawableBottom="@drawable/ic_share_new"
+            android:text="Share Image" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/save"
+            style="@style/ControlPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableBottom="@drawable/ic_download"
+            android:text="Download" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/copy"
+            style="@style/ControlPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableBottom="@drawable/ic_copy_text"
+            android:text="Copy Text" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/shareText"
+            style="@style/ControlPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:drawableBottom="@drawable/ic_text"
+            android:text="Share Text" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/adContainer"
+        layout="@layout/native_ad_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_margin="3dp" />
+
+</RelativeLayout>

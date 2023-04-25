@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/nav_main">
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="com.examp.allwishes.ui.fragment.MainFragment"
+        android:label="main_frag"
+        tools:layout="@layout/main_fragment_layout">
+
+    <action
+        android:id="@+id/nav_home_to_nav_category"
+        app:destination="@id/nav_theme_cat" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.examp.allwishes.ui.fragment.HolidayMainFragment"
+        android:label="menu_home"
+        tools:layout="@layout/fragment_holiday">
+
+        <action
+            android:id="@+id/nav_home_to_nav_category"
+            app:destination="@id/nav_theme_cat" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/holiday_list"
+        android:name="com.examp.allwishes.ui.fragment.HolidayFragment"
+        android:label="menu_home"
+        tools:layout="@layout/fragment_holiday">
+
+        <action
+            android:id="@+id/nav_home_to_nav_category"
+            app:destination="@id/nav_theme_cat" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_theme_cat"
+        android:name="com.examp.allwishes.ui.fragment.CategoryFrag"
+        android:label="themeCatFragment"
+        tools:layout="@layout/fragment_category">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_frameEdit"
+        android:name="com.examp.allwishes.ui.fragment.FrameEditFragment"
+        android:label="@string/contentPreview"
+        tools:layout="@layout/fragment_frame_edit"/>
+
+    <fragment
+        android:id="@+id/nav_cat_main"
+        android:name="com.examp.allwishes.ui.fragment.CategoryMainFragment"
+        android:label="themeCatFragment"
+        tools:layout="@layout/categorymainfragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_contentPreview"
+        android:name="com.examp.allwishes.ui.fragment.ContentPreviewFragment"
+        android:label="contentPreview"
+        tools:layout="@layout/fragment_content_preview">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_quotesPreview"
+        android:name="com.examp.allwishes.ui.fragment.QuotesPreviewFragment"
+        android:label="contentPreview"
+        tools:layout="@layout/fragment_content_preview">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/daily_catFrag"
+        android:name="com.examp.allwishes.ui.fragment.DailyWishes_CategoryFrag"
+        android:label="daily_cat"
+        tools:layout="@layout/daily_wishes_category_activity">
+    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/nav_savedfrag"-->
+<!--        android:name="com.greetings.allwishes.fragments.SavedFragment"-->
+<!--        android:label="savedmain"-->
+<!--        tools:layout="@layout/fragment_saved">-->
+<!--    </fragment>-->
+
+</navigation>

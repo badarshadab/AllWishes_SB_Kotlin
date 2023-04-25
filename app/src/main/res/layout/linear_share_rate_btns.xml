@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sharepanel"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/privacy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/privacy_drawable_btn"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="Privacy Policy"
+        android:textColor="@color/white" />
+
+
+    <TextView
+        android:id="@+id/rate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/rate_drawable_btn"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="Rate Us"
+        android:textColor="@color/white" />
+
+
+    <TextView
+        android:id="@+id/sharePkg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/share_drawable_btn"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="Share"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/saveItems"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_save_items"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="Saved"
+        android:textColor="@color/white" />
+
+</LinearLayout>

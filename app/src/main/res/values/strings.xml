@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">AllWishes_SB_Kotlin</string>
+    <string name="go_to_cat">Daily Wishes</string>
+    <string name="go_to_holidays">Holiday Wishes</string>
+    <string name="pp_url" translatable="false">https://s3.ap-south-1.amazonaws.com/greetingandwishes/privacypolicy.html</string>
+    <string name="openSaved">Show Saved items from</string>
+    <string name="no_Saved">Nothing Saved Here!!</string>
+    <string name="removeConfirm">You are about to Remove this item From Saved List ?</string>
+    <string name="contentPreview">ContentPreview</string>
+    <string name="share">Share\nImage</string>
+    <string name="add_text_btn_ttl">Add\nText</string>
+    <string name="remove_text_btn_ttl">Remove\nText</string>
+    <string name="remove_stickers_btn_ttl">Remove\nStickers</string>
+    <string name="add_stickers_btn_ttl">Add\nStickers</string>
+    <string name="choose_image">Select\nImage</string>
+    <string name="download_image">Save\nImages</string>
+    <string name="double_click_input_text">Double click to enter text</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

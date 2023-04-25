@@ -1,0 +1,2 @@
+rootProject.name = "AllWishes_SB_Kotlin"
+include ':app'
