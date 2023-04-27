@@ -11,9 +11,9 @@
         android:label="main_frag"
         tools:layout="@layout/main_fragment_layout">
 
-    <action
-        android:id="@+id/nav_home_to_nav_category"
-        app:destination="@id/nav_theme_cat" />
+        <action
+            android:id="@+id/nav_home_to_nav_category"
+            app:destination="@id/nav_theme_cat" />
     </fragment>
 
     <fragment
@@ -43,48 +43,57 @@
         android:id="@+id/nav_theme_cat"
         android:name="com.examp.allwishes.ui.fragment.CategoryFrag"
         android:label="themeCatFragment"
-        tools:layout="@layout/fragment_category">
-    </fragment>
+        tools:layout="@layout/fragment_category"/>
 
     <fragment
         android:id="@+id/nav_frameEdit"
         android:name="com.examp.allwishes.ui.fragment.FrameEditFragment"
         android:label="@string/contentPreview"
-        tools:layout="@layout/fragment_frame_edit"/>
+        tools:layout="@layout/fragment_frame_edit" />
 
     <fragment
         android:id="@+id/nav_cat_main"
         android:name="com.examp.allwishes.ui.fragment.CategoryMainFragment"
         android:label="themeCatFragment"
-        tools:layout="@layout/categorymainfragment">
-    </fragment>
+        tools:layout="@layout/categorymainfragment"/>
 
     <fragment
         android:id="@+id/nav_contentPreview"
         android:name="com.examp.allwishes.ui.fragment.ContentPreviewFragment"
         android:label="contentPreview"
-        tools:layout="@layout/fragment_content_preview">
-    </fragment>
+        tools:layout="@layout/fragment_content_preview"/>
 
     <fragment
         android:id="@+id/nav_quotesPreview"
         android:name="com.examp.allwishes.ui.fragment.QuotesPreviewFragment"
         android:label="contentPreview"
-        tools:layout="@layout/fragment_content_preview">
-    </fragment>
+        tools:layout="@layout/fragment_content_preview"/>
 
 
     <fragment
         android:id="@+id/daily_catFrag"
         android:name="com.examp.allwishes.ui.fragment.DailyWishes_CategoryFrag"
         android:label="daily_cat"
-        tools:layout="@layout/daily_wishes_category_activity">
-    </fragment>
-<!--    <fragment-->
-<!--        android:id="@+id/nav_savedfrag"-->
-<!--        android:name="com.greetings.allwishes.fragments.SavedFragment"-->
-<!--        android:label="savedmain"-->
-<!--        tools:layout="@layout/fragment_saved">-->
-<!--    </fragment>-->
+        tools:layout="@layout/daily_wishes_category_activity"/>
+
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/nav_savedfrag"-->
+    <!--        android:name="com.greetings.allwishes.fragments.SavedFragment"-->
+    <!--        android:label="savedmain"-->
+    <!--        tools:layout="@layout/fragment_saved">-->
+    <!--    </fragment>-->
+
+    <fragment
+        android:id="@+id/nav_daily_type"
+        android:name="com.examp.allwishes.ui.fragment.DailyWishes_TypeFrag"
+        android:label="daily_type"
+        tools:layout="@layout/dailywishes_type_lay"/>
+
+    <fragment
+        android:id="@+id/nav_content_list"
+        android:name="com.examp.allwishes.ui.fragment.ContentListFragment"
+        android:label="daily_content_list"
+        tools:layout="@layout/fragment_content_list"/>
 
 </navigation>

@@ -10,19 +10,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cateRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/adsLayout"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_marginBottom="5dp" />
 
-    <LinearLayout
-        android:id="@+id/adsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="3dp"
-        android:orientation="vertical"
-        android:padding="3dp" />
 
 </RelativeLayout>

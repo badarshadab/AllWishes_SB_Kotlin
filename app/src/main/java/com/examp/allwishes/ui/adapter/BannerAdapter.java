@@ -10,20 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.examp.allwishes.R;
-import com.examp.allwishes.ui.model.DailyWishe;
 import com.examp.allwishes.ui.model.Root_Hl;
-import com.examp.allwishes.ui.util.AppUtils;
 
 
 public class BannerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    DailyWishe model;
+    Root_Hl model;
     Activity activity;
     private RecyclerViewClickListener mListener;
 
 
-    public BannerAdapter(Activity activity, DailyWishe model, RecyclerViewClickListener mListener) {
+    public BannerAdapter(Activity activity, Root_Hl model, RecyclerViewClickListener mListener) {
         this.model = model;
         this.activity = activity;
         this.mListener = mListener;
@@ -39,14 +38,18 @@ public class BannerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         String cIcon = model.getDailyWishes().get(position).getIcon();
-//        String cName = model.getTop().get(position).getName();
-        myViewHolder.setImage(cIcon);
-//        myViewHolder.tv.setText(cName);
+        String cName = model.getDailyWishes().get(position).getName();
+//        myViewHolder.setImage(cIcon);
+        Glide.with(activity)
+                .load(cIcon)
+                .placeholder(R.drawable.loading_img)
+                .error(R.drawable.error_img)
+                .into(myViewHolder.iv);
+        myViewHolder.tv.setText(cName);
         myViewHolder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onClick(view, position);
-//                Toast.makeText(activity, "clicked on  " + cName, Toast.LENGTH_SHORT).show();
+                mListener.onClick(view, position , cName);
             }
         });
 
@@ -70,12 +73,14 @@ public class BannerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         public void setImage(String url) {
-            AppUtils.INSTANCE.setImage(iv, url);
+//            System.out.println("setImage(String url)   " + url);
+//            AppUtils.INSTANCE.setImage(iv, url);
+
         }
     }
 
     public interface RecyclerViewClickListener {
 
-        void onClick(View view, int position);
+        void onClick(View view, int position , String catName);
     }
 }

@@ -27,6 +27,7 @@ class HolidayViewModel() : ViewModel() {
     val arrayListLiveData: SharedFlow<ArrayList<EventByMonth>> = _arrayListLiveData
     lateinit var date: String
     lateinit var eventslist: ArrayList<Event>
+
     fun getComModel(): ArrayList<EventByMonth>? {
         if (comModel == null) {
             comModel = MutableLiveData()

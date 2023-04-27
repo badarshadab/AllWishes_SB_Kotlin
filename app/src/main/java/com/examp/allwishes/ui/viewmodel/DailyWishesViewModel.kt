@@ -1,5 +1,6 @@
 package com.examp.allwishes.ui.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,20 +19,14 @@ import kotlinx.coroutines.launch
 
 class DailyWishesViewModel : ViewModel() {
 
-    private var comModel: MutableLiveData<Root_Hl>? = null
-    private var arrayList: ArrayList<DailyWishe>? = null
-    lateinit var dailylist: ArrayList<DailyWishe>
-    private var _arrayListLiveData = MutableSharedFlow<ArrayList<DailyWishe>>()
-    val arrayListLiveData: SharedFlow<ArrayList<DailyWishe>> = _arrayListLiveData
+    private var comModel: MutableLiveData<Root_Hl?>? = null
 
-    fun getComModel(): ArrayList<DailyWishe>? {
+    fun getComModel(): LiveData<Root_Hl?> {
         if (comModel == null) {
             comModel = MutableLiveData()
             loadCommonData()
-            return null
-        } else {
-            return arrayList
         }
+        return comModel as MutableLiveData<Root_Hl?>
     }
 
     private fun loadCommonData() {
@@ -39,15 +34,7 @@ class DailyWishesViewModel : ViewModel() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 try {
-                    val model = dataSnapshot.getValue(Root_Hl::class.java)
-                    comModel?.value = model!!
-                    arrayList?.clear()
-
-                    dailylist = model.getDailyWishes()
-
-                    viewModelScope.launch {
-                        arrayList?.let { setArrayListLive(it) }
-                    }
+                    comModel?.value = dataSnapshot.getValue(Root_Hl::class.java)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -58,13 +45,6 @@ class DailyWishesViewModel : ViewModel() {
             }
         }
         database.addValueEventListener(postListener)
-    }
-
-    private fun setArrayListLive(arrayList: ArrayList<DailyWishe>) {
-
-        viewModelScope.launch {
-            _arrayListLiveData?.emit(arrayList)
-        }
     }
 
 

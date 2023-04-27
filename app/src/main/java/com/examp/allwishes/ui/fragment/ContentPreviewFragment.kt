@@ -49,10 +49,10 @@ class ContentPreviewFragment : Fragment() {
         println("arguments?.getInt(pos) " + index)
         setupViewModel()
         setupObservers(category)
-        AdUtils.showNativeBanner(
-            Holidays_List.activity,
-            b.nativeAdContainer
-        )
+//        AdUtils.showNativeBanner(
+//            Holidays_List.activity,
+//            b.nativeAdContainer
+//        )
 
         toolbar = b.toolbar.toolbar
 
@@ -62,7 +62,6 @@ class ContentPreviewFragment : Fragment() {
             type + " Preview",
             true
         )
-
 
         return b.root
     }
@@ -85,7 +84,7 @@ class ContentPreviewFragment : Fragment() {
                             this.list = resource.data
                             val adapter = list?.let {
                                 ContentPreviewAdapter(
-                                    Holidays_List.activity,
+                                    requireActivity(),
                                     it,
                                     type
                                 )

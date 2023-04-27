@@ -28,7 +28,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.examp.allwishes.R
 import com.google.firebase.storage.StorageReference
-import com.greetings.allwishes.util.AdUtils
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -151,18 +150,18 @@ object AppUtils {
             .into(iv)
     }
 
-    fun captureScreen(view : View): Bitmap?{
+    fun captureScreen(view: View): Bitmap? {
 
-    if (view == null) {
-        return null
-    }
-    var bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888)
-    var canvas = Canvas(bitmap)
-    var drawable: Drawable = view.getBackground()
-    if (drawable != null)drawable.draw(canvas) else canvas.drawColor(android.graphics.Color.WHITE)
-    view.draw(canvas)
+        if (view == null) {
+            return null
+        }
+        var bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888)
+        var canvas = Canvas(bitmap)
+        var drawable: Drawable = view.getBackground()
+        if (drawable != null) drawable.draw(canvas) else canvas.drawColor(android.graphics.Color.WHITE)
+        view.draw(canvas)
 
-    return bitmap
+        return bitmap
     }
 
     fun shareBitmap(context: Context, bitmap: Bitmap) {
@@ -212,6 +211,7 @@ object AppUtils {
             null
         }
     }
+
     fun showToast(context: Context?, msg: String?) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
@@ -295,7 +295,6 @@ object AppUtils {
     }
 
 
-
     fun checkCameraPermission(context: Context, callback: (result: Boolean) -> Unit) {
         Dexter.withContext(context)
             .withPermission(Manifest.permission.CAMERA)
@@ -330,6 +329,7 @@ object AppUtils {
         Glide.with(imageView.context)
             .load(url)
             .thumbnail(Glide.with(imageView).load(R.drawable.loading_img))
+            .error(R.drawable.error_img)
             .into(imageView)
     }
 
@@ -337,25 +337,25 @@ object AppUtils {
     fun changeFragment(activity: Activity, resId: Int, b: Bundle) {
 //        AdUtils.showFullAd(activity, object : AdUtils.AdListener {
 //            override fun onComplete() {
-                var dTime = 10L
+        var dTime = 10L
 //                if (adNetwork.equals("Mopub", ignoreCase = true)) {
 //                    dTime = 500L
 //                }
-                Handler(Looper.getMainLooper()).postDelayed(
-                    {
-                        try {
-                            Navigation.findNavController(
-                                activity,
-                                R.id.nav_host_fragment_content_main
-                            ).navigate(
-                                resId,
-                                b
-                            )
-                        } catch (e: Exception) {
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                try {
+                    Navigation.findNavController(
+                        activity,
+                        R.id.nav_host_fragment_content_main
+                    ).navigate(
+                        resId,
+                        b
+                    )
+                } catch (e: Exception) {
 //                            AppUtils.getInstance().showToast(activity, "Something went wrong")
-                        }
-                    }, dTime
-                )
+                }
+            }, dTime
+        )
 //            }
 //        })
     }

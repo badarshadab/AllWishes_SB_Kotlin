@@ -21,7 +21,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun scheduleSplashScreen() {
-        val SPLASH_TIME_OUT = 7000
+        val SPLASH_TIME_OUT = 2000
         handler!!.postDelayed({ goToMainActivity() }, SPLASH_TIME_OUT.toLong())
     }
 
