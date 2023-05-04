@@ -1,5 +1,6 @@
 package com.examp.allwishes.ui.data.api
 
+import com.examp.allwishes.ui.model.Root_HlNew
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -13,15 +14,15 @@ import kotlin.coroutines.suspendCoroutine
 
 class FirebaseHelper() {
 
-    suspend fun loadRealTimeData(): List<com.examp.allwishes.ui.model.Root_Hl> {
-        return suspendCoroutine<List<com.examp.allwishes.ui.model.Root_Hl>> {
+    suspend fun loadRealTimeData(): List<Root_HlNew> {
+        return suspendCoroutine<List<Root_HlNew>> {
             val database: DatabaseReference = Firebase.database.reference
-            val modelList = ArrayList<com.examp.allwishes.ui.model.Root_Hl>()
+            val modelList = ArrayList<Root_HlNew>()
             database.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     //val dataSnapshot = database.get().await()
                     for (child in dataSnapshot.children) {
-                        val mainModel = child.getValue(com.examp.allwishes.ui.model.Root_Hl::class.java)!!
+                        val mainModel = child.getValue(Root_HlNew::class.java)!!
                         modelList.add(mainModel)
                     }
                     it.resume(modelList)

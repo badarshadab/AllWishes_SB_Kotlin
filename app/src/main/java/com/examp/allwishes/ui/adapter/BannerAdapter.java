@@ -12,18 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.examp.allwishes.R;
-import com.examp.allwishes.ui.model.Root_Hl;
+import com.examp.allwishes.ui.model.Root_HlNew;
 import com.examp.allwishes.ui.util.AppUtils;
 
 
 public class BannerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    Root_Hl model;
+    Root_HlNew model;
     Activity activity;
     private RecyclerViewClickListener mListener;
 
 
-    public BannerAdapter(Activity activity, Root_Hl model, RecyclerViewClickListener mListener) {
+    public BannerAdapter(Activity activity, Root_HlNew model, RecyclerViewClickListener mListener) {
         this.model = model;
         this.activity = activity;
         this.mListener = mListener;

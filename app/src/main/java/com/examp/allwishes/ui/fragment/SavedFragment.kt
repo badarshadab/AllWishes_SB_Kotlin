@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.examp.allwishes.databinding.FragmentSavedBinding
 import com.examp.allwishes.ui.adapter.DownloadedAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
+import com.examp.allwishes.ui.model.FavoriteDataNew
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.greetings.allwishes.util.AdUtils
 import com.sm.allwishes.greetings.util.ShareUtils
@@ -17,7 +18,7 @@ import com.sm.allwishes.greetings.util.ShareUtils
 class SavedFragment(val pos: Int, val clickedType: String) : Fragment() {
     private lateinit var b: FragmentSavedBinding
     var list: ArrayList<String>? = null
-    lateinit var favList: ArrayList<com.examp.allwishes.ui.model.FavoriteData>
+    lateinit var favList: ArrayList<FavoriteDataNew>
     lateinit var downloadedAdapter: DownloadedAdapter
     private var type: String = ""
 

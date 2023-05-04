@@ -3,7 +3,7 @@ package com.examp.allwishes.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.examp.allwishes.ui.model.Root_Hl
+import com.examp.allwishes.ui.model.Root_HlNew
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -16,14 +16,14 @@ import kotlinx.coroutines.launch
 
 class DailyWishesViewModel : ViewModel() {
 
-    private var comModel: MutableLiveData<Root_Hl?>? = null
+    private var comModel: MutableLiveData<Root_HlNew?>? = null
 
-    fun getComModel(): LiveData<Root_Hl?> {
+    fun getComModel(): LiveData<Root_HlNew?> {
         if (comModel == null) {
             comModel = MutableLiveData()
             loadCommonData()
         }
-        return comModel as MutableLiveData<Root_Hl?>
+        return comModel as MutableLiveData<Root_HlNew?>
     }
 
     private fun loadCommonData() {
@@ -32,7 +32,7 @@ class DailyWishesViewModel : ViewModel() {
             val postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     try {
-                        comModel?.value = dataSnapshot.getValue(Root_Hl::class.java)
+                        comModel?.value = dataSnapshot.getValue(Root_HlNew::class.java)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

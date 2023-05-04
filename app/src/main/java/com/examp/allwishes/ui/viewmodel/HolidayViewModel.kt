@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.examp.allwishes.ui.model.Event
 import com.examp.allwishes.ui.model.EventByMonth
-import com.examp.allwishes.ui.model.Root_Hl
+import com.examp.allwishes.ui.model.Root_HlNew
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -21,7 +21,7 @@ import java.util.*
 
 class HolidayViewModel() : ViewModel() {
 
-    var comModel: MutableLiveData<Root_Hl?>? = null
+    var comModel: MutableLiveData<Root_HlNew?>? = null
     private var arrayList: ArrayList<EventByMonth>? = null
     private var _arrayListLiveData = MutableSharedFlow<ArrayList<EventByMonth>>()
     val arrayListLiveData: SharedFlow<ArrayList<EventByMonth>> = _arrayListLiveData
@@ -53,12 +53,11 @@ class HolidayViewModel() : ViewModel() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 try {
-                    val model = dataSnapshot.getValue(Root_Hl::class.java)
+                    val model = dataSnapshot.getValue(Root_HlNew::class.java)
                     comModel?.value = model
                     arrayList?.clear()
-
-
-                    eventslist = model!!.getEvents()
+                    eventslist = model?.events!!
+//                    eventslist = model!!.getEvents()
                     viewModelScope.launch {
 
                         Collections.sort(eventslist, PriorityComparator())

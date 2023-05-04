@@ -3,22 +3,22 @@ package com.examp.allwishes.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.examp.allwishes.ui.model.Root_Hl
+import com.examp.allwishes.ui.model.Root_HlNew
 import com.examp.allwishes.ui.util.Resource
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 
 class HomeViewModel(private val myRepository: MyRepository) : ViewModel() {
 
-    var listMainModel: MutableLiveData<Resource<List<Root_Hl>>>? = null
+    var listMainModel: MutableLiveData<Resource<List<Root_HlNew>>>? = null
     var listStorage: MutableLiveData<Resource<List<StorageReference>>>? = null
     var categoryName: String = ""
 
-    fun loadRealTimeData(): MutableLiveData<Resource<List<Root_Hl>>> {
+    fun loadRealTimeData(): MutableLiveData<Resource<List<Root_HlNew>>> {
         if (listMainModel == null) {
-            listMainModel = loadRealTimeDataOnce() as MutableLiveData<Resource<List<Root_Hl>>>
+            listMainModel = loadRealTimeDataOnce() as MutableLiveData<Resource<List<Root_HlNew>>>
         }
-        return listMainModel as MutableLiveData<Resource<List<Root_Hl>>>
+        return listMainModel as MutableLiveData<Resource<List<Root_HlNew>>>
     }
 
     private fun loadRealTimeDataOnce() = liveData(Dispatchers.IO) {
