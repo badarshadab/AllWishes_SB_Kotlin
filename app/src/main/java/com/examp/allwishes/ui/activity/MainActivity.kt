@@ -3,9 +3,12 @@ package com.examp.allwishes.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.ActivityMainBinding
 import com.examp.allwishes.ui.fragment.MainFragment
+import com.examp.allwishes.ui.util.AppUtils
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,4 +28,20 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.nav_host_fragment_content_main, fragment)
         transaction.commit()
     }
+
+    override fun onBackPressed() {
+
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val destination = navController.currentDestination
+        if (destination?.id == R.id.nav_main) {
+
+//                AdUtils.showFullAd(this, object : AdUtils.AdListener {
+//                    override fun onComplete() {
+            AppUtils.fullExitScreen(this)
+//                    }
+//                })
+
+        }
+    }
+
 }

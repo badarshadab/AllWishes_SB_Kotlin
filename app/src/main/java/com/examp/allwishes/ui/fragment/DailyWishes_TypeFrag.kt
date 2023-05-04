@@ -41,10 +41,9 @@ class DailyWishes_TypeFrag : Fragment(), View.OnClickListener {
                 move("Gif")
             }
             b.typeBtns.imgBtn ->
-                move("Cards")
+                move("Card")
             b.typeBtns.quotes ->
-                Toast.makeText(requireContext(), "clicked on Quotes Button", Toast.LENGTH_SHORT)
-                    .show()
+                move("Quote")
         }
 
     }

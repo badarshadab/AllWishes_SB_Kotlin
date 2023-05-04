@@ -28,9 +28,7 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
         super.onCreate(savedInstanceState)
 
         name = arguments?.getString("name").toString()
-//        println("the name  namename " + name)
         index = arguments?.getInt("pos", 0)
-//        println("arguments?.getInt   " + index)
     }
 
     override fun onCreateView(
@@ -51,20 +49,20 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
 //                AdUtils.showNativeBanner(requireActivity(), b.adContainer.adContainer)
             }
 
-            AppUtils.setUpToolbar(
-                Holidays_List.holidaysList,
-                b.toolbar.toolbar,
-                "Quotes Preview",
-                true
-            )
+//            AppUtils.setUpToolbar(
+//                requireActivity(),
+//                b.toolbar.toolbar,
+//                "Quotes Preview",
+//                true
+//            )
 
-            AdUtils.showNativeBanner(
-                Holidays_List.activity,
-                b.adContainer.nativeAdContainer
-            )
+//            AdUtils.showNativeBanner(
+//                Holidays_List.activity,
+//                b.adContainer.nativeAdContainer
+//            )
 
             listA = list as ArrayList<String>
-            val adapter = list?.let { QuotesPreviewAdapter(Holidays_List.activity, it) }
+            val adapter = list?.let { activity?.let { it1 -> QuotesPreviewAdapter(it1, it) } }
             b.vp.adapter = adapter
             index?.let {
                 b.vp.postDelayed({ b.vp.setCurrentItem(it, true) }, 100)
@@ -119,7 +117,7 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
 //        val bm: Bitmap? = AppUtils.getInstance().captureScreen(v)
 //        UtilFunctions.saveViewAsBitmap(DrawerActivity.activity, v)
 //        UtilFunctions.saveImage()
-        ShareUtils.saveQuotes(Holidays_List.activity, v, "Quotes")
+        ShareUtils.saveQuotes(requireActivity(), v, "Quotes")
     }
 
 }

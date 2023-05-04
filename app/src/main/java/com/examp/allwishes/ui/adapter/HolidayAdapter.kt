@@ -55,7 +55,8 @@ class HolidayAdapter(public val activity: Activity, val msgList: ArrayList<Event
             val b = Bundle()
             b.putInt("pos", position)
             b.putString("trending_cat", festival_name)
-            AdUtils.changeFragment(activity, R.id.nav_cat_main, b)
+            AppUtils.changeFragment(activity, R.id.nav_cat_main, b)
+//            AdUtils.changeFragment(activity, R.id.nav_cat_main, b)
         })
     }
 

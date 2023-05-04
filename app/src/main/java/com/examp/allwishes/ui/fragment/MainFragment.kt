@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.MainFragmentLayoutBinding
 import com.examp.allwishes.ui.activity.Holidays_List
@@ -32,20 +32,20 @@ class MainFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-
-
         when (v) {
             b.startBtn -> {
                 val b = Bundle()
-                AppUtils.changeFragment(requireActivity() , R.id.daily_catFrag , b)
+                AppUtils.changeFragmentWithPosition(
+                    findNavController(),
+                    R.id.action_nav_main_to_daily_catFrag,
+                    requireActivity(),
+                    b
+                )
             }
 
             b.holidayBtn -> {
-//                Toast.makeText(requireContext() , "clicked on holiday Button" ,Toast.LENGTH_SHORT).show()
                 val inten1 = Intent(requireContext(), Holidays_List::class.java)
                 startActivity(inten1)
-//                val b = Bundle()
-//                AppUtils.changeFragment(requireActivity() , R.id.nav_home , b)
             }
             b.sharepanel.privacy -> AppUtils.openUrl(
                 requireContext(),

@@ -24,7 +24,6 @@ import com.greetings.allwishes.util.AdUtils
 class ContentPreviewFragment : Fragment() {
     private lateinit var b: FragmentContentPreviewBinding
 
-    //    private var nav: NavController? = null
     private var type: String = ""
     private var category: String = ""
     private var list: List<StorageReference>? = null
@@ -45,7 +44,6 @@ class ContentPreviewFragment : Fragment() {
         type = arguments?.getString("type").toString()
         category = arguments?.getString("catName").toString()
         index = arguments?.getInt("position", 0)
-//        nav = findNavController()
         println("arguments?.getInt(pos) " + index)
         setupViewModel()
         setupObservers(category)

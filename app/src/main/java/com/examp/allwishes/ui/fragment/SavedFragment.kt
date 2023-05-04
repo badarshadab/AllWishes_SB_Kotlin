@@ -5,21 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examp.allwishes.databinding.FragmentSavedBinding
 import com.examp.allwishes.ui.adapter.DownloadedAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
-import com.examp.allwishes.ui.viewmodel.QuoteViewModel
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.greetings.allwishes.util.AdUtils
 import com.sm.allwishes.greetings.util.ShareUtils
 
 
-class SavedFragment(val pos: Int) : Fragment() {
+class SavedFragment(val pos: Int, val clickedType: String) : Fragment() {
     private lateinit var b: FragmentSavedBinding
     var list: ArrayList<String>? = null
-    private lateinit var quotesViewModel: QuoteViewModel
     lateinit var favList: ArrayList<com.examp.allwishes.ui.model.FavoriteData>
     lateinit var downloadedAdapter: DownloadedAdapter
     private var type: String = ""
@@ -30,18 +27,31 @@ class SavedFragment(val pos: Int) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         b = FragmentSavedBinding.inflate(inflater, container, false)
-        setupViewModel()
+//        setupViewModel()
         favList = ArrayList()
-        type = when (pos) {
-            0 -> "Gifs"
-            1 -> "Frames"
-            2 -> "Cards"
-            3 -> "Quotes"
-            else -> { // Note the block
-                ""
-            }
 
+
+        if (clickedType.equals("daily")) {
+            type = when (pos) {
+                0 -> "Gif"
+                1 -> "Card"
+                2 -> "Quote"
+                else -> { // Note the block
+                    ""
+                }
+            }
+        } else {
+            type = when (pos) {
+                0 -> "Gifs"
+                1 -> "Frames"
+                2 -> "Cards"
+                3 -> "Quotes"
+                else -> { // Note the block
+                    ""
+                }
+            }
         }
+
 
         list = ShareUtils.getCollection(requireActivity(), "/" + type)
 
@@ -57,7 +67,8 @@ class SavedFragment(val pos: Int) : Fragment() {
                 false
             )
         )
-        downloadedAdapter = DownloadedAdapter(list!!)
+        downloadedAdapter = DownloadedAdapter(list!!, requireActivity())
+        list?.reverse()
         b.rv.adapter = downloadedAdapter
         if (list!!.size > 0) {
             AdUtils.showNativeBanner(
@@ -72,6 +83,6 @@ class SavedFragment(val pos: Int) : Fragment() {
 
     private fun setupViewModel() {
         val myViewModelFactory = MyViewModelFactory(FirebaseHelper())
-        quotesViewModel = ViewModelProvider(this, myViewModelFactory)[QuoteViewModel::class.java]
+//        quotesViewModel = ViewModelProvider(this)[QuoteViewModel::class.java]
     }
 }

@@ -91,28 +91,6 @@ class HolidayViewModel() : ViewModel() {
         }
         database.addValueEventListener(postListener)
     }
-//    private fun createDataList(eventslist: ArrayList<Event>){
-//
-//        Collections.sort(eventslist, PriorityComparator())
-//
-//        for (events in eventslist) {
-//            println("URL   " + events.icon)
-//            val month = events.udate?.let {
-//                dat = getSString(it)
-//                println("dat = getSString(it)   " + dat)
-////                            getSString(it)
-////                            milliseconds(it)
-//            }
-//            if (dat.equals("-1")) {
-//
-//            } else {
-//                val eventByMonth = month?.let { searchEvent(dat) }
-//                addEventByMonth(eventByMonth, events)
-//            }
-//
-//        }
-//        arrayList?.let { setArrayListLive(it) }
-//    }
 
     fun getMonthDigit(str: String): String {
         val asubstring = str.substring(3, 5)

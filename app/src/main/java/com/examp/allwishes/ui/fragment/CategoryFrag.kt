@@ -13,6 +13,7 @@ import com.examp.allwishes.R
 import com.examp.allwishes.databinding.FragmentCategoryBinding
 import com.examp.allwishes.ui.activity.Holidays_List
 import com.examp.allwishes.ui.data.api.FirebaseHelper
+import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.util.Status
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.examp.allwishes.ui.viewmodel.QuoteViewModel
@@ -134,14 +135,14 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
         if (type.equals("Frames")) {
             val b = Bundle()
             FrameEditFragment.any = storageReference as StorageReference
-            AdUtils.changeFragment(requireActivity(), R.id.nav_frameEdit, b)
+            AppUtils.changeFragment(requireActivity(), R.id.nav_frameEdit, b)
 
         } else if (type.equals("Quotes")) {
             val b = Bundle()
             b.putInt("pos", index)
             b.putString("name", catName)
             println("ist?.get(index)?.name " + list)
-            AdUtils.changeFragment(requireActivity(), R.id.nav_quotesPreview, b)
+            AppUtils.changeFragment(requireActivity(), R.id.nav_quotesPreview, b)
         } else {
             val bun = Bundle()
             bun.putString("type", type)
@@ -150,7 +151,8 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
             if (storageReference is StorageReference) {
                 Holidays_List.storageRef = storageReference as StorageReference
             }
-            AdUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
+            AppUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
+//            AdUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
         }
 
     }

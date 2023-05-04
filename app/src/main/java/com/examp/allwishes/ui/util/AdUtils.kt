@@ -59,31 +59,6 @@ object AdUtils {
         fun onComplete()
     }
 
-    fun changeFragment(activity: Activity, resId: Int, b: Bundle) {
-        showFullAd(activity, object : AdListener {
-            override fun onComplete() {
-                var dTime = 10L
-//                if (adNetwork.equals("Mopub", ignoreCase = true)) {
-//                    dTime = 500L
-//                }
-                Handler(Looper.getMainLooper()).postDelayed(
-                    {
-                        try {
-                            findNavController(
-                                activity,
-                                R.id.nav_host_fragment_content_main
-                            ).navigate(
-                                resId,
-                                b
-                            )
-                        } catch (e: Exception) {
-//                            AppUtils.getInstance().showToast(activity, "Something went wrong")
-                        }
-                    }, dTime
-                )
-            }
-        })
-    }
 
     fun removeFromFavDialog(
         activity: Activity, list: ArrayList<String>,

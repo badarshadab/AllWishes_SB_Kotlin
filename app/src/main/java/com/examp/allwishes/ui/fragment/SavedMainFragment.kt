@@ -22,10 +22,8 @@ class SavedMainFragment : Fragment() {
     lateinit var tablayout: TabLayout
     lateinit var viewpager: ViewPager2
     lateinit var toolbar: Toolbar
-    val typeArray = arrayOf(
-        "Gifs", "Frames", "Cards", "Quotes"
-    )
-    private var trending_cat: String = ""
+    lateinit var typeArray: Array<String>
+    private var clickedType: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -39,7 +37,19 @@ class SavedMainFragment : Fragment() {
 
         viewpager = _binding.vp
         tablayout = _binding.tl
-        trending_cat = arguments?.getString("trending_cat").toString()
+        clickedType = arguments?.getString("from").toString()
+
+        if(clickedType.equals("daily")){
+            typeArray = arrayOf(
+                "Gifs", "Cards", "Quotes"
+            )
+        }
+        else{
+            typeArray = arrayOf(
+                "Gifs", "Frames", "Cards", "Quotes"
+            )
+        }
+
 
 
         toolbar = _binding.toolbar.toolbar
@@ -59,7 +69,7 @@ class SavedMainFragment : Fragment() {
             lifecycle,
             requireActivity(),
             typeArray,
-            trending_cat
+            clickedType
         )
 
         TabLayoutMediator(tablayout, viewpager) { tab, position ->

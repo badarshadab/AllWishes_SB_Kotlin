@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.examp.allwishes.R;
 import com.examp.allwishes.ui.model.Root_Hl;
+import com.examp.allwishes.ui.util.AppUtils;
 
 
 public class BannerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -45,11 +46,12 @@ public class BannerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.error_img)
                 .into(myViewHolder.iv);
+        AppUtils.INSTANCE.setScaleAnimation(holder.itemView);
         myViewHolder.tv.setText(cName);
         myViewHolder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onClick(view, position , cName);
+                mListener.onClick(view, position, cName);
             }
         });
 
@@ -81,6 +83,6 @@ public class BannerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public interface RecyclerViewClickListener {
 
-        void onClick(View view, int position , String catName);
+        void onClick(View view, int position, String catName);
     }
 }

@@ -3,6 +3,7 @@ package com.examp.allwishes.ui.util
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -16,18 +17,25 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.Window
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.core.content.FileProvider
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.examp.allwishes.R
+import com.examp.allwishes.ui.activity.SavedHolidayGreetings
 import com.google.firebase.storage.StorageReference
+import com.greetings.allwishes.util.AdUtils
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -39,6 +47,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 object AppUtils {
+
+    private const val FADE_DURATION = 700
 
     public fun openUrl(context: Context, url: String?) {
         try {
@@ -90,24 +100,21 @@ object AppUtils {
         val dialog = builder.create()
         val fromDaily = customLayout.findViewById<ImageView>(R.id.daily)
         val fromHoliday = customLayout.findViewById<ImageView>(R.id.holiday)
-//        fromDaily.setOnClickListener {
-//            val inten1 = Intent(context, SavedActivity::class.java)
-////            AdUtils.INSTANCE.showFullAd(this@MainActivity, object : AdListener() {
-////                fun onComplete() {
-//            context.startActivity(inten1)
-////                }
-////            })
-//            dialog.dismiss()
-//        }
-//        fromHoliday.setOnClickListener {
-//            val inten1 = Intent(context, SavedHolidayGreetings::class.java)
-////            AdsHandler.INSTANCE.showInterstitialAds(this@MainActivity) { isAdDisplay, which ->
-//            context.startActivity(
-//                inten1
-//            )
-////            }
-//            dialog.dismiss()
-//        }
+
+        fromDaily.setOnClickListener {
+
+            val b = Bundle()
+            b.putString("from", "daily")
+            changeFragment(context, R.id.nav_saved_main, b)
+            dialog.dismiss()
+        }
+        fromHoliday.setOnClickListener {
+
+            val b = Bundle()
+            b.putString("from", "holiday")
+            changeFragment(context, R.id.nav_saved_main, b)
+            dialog.dismiss()
+        }
         dialog.show()
     }
 
@@ -333,6 +340,18 @@ object AppUtils {
             .into(imageView)
     }
 
+    fun changeFragmentWithPosition(
+        nav: NavController,
+        fragmentId: Int,
+        activity: Activity,
+        bundle: Bundle
+    ) {
+//        SmAds.showFullAd(activity, object : FullAdListener {
+//            override fun onComplete(isAdDisplay: Boolean, adNetwork: String) {
+        nav.navigate(fragmentId, bundle)
+//            }
+//        })
+    }
 
     fun changeFragment(activity: Activity, resId: Int, b: Bundle) {
 //        AdUtils.showFullAd(activity, object : AdUtils.AdListener {
@@ -358,6 +377,43 @@ object AppUtils {
         )
 //            }
 //        })
+    }
+
+    fun setScaleAnimation(view: View) {
+        val anim = ScaleAnimation(
+            0.0f,
+            1.0f,
+            0.0f,
+            1.0f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
+        anim.duration = AppUtils.FADE_DURATION.toLong()
+        view.startAnimation(anim)
+    }
+
+
+    fun fullExitScreen(activity: Activity) {
+        val dialog = Dialog(activity, R.style.DialogTheme)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.exit_dialog)
+        AdUtils.showNative(activity, dialog.findViewById<View>(R.id.nativeAdContainer) as CardView)
+//        showNativeAd(dialog.findViewById<View>(R.id.smNativeAdContainer) as ViewGroup)
+        dialog.findViewById<View>(R.id.canBtn)
+            .setOnClickListener { view: View? -> dialog.dismiss() }
+        dialog.findViewById<View>(R.id.okBtn).setOnClickListener { activity.finish() }
+        dialog.findViewById<View>(R.id.rate_us).setOnClickListener {
+            rateUs(activity)
+        }
+        dialog.findViewById<View>(R.id.more).setOnClickListener {
+            openUrl(
+                activity,
+                "https://play.google.com/store/apps/developer?id=Greetings+%26+Wishes"
+            )
+        }
+        dialog.show()
     }
 
 

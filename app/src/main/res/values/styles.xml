@@ -55,7 +55,7 @@
     <style name="ControlPanel">
         <item name="android:gravity">center</item>
         <item name="android:textSize">11sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_col</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="textAllCaps">true</item>
     </style>

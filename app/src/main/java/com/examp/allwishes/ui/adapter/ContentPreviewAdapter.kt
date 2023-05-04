@@ -37,7 +37,7 @@ class ContentPreviewAdapter(
         println("Shadab.ViewHolder " + position)
 
         holder.b.actionLay.download.setOnClickListener({
-            ShareUtils.saveItem(Holidays_List.activity, list.get(position), type)
+            ShareUtils.saveItem(activity, list.get(position), type)
         })
         holder.b.actionLay.share.setOnClickListener({
             ShareUtils.shareGIF(

@@ -1,5 +1,6 @@
 package com.examp.allwishes.ui.adapter
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.examp.allwishes.ui.util.AppUtils
 import com.greetings.allwishes.util.AdUtils
 import com.sm.allwishes.greetings.util.ShareUtils
 
-class DownloadedAdapter(private var list: ArrayList<String>) :
+class DownloadedAdapter(private var list: ArrayList<String> ,var activity:Activity) :
     RecyclerView.Adapter<DownloadedAdapter.ImageHolder>() {
 
     var layoutInflater: LayoutInflater? = null
@@ -20,7 +21,7 @@ class DownloadedAdapter(private var list: ArrayList<String>) :
     class ImageHolder(val b: DownloadedListRowBinding) : RecyclerView.ViewHolder(b.root) {
 
         fun setImage(path: String) {
-            AppUtils.setImageWithRoundCorner(path, b.iv, 20, 500)
+            AppUtils.setImageWithRoundCorner(path, b.iv, 20, 700)
         }
     }
 
@@ -49,7 +50,7 @@ class DownloadedAdapter(private var list: ArrayList<String>) :
         holder.b.actionLay.download.setText("Remove")
         holder.b.actionLay.download.setOnClickListener({
             AdUtils.removeFromFavDialog(
-                SavedHolidayGreetings.activity,
+                activity ,
                 list,
                 position,
                 imageName, this

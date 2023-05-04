@@ -1,6 +1,7 @@
 package com.examp.allwishes.ui.adapter
 
 import android.app.Activity
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,9 +66,10 @@ class QuotesPreviewAdapter(
         RecyclerView.ViewHolder(b.root) {
 
         fun setData(s: String) {
+
+            val typeface = Typeface.createFromAsset(activity.getAssets(), "fonts/quotesfont.TTF")
+            b.tv.setTypeface(typeface)
             b.tv.text = s
-            b.tv.textSize
-            println("RecyclerView.ViewHolder " + s)
         }
     }
 }

@@ -15,4 +15,5 @@
     <color name="red_e73a3d">#e73a3d</color>
     <color name="status_bar_color">#028073</color>
     <color name="offWhite">#D3D3D3</color>
+    <color name="tool_text">#350801</color>
 </resources>
