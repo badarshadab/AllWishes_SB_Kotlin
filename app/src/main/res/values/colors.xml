@@ -16,4 +16,5 @@
     <color name="status_bar_color">#028073</color>
     <color name="offWhite">#D3D3D3</color>
     <color name="tool_text">#350801</color>
+    <color name="bg_col_new">#C9E1F2</color>
 </resources>

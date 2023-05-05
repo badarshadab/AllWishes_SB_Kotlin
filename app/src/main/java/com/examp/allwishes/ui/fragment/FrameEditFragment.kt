@@ -100,7 +100,7 @@ class FrameEditFragment : Fragment() {
         b = FragmentFrameEditBinding.inflate(inflater, container, false)
         initializeView(b)
         imageUri = createImageUri()!!
-        b.galleryImageView.setOnTouchListener(com.examp.allwishes.ui.util.MultiTouchListener())
+        b.galleryImageView.setOnTouchListener(MultiTouchListener())
         if (any is StorageReference) {
             AppUtils.setImage(requireContext(), any as StorageReference, b.cakeImageView)
         } else if (any is String) {

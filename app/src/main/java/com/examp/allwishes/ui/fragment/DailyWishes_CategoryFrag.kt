@@ -38,7 +38,6 @@ class DailyWishes_CategoryFrag : Fragment() {
                         AppUtils.changeFragment(requireActivity(), R.id.nav_daily_type, b)
                     }
                 })
-
         }
 
         val view = b.root
