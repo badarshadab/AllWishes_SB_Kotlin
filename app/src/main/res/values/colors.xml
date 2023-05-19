@@ -11,10 +11,18 @@
     <color name="bg">#ffecc6</color>
     <color name="text_col">#1B7DE6</color>
     <color name="toolbar_color">#2700a3</color>
+    <color name="toolbar_text_colo">#242D81</color>
     <color name="colorOrange">#efac2b</color>
     <color name="red_e73a3d">#e73a3d</color>
     <color name="status_bar_color">#028073</color>
     <color name="offWhite">#D3D3D3</color>
     <color name="tool_text">#350801</color>
     <color name="bg_col_new">#C9E1F2</color>
+    <color name="text_color">#ED365E</color>
+    <color name="processbar_color">#E56BD7</color>
+    <color name="transparent">#00000000</color>
+    <color name="tile_even">#2196F3</color>
+    <color name="quotes_bg">#FF99DB</color>
+    <color name="cardbg">#E1EEF8</color>
+    <color name="win_def_bg">#F5F9F5</color>
 </resources>

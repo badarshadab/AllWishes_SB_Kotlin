@@ -20,4 +20,20 @@
     <string name="quotes">Quotes</string>
     <string name="images">Images</string>
     <string name="test_quote">Happy Thanksgiving to you and your family. May God keep blessing you and fulfill all your wishes and dreams.</string>
+
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="good_morning">Good Morning</string>
+    <string name="choose_color">Choose Color</string>
+    <string name="choose_gradient">Choose Gradient</string>
+    <string name="color">Color</string>
+    <string name="choose_background">Choose Background</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_app_bar_open_drawer_description">open</string>
+    <string name="add_bg">Add Bg</string>
+    <string name="create">CREATE</string>
+    <string name="add_text">Add Text</string>
+    <string name="fonts">Fonts</string>
+    <string name="text_color">Text Color</string>
+    <string name="stickers">Stickers</string>
 </resources>

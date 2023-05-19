@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottomnav"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/colortitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/choose_color"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/addbgdilogtitlesize"
+        app:layout_constraintBottom_toTopOf="@+id/colorchooselayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/colorchooselayout"
+        android:layout_width="match_parent"
+        android:layout_height="297dp"
+        android:clipToPadding="false"
+        android:elevation="3dp"
+        android:outlineProvider="bounds"
+        app:layout_constraintBottom_toBottomOf="@id/colorchooselayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colortitle">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/onecolorrecyView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:spanCount="4" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/colortitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/choose_gradient"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/addbgdilogtitlesize"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/colorchooselayout"
+        app:layout_constraintBottom_toTopOf="@+id/colorchooselayout2"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/colorchooselayout2"
+        android:layout_width="match_parent"
+        android:layout_height="297dp"
+        android:clipToPadding="false"
+        android:layout_marginBottom="5dp"
+        android:elevation="3dp"
+        android:outlineProvider="bounds"
+        app:layout_constraintTop_toBottomOf="@id/colortitle2"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/gridentrecycView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:spanCount="4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

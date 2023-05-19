@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.examp.allwishes.databinding.BannerRowBinding
 import com.examp.allwishes.databinding.CreateCardsRowBinding
-import com.examp.allwishes.databinding.ImageRowBinding
 import com.examp.allwishes.ui.model.Root_HlNew
 import com.examp.allwishes.ui.util.AppUtils
 
@@ -28,12 +26,10 @@ class CreateCardsAdapter(
         val contentPreviewRowBinding =
             CreateCardsRowBinding.inflate(layoutInflater!!, parent, false)
 
-
         return ContentPreviewHolder(contentPreviewRowBinding)
     }
 
     override fun onBindViewHolder(holder: ContentPreviewHolder, position: Int) {
-        println("Shadab.ViewHolder " + position)
         val cIcon = model.createcards?.get(position)?.icon
         val cName = model.createcards?.get(position)?.name
 
@@ -41,6 +37,10 @@ class CreateCardsAdapter(
             AppUtils.setImageWithRoundCorner(cIcon, holder.b.iv, 20, 300)
         }
         holder.b.tv.text = cName
+
+        holder.b.iv.setOnClickListener { view ->
+            mListener.onClick(view, position, cName)
+        }
 
 
     }

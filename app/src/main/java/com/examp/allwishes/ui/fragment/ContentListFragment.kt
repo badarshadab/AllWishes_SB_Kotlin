@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.examp.allwishes.R
@@ -14,7 +13,6 @@ import com.examp.allwishes.ui.adapter.GifImageAdapter
 import com.examp.allwishes.ui.adapter.QuotesListAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
 import com.examp.allwishes.ui.util.AppUtils
-import com.examp.allwishes.ui.util.Status
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.examp.allwishes.ui.viewmodel.QuoteViewModel
 import com.google.firebase.storage.StorageReference
@@ -64,7 +62,7 @@ class ContentListFragment : Fragment() {
 
 
     private fun setupObservers(categoryName: String) {
-
+        mainViewModel.loadImagesStorage(categoryName)
         if (type.equals("Quotes")) {
             quotesViewModel.getData(categoryName).observe(requireActivity()) { list ->
                 if (list != null) {
@@ -87,46 +85,73 @@ class ContentListFragment : Fragment() {
                     })
             }
         } else {
-            mainViewModel.loadImagesStorage(categoryName)
-                .observe(requireActivity(), Observer { it ->
-                    it.let { resource ->
-                        when (resource.status) {
-                            Status.SUCCESS -> {
-                                b.pb.visibility = View.GONE
-                                this.list = resource.data
-                                b.rv.adapter = resource.data?.let { it1 ->
-                                    GifImageAdapter(
-                                        requireActivity(),
-                                        it1, object : GifImageAdapter.RecyclerViewClickListener {
-                                            override fun onClick(
-                                                view: View?,
-                                                position: Int
-                                            ) {
-                                                val b = Bundle()
-                                                b.putString("type", type)
-                                                b.putString("catName", "DailyWishes/" + name)
-                                                b.putInt("position", position)
-                                                AppUtils.changeFragment(
-                                                    requireActivity(),
-                                                    R.id.nav_contentPreview,
-                                                    b
-                                                )
-                                            }
+            mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
+            { resource ->
+                b.pb.visibility = View.GONE
+                this.list = resource
+                b.rv.adapter = this.list?.let { it1 ->
+                    GifImageAdapter(
+                        requireActivity(),
+                        it1, object : GifImageAdapter.RecyclerViewClickListener {
+                            override fun onClick(
+                                view: View?,
+                                position: Int
+                            ) {
+                                val b = Bundle()
+                                b.putString("type", type)
+                                b.putString("catName", "DailyWishes/" + name)
+                                b.putInt("position", position)
+                                AppUtils.changeFragment(
+                                    requireActivity(),
+                                    R.id.nav_contentPreview,
+                                    b
+                                )
+                            }
 
-                                        }
-                                    )
-                                }
-                            }
-                            Status.ERROR -> {
-                                b.retry.root.visibility = View.VISIBLE
-                                println("setupObservers Status.ERROR" + resource.data)
-                            }
-                            Status.LOADING -> {
-                                println("setupObservers Status.LOADING" + resource.data)
-                            }
                         }
-                    }
-                })
+                    )
+                }
+            }
+//            mainViewModel.loadImagesStorage(categoryName)
+//                .observe(requireActivity(), Observer { it ->
+//                    it.let { resource ->
+//                        when (resource.status) {
+//                            Status.SUCCESS -> {
+//                                b.pb.visibility = View.GONE
+//                                this.list = resource.data
+//                                b.rv.adapter = resource.data?.let { it1 ->
+//                                    GifImageAdapter(
+//                                        requireActivity(),
+//                                        it1, object : GifImageAdapter.RecyclerViewClickListener {
+//                                            override fun onClick(
+//                                                view: View?,
+//                                                position: Int
+//                                            ) {
+//                                                val b = Bundle()
+//                                                b.putString("type", type)
+//                                                b.putString("catName", "DailyWishes/" + name)
+//                                                b.putInt("position", position)
+//                                                AppUtils.changeFragment(
+//                                                    requireActivity(),
+//                                                    R.id.nav_contentPreview,
+//                                                    b
+//                                                )
+//                                            }
+//
+//                                        }
+//                                    )
+//                                }
+//                            }
+//                            Status.ERROR -> {
+//                                b.retry.root.visibility = View.VISIBLE
+//                                println("setupObservers Status.ERROR" + resource.data)
+//                            }
+//                            Status.LOADING -> {
+//                                println("setupObservers Status.LOADING" + resource.data)
+//                            }
+//                        }
+//                    }
+//                })
         }
 
 

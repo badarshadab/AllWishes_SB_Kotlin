@@ -1,6 +1,5 @@
 package com.examp.allwishes.ui.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.examp.allwishes.ui.model.Root_HlNew
@@ -16,23 +15,20 @@ import kotlinx.coroutines.launch
 
 class DailyWishesViewModel : ViewModel() {
 
-    private var comModel: MutableLiveData<Root_HlNew?>? = null
+    val repositoryResponseLiveData = MutableLiveData<Root_HlNew?>()
 
-    fun getComModel(): LiveData<Root_HlNew?> {
-        if (comModel == null) {
-            comModel = MutableLiveData()
-            loadCommonData()
-        }
-        return comModel as MutableLiveData<Root_HlNew?>
+    init {
+        getComModel()
     }
 
-    private fun loadCommonData() {
+    private fun getComModel() {
         val database: DatabaseReference = Firebase.database.reference
         GlobalScope.launch(Dispatchers.IO) {
             val postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     try {
-                        comModel?.value = dataSnapshot.getValue(Root_HlNew::class.java)
+                        repositoryResponseLiveData.value =
+                            dataSnapshot.getValue(Root_HlNew::class.java)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

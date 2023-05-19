@@ -28,7 +28,7 @@ class QuotesPreviewAdapter(
 
     override fun onBindViewHolder(holder: QuotesPreviewHolder, position: Int) {
         holder.setData(list[position])
-        println("Shadab.ViewHolder " + position)
+//        println("Shadab.ViewHolder " + position)
 
 //        val text = list[position].toString()
 //        holder.b.tv.setText(text)

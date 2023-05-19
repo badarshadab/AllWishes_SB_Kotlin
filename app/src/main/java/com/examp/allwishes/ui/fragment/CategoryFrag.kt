@@ -70,25 +70,30 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
 
     private fun setupObservers(categoryName: String, cat: Int) {
         if (cat != 3) {
-            mainViewModel.loadImagesStorage(categoryName)
-                .observe(requireActivity(), Observer { it ->
-                    it.let { resource ->
-                        when (resource.status) {
-                            Status.SUCCESS -> {
-                                println("setupObservers Status.SUCCESS" + resource.data)
-                                this.list = resource.data
-                                setCatCards(resource.data)
-                                b.progressBar.visibility = View.GONE
-                            }
-                            Status.ERROR -> {
-                                println("setupObservers Status.ERROR" + resource.data)
-                            }
-                            Status.LOADING -> {
-                                println("setupObservers Status.LOADING" + resource.data)
-                            }
-                        }
-                    }
-                })
+            mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()){resource->
+                this.list = resource.asReversed()
+                setCatCards(this.list)
+                b.progressBar.visibility = View.GONE
+            }
+//            mainViewModel.loadImagesStorage(categoryName)
+//                .observe(requireActivity(), Observer { it ->
+//                    it.let { resource ->
+//                        when (resource.status) {
+//                            Status.SUCCESS -> {
+//                                println("setupObservers Status.SUCCESS" + resource.data)
+//                                this.list = resource.data
+//                                setCatCards(resource.data)
+//                                b.progressBar.visibility = View.GONE
+//                            }
+//                            Status.ERROR -> {
+//                                println("setupObservers Status.ERROR" + resource.data)
+//                            }
+//                            Status.LOADING -> {
+//                                println("setupObservers Status.LOADING" + resource.data)
+//                            }
+//                        }
+//                    }
+//                })
         } else {
             quotesViewModel.getData(categoryName).observe(requireActivity()) { list ->
                 setCatCards(list)

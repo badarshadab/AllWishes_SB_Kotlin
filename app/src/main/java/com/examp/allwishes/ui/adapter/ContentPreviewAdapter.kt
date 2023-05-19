@@ -34,7 +34,6 @@ class ContentPreviewAdapter(
 
     override fun onBindViewHolder(holder: ContentPreviewHolder, position: Int) {
         holder.setData(position)
-        println("Shadab.ViewHolder " + position)
 
         holder.b.actionLay.download.setOnClickListener({
             ShareUtils.saveItem(activity, list.get(position), type)

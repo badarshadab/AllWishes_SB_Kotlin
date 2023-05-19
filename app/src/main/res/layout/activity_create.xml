@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg"
+        tools:context=".ui.activites.createCard.CreateCardActivity">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="Good Night"
+            app:titleTextColor="@color/white">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/toolbartitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="?android:attr/actionBarSize"
+                    android:layout_marginRight="?android:attr/actionBarSize"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="@string/add_bg"
+                    android:textColor="@color/toolbar_text_colo"
+                    android:textSize="@dimen/toolbartitlesize"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/next_btn"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    app:cardCornerRadius="@dimen/_60sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:gravity="center"
+                        android:text="Next"
+                        android:textColor="@color/toolbar_text_colo"
+                        android:textSize="@dimen/_14sdp" />
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardsharesaveid"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_300sdp"
+            android:layout_marginHorizontal="@dimen/_25sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:strokeWidth="1dp">
+
+            <RelativeLayout
+                android:id="@+id/cardrootlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/curved_bg_primarycol">
+
+                <TextView
+                    android:id="@+id/create"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:text="@string/create"
+                    android:textColor="@color/toolbar_text_colo"
+                    android:textSize="23dp"
+                    app:drawableTopCompat="@drawable/create_icon" />
+
+
+                <ImageView
+                    android:id="@+id/createimageview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY" />
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fontcolorlistlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/bootomlayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listfontcolorrecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="3dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:spanCount="2" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bootomlayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:background="@drawable/bottomnav"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/addbgid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="center"
+                android:onClick="iconButton"
+                android:text="@string/add_bg"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_wishes_textsize"
+                app:drawableTopCompat="@drawable/ic_add_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/addtextid"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/addtextid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="center"
+                android:onClick="iconButton"
+                android:text="@string/add_text"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_wishes_textsize"
+                app:drawableTopCompat="@drawable/ic_add_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/quoteid"
+                app:layout_constraintStart_toEndOf="@+id/addbgid"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/quoteid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="center"
+                android:onClick="iconButton"
+                android:text="@string/quotes"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_wishes_textsize"
+                app:drawableTopCompat="@drawable/ic_add_quotes"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fontsid"
+                app:layout_constraintStart_toEndOf="@+id/addtextid"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fontsid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="center"
+                android:onClick="iconButton"
+                android:text="@string/fonts"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_wishes_textsize"
+                app:drawableTopCompat="@drawable/ic_add_fonts"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textcolorid"
+                app:layout_constraintStart_toEndOf="@+id/quoteid"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textcolorid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="center"
+                android:onClick="iconButton"
+                android:text="@string/text_color"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_wishes_textsize"
+                app:drawableTopCompat="@drawable/ic_text_colour"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/stickersid"
+                app:layout_constraintStart_toEndOf="@+id/fontsid"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/stickersid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:gravity="center"
+                android:onClick="iconButton"
+                android:text="@string/stickers"
+                android:textColor="@color/black"
+                android:textSize="@dimen/all_wishes_textsize"
+                app:drawableTopCompat="@drawable/ic_stickers"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textcolorid"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

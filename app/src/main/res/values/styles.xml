@@ -10,7 +10,7 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splashbg</item>
+        <item name="android:windowBackground">@drawable/splash_bg_new</item>
     </style>
 
     <style name="ExitTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -22,7 +22,7 @@
     </style>
 
     <style name="ToolTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlNormal">@color/toolbar_text_colo</item>
     </style>
 
     <style name="Download_Theme_Dialog" parent="ThemeOverlay.AppCompat.Light">
@@ -31,6 +31,18 @@
         <item name="android:navigationBarColor">@color/white</item>
     </style>
 
+    <style name="roundedCornersImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <style name="DialogTheme4" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowEnterAnimation">@anim/bottom_up</item>
+        <item name="android:windowExitAnimation">@anim/bottom_down</item>
+    </style>
+
+
 
     <style name="Theme_Dialog" parent="android:Theme.Holo.Light.Dialog">
         <item name="android:windowMinWidthMajor">90%</item>
@@ -38,15 +50,29 @@
         <item name="android:windowAnimationStyle">@style/MyAnimation.Window</item>
     </style>
 
+    <style name="WideDialogcolorpic" parent="Base.Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">95%</item>
+        <item name="android:windowMinWidthMinor">95%</item>
+        <item name="windowFixedHeightMajor">95%</item>
+        <item name="windowFixedHeightMinor">95%</item>
+    </style>
+
     <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
         <item name="android:windowEnterAnimation">@anim/anim_in</item>
         <item name="android:windowExitAnimation">@anim/anim_out</item>
     </style>
 
+    <style name="addbgWideDialog" parent="Base.Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+    </style>
 
 
-
-
+    <style name="DialogTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowEnterAnimation">@anim/slide_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_right</item>
+    </style>
 
 
 

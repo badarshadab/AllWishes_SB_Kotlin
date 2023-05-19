@@ -9,7 +9,7 @@
         android:id="@+id/nav_main"
         android:name="com.examp.allwishes.ui.fragment.MainFragment"
         android:label="main_frag"
-        tools:layout="@layout/main_fragment_layout">
+        tools:layout="@layout/viewall_createcards_fragment">
 
         <action
             android:id="@+id/nav_home_to_nav_category"
@@ -17,6 +17,12 @@
         <action
             android:id="@+id/action_nav_main_to_daily_catFrag"
             app:destination="@id/daily_catFrag" />
+        <action
+            android:id="@+id/action_nav_main_to_nav_create_cards_list"
+            app:destination="@id/nav_create_cards_list" />
+        <action
+            android:id="@+id/action_nav_main_to_nav_set_cards"
+            app:destination="@id/nav_set_cards" />
     </fragment>
 
     <fragment
@@ -104,5 +110,27 @@
         android:name="com.examp.allwishes.ui.fragment.ContentListFragment"
         android:label="daily_content_list"
         tools:layout="@layout/fragment_content_list"/>
+
+    <fragment
+        android:id="@+id/nav_view_create_cards"
+        android:name="com.examp.allwishes.ui.fragment.ViewAllCreateCardsFragment"
+        android:label="viewcreatecards"
+        tools:layout="@layout/viewall_createcards_fragment"/>
+
+    <fragment
+        android:id="@+id/nav_create_cards_list"
+        android:name="com.examp.allwishes.ui.fragment.CreateCardCatListFrag"
+        android:label="createcardslist"
+        tools:layout="@layout/addbg_diloglayout">
+        <action
+            android:id="@+id/action_nav_create_cards_list_to_nav_set_cards"
+            app:destination="@id/nav_set_cards" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_set_cards"
+        android:name="com.examp.allwishes.ui.fragment.SetCardFrag"
+        android:label="setcards"
+        tools:layout="@layout/activity_create"/>
 
 </navigation>

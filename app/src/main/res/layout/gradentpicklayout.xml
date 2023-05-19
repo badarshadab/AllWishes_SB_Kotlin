@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/cancelbtnid"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="3dp"
+        android:src="@drawable/cancelview"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="13dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:weightSum="10">
+
+            <com.skydoves.colorpickerview.sliders.AlphaSlideBar
+                android:id="@+id/graalphaSlideBar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_140sdp"
+                android:layout_gravity="center"
+                app:borderColor_AlphaSlideBar="@android:color/white"
+                app:borderSize_AlphaSlideBar="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:selector_AlphaSlideBar="@drawable/wheel" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/selectarrow1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/graalphaSlideBar">
+
+                <com.skydoves.colorpickerview.ColorPickerView
+                    android:id="@+id/colorPickerViewgr1"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:palette="@drawable/colorpicbg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+
+
+
+                    />
+
+                <!--   app:selector_AlphaSlideBar="@drawable/wheel" -->
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--            //-gr;-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/gradentselectarrow"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectarrow1">
+
+                <com.skydoves.colorpickerview.ColorPickerView
+                    android:id="@+id/colorPickerViewgr2"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:actionMode="last"
+                    app:debounceDuration="200"
+                    app:preferenceName="MyColorPicker"
+                    app:selector="@drawable/wheel"
+                    app:selector_size="15dp"
+                    app:palette="@drawable/colorpicbg"
+
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/donelayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                app:layout_constraintTop_toBottomOf="@+id/gradentselectarrow"
+                app:layout_goneMarginTop="10dp">
+
+                <com.skydoves.colorpickerview.AlphaTileView
+                    android:id="@+id/alphatileView"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/cornerradiusviewbg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/gokid"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tileEvenColor="@color/tile_even"
+
+                    />
+
+
+                <TextView
+                    android:id="@+id/gokid"
+                    android:layout_width="@dimen/_180sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:background="@drawable/colorpickbtnbg"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:text="Done"
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/alphatileView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

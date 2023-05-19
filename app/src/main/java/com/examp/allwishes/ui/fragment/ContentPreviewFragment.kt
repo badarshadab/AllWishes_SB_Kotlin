@@ -7,18 +7,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.examp.allwishes.databinding.FragmentContentPreviewBinding
-import com.examp.allwishes.ui.activity.Holidays_List
-import com.examp.allwishes.ui.adapter.ContentPreviewAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
 import com.examp.allwishes.ui.util.AppUtils
-import com.examp.allwishes.ui.util.Status
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
-import com.greetings.allwishes.util.AdUtils
 
 
 class ContentPreviewFragment : Fragment() {
@@ -72,39 +67,39 @@ class ContentPreviewFragment : Fragment() {
 
     private fun setupObservers(categoryName: String) {
 
-        mainViewModel.loadImagesStorage(categoryName + "/" + type)
-            .observe(requireActivity(), Observer { it ->
-                it.let { resource ->
-                    when (resource.status) {
-                        Status.SUCCESS -> {
-//                            listtoShare = it
-                            println("setupObservers Status.SUCCESS" + resource.data)
-                            this.list = resource.data
-                            val adapter = list?.let {
-                                ContentPreviewAdapter(
-                                    requireActivity(),
-                                    it,
-                                    type
-                                )
-                            }
-                            println("the value of index ")
-                            b.vp.adapter = adapter
-                            index?.let {
-                                b.vp.postDelayed({
-                                    println("the value of index " + index)
-                                    b.vp.setCurrentItem(it, true)
-                                }, 100)
-                            }
-                        }
-                        Status.ERROR -> {
-                            println("setupObservers Status.ERROR" + resource.data)
-                        }
-                        Status.LOADING -> {
-                            println("setupObservers Status.LOADING" + resource.data)
-                        }
-                    }
-                }
-            })
+//        mainViewModel.loadImagesStorage(categoryName + "/" + type)
+//            .observe(requireActivity(), Observer { it ->
+//                it.let { resource ->
+//                    when (resource.status) {
+//                        Status.SUCCESS -> {
+////                            listtoShare = it
+//                            println("setupObservers Status.SUCCESS" + resource.data)
+//                            this.list = resource.data
+//                            val adapter = list?.let {
+//                                ContentPreviewAdapter(
+//                                    requireActivity(),
+//                                    it,
+//                                    type
+//                                )
+//                            }
+//                            println("the value of index ")
+//                            b.vp.adapter = adapter
+//                            index?.let {
+//                                b.vp.postDelayed({
+//                                    println("the value of index " + index)
+//                                    b.vp.setCurrentItem(it, true)
+//                                }, 100)
+//                            }
+//                        }
+//                        Status.ERROR -> {
+//                            println("setupObservers Status.ERROR" + resource.data)
+//                        }
+//                        Status.LOADING -> {
+//                            println("setupObservers Status.LOADING" + resource.data)
+//                        }
+//                    }
+//                }
+//            })
 
 
     }

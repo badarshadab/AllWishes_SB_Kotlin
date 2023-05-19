@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examp.allwishes.R
-import com.examp.allwishes.databinding.MainFragmentLayoutBinding
 import com.examp.allwishes.databinding.MainFragmentLayoutNewBinding
 import com.examp.allwishes.ui.activity.Holidays_List
-import com.examp.allwishes.ui.adapter.BannerAdapter
 import com.examp.allwishes.ui.adapter.CreateCardsAdapter
+import com.examp.allwishes.ui.model.Root_HlNew
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.DailyWishesViewModel
 
@@ -31,6 +29,7 @@ class MainFragment : Fragment(), View.OnClickListener {
         b = MainFragmentLayoutNewBinding.inflate(inflater, container, false)
         b.startBtn.setOnClickListener(this)
         b.holidayBtn.setOnClickListener(this)
+        b.viewAll.setOnClickListener(this)
 //        b.sharepanel.privacy.setOnClickListener(this)
 //        b.sharepanel.rate.setOnClickListener(this)
 //        b.sharepanel.sharePkg.setOnClickListener(this)
@@ -41,20 +40,27 @@ class MainFragment : Fragment(), View.OnClickListener {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-        mainViewModel.getComModel().observe(requireActivity()){model ->
-            b.createCardRv.adapter = model?.let {
-                CreateCardsAdapter(
-                    requireActivity(), it, object : CreateCardsAdapter.RecyclerViewClickListener {
-                        override fun onClick(view: View?, position: Int, catName: String?) {
-                            val b = Bundle()
-                            b.putString("catName", catName)
-                            AppUtils.changeFragment(requireActivity(), R.id.nav_daily_type, b)
-                        }
-
-                    })
+        mainViewModel.repositoryResponseLiveData.observe(requireActivity()) { model ->
+            if (model != null) {
+                createAdapter(model)
             }
         }
         return b.root
+    }
+
+    private fun createAdapter(model: Root_HlNew) {
+        b.createCardRv.adapter = model?.let {
+            CreateCardsAdapter(
+                requireActivity(), it, object : CreateCardsAdapter.RecyclerViewClickListener {
+                    override fun onClick(view: View?, position: Int, catName: String?) {
+                        val b = Bundle()
+                        b.putString("catName", catName)
+                        AppUtils.changeFragmentWithPosition(
+                            findNavController(),R.id.action_nav_main_to_nav_set_cards , requireActivity() , b)
+//                        AppUtils.changeFragment(requireActivity(), R.id.action_nav_main_to_nav_create_cards_list, b)
+                    }
+                })
+        }
     }
 
     override fun onClick(v: View?) {
@@ -72,6 +78,11 @@ class MainFragment : Fragment(), View.OnClickListener {
             b.holidayBtn -> {
                 val inten1 = Intent(requireContext(), Holidays_List::class.java)
                 startActivity(inten1)
+            }
+
+            b.viewAll->{
+                val b = Bundle()
+                AppUtils.changeFragment(requireActivity(), R.id.nav_view_create_cards, b)
             }
 //            b.sharepanel.privacy -> AppUtils.openUrl(
 //                requireContext(),

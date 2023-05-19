@@ -34,7 +34,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.examp.allwishes.BuildConfig
 import com.examp.allwishes.R
-import com.examp.allwishes.ui.activity.SavedHolidayGreetings
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.util.AdUtils
 import com.karumi.dexter.Dexter
@@ -50,6 +49,8 @@ import java.io.IOException
 object AppUtils {
 
     private const val FADE_DURATION = 700
+    private val GALLERY: Int = 1
+    private val CAMERA: Int = 2
 
     public fun openUrl(context: Context, url: String?) {
         try {
@@ -128,10 +129,10 @@ object AppUtils {
         activity.setSupportActionBar(toolbar)
         val titleTv = toolbar.findViewById<TextView>(R.id.tooText)
         titleTv.text = title
-        titleTv.setTextColor(Color.WHITE)
+        titleTv.setTextColor(activity.getColor(R.color.toolbar_text_colo))
         activity.supportActionBar!!.setDisplayShowTitleEnabled(false)
         activity.supportActionBar!!.setDisplayHomeAsUpEnabled(isHomeUp)
-        //        activity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        activity.supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_back_new);
         toolbar.setNavigationOnClickListener { activity.onBackPressed() }
     }
 
@@ -212,7 +213,7 @@ object AppUtils {
         return try {
             FileProvider.getUriForFile(
                 ctx!!,
-                BuildConfig .APPLICATION_ID + ".provider",
+                BuildConfig.APPLICATION_ID + ".provider",
                 file.absoluteFile
             )
         } catch (e: java.lang.Exception) {
@@ -366,7 +367,7 @@ object AppUtils {
                 try {
                     Navigation.findNavController(
                         activity,
-                        R.id.nav_host_fragment_content_main
+                        R.id.nav_host_fragment
                     ).navigate(
                         resId,
                         b
@@ -417,5 +418,11 @@ object AppUtils {
         dialog.show()
     }
 
+    fun getpicGallery(activity: Activity) {
+        val intent = Intent()
+        intent.setType("image/*")
+        intent.setAction(Intent.ACTION_GET_CONTENT)
+        activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY)
+    }
 
 }
