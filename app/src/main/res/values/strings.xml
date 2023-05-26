@@ -36,4 +36,9 @@
     <string name="fonts">Fonts</string>
     <string name="text_color">Text Color</string>
     <string name="stickers">Stickers</string>
+    <string name="add_bgtitle">Add background</string>
+    <string name="text_Quotes">Quotes</string>
+    <string name="myquotes">"Enter Text Here..."</string>
+    <string name="ab">AB</string>
+    <string name="choose_stic">Choose Stickers </string>
 </resources>

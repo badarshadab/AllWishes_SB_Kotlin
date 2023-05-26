@@ -1,37 +1,61 @@
 package com.examp.allwishes.ui.fragment
 
+import android.Manifest
 import android.app.Dialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.ActivityCreateBinding
 import com.examp.allwishes.databinding.AddbgDiloglayoutBinding
+import com.examp.allwishes.databinding.AddtextDialogLayBinding
 import com.examp.allwishes.databinding.GradentpicklayoutBinding
+import com.examp.allwishes.databinding.QuoteslistdlayoutBinding
+import com.examp.allwishes.databinding.StickerdiloglayoutBinding
 import com.examp.allwishes.ui.activity.MainActivity
 import com.examp.allwishes.ui.adapter.AddbgCardAdapter
 import com.examp.allwishes.ui.adapter.ChooseColorAdapter
 import com.examp.allwishes.ui.adapter.ChooseGradCloreAdapter
+import com.examp.allwishes.ui.adapter.FontsAdapter
+import com.examp.allwishes.ui.adapter.QuotesAdapter
+import com.examp.allwishes.ui.adapter.StickerAdpter
+import com.examp.allwishes.ui.adapter.TextChooseColorAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
 import com.examp.allwishes.ui.util.AppUtils
+import com.examp.allwishes.ui.util.MultiTouchListener
 import com.examp.allwishes.ui.util.OnItemClickListener
+import com.examp.allwishes.ui.util.OnItemClickListener_Quotes
+import com.examp.allwishes.ui.util.StickerImageView
+import com.examp.allwishes.ui.util.StickerOnItemClick
 import com.examp.allwishes.ui.viewmodel.CreateCardViewModel
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
+import com.examp.allwishes.ui.viewmodel.QuoteViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.skydoves.colorpickerview.AlphaTileView
@@ -45,20 +69,34 @@ import com.skydoves.colorpickerview.sliders.BrightnessSlideBar
 import timber.log.Timber
 
 
-class SetCardFrag : Fragment() {
+class SetCardFrag : Fragment(), View.OnClickListener {
 
 
     private lateinit var b: ActivityCreateBinding
     private var addbgcolordialog: Dialog? = null
     private lateinit var createCardViewModel: CreateCardViewModel
+    private lateinit var quoteViewModel: QuoteViewModel
     private lateinit var mainViewModel: HomeViewModel
     private var addbgbinding: AddbgDiloglayoutBinding? = null
+    private var addtextbinding: AddtextDialogLayBinding? = null
     private var addbgdialog: Dialog? = null
+    lateinit var quotesbinding: QuoteslistdlayoutBinding
+    private var quotelistdialog: Dialog? = null
+    lateinit var stickerBinding: StickerdiloglayoutBinding
+    private var stickerdialog: Dialog? = null
+    lateinit var stickerImageView: StickerImageView
+
 
     private var colorpickdialog: Dialog? = null
     var aalphaTileview: AlphaTileView? = null
     private var name: String = ""
     private var cat_addrs: String = ""
+    private val GALLERY: Int = 1
+    private val CAMERA: Int = 2
+    var dtextView: TextView? = null
+    var fontlist: String = ""
+    var quotetext: TextView? = null
+    private var addtextdialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,23 +107,36 @@ class SetCardFrag : Fragment() {
         name = arguments?.getString("catName").toString()
         cat_addrs = "CreateCards/" + name
         createCardViewModel = ViewModelProvider(this)[CreateCardViewModel::class.java]
-        mainViewModel =
-            ViewModelProvider(
-                requireActivity(),
-                MyViewModelFactory(FirebaseHelper())
-            )[HomeViewModel::class.java]
-        mainViewModel.loadImagesStorage(name)
+        setupViewModel()
+        mainViewModel.loadImagesStorage(cat_addrs + "/cards")
+        quotetext = TextView(requireContext())
+        quotetext?.layoutParams = RelativeLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        quotetext?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5f)
+        quotetext?.gravity = (Gravity.BOTTOM)
         addbgDilog()
         createCardViewModel.colorList()
         createCardViewModel.fontList()
         createCardViewModel.gradientList()
-
-
+        b.addbgid.setOnClickListener(this)
+        b.addtextid.setOnClickListener(this)
+        b.quoteid.setOnClickListener(this)
+        b.fontsid.setOnClickListener(this)
+        b.textcolorid.setOnClickListener(this)
+        b.stickersid.setOnClickListener(this)
         return b.root
     }
 
-    private fun addbgDilog() {
+    private fun setupViewModel() {
+        val myViewModelFactory = MyViewModelFactory(FirebaseHelper())
+        mainViewModel =
+            ViewModelProvider(requireActivity(), myViewModelFactory)[HomeViewModel::class.java]
+        quoteViewModel = ViewModelProvider(this)[QuoteViewModel::class.java]
+    }
 
+    private fun addbgDilog() {
 
         addbgbinding = AddbgDiloglayoutBinding.inflate(layoutInflater)
         addbgdialog = Dialog(requireContext(), R.style.addbgWideDialog)
@@ -101,10 +152,21 @@ class SetCardFrag : Fragment() {
         }
 
         addbgbinding!!.galleryid.setOnClickListener {
-
+//            b.create.visibility = View.GONE
+            b.createimageview.setOnTouchListener(MultiTouchListener())
+            AppUtils.getpicGallery(requireActivity())
+            addbgdialog?.dismiss()
         }
 
         addbgbinding!!.cameraid.setOnClickListener {
+
+            val mListener = MultiTouchListener()
+            mListener.minimumScale = 0.1f
+            b.createimageview.setOnTouchListener(mListener)
+//            .setOnTouchListener(MultiTouchListener())
+
+            AppUtils.camshow(MainActivity.activity)
+            addbgdialog?.dismiss()
 
         }
 
@@ -114,9 +176,43 @@ class SetCardFrag : Fragment() {
         { resource ->
             createAdapter(resource)
         }
-
-
         addbgdialog?.show()
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            1 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if ((ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.CAMERA
+                        ) ==
+                                PackageManager.PERMISSION_GRANTED)
+                    ) {
+                        AppUtils.captercamera(requireActivity())
+                    }
+                }
+                return
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == GALLERY) {
+            b.createimageview.setImageURI(data?.data)
+        } else if (requestCode == CAMERA) {
+            val photo = data!!.extras!!["data"] as Bitmap?
+            // Set the image in imageview for display
+            b.createimageview.setImageBitmap(photo)
+        }
     }
 
     private fun createAdapter(resource: List<StorageReference>) {
@@ -127,13 +223,13 @@ class SetCardFrag : Fragment() {
         val adapter = AddbgCardAdapter(
             requireActivity(), resource, object : OnItemClickListener {
                 override fun onClick(position: Int) {
-                    val b = Bundle()
-                    AppUtils.changeFragmentWithPosition(
-                        findNavController(),
-                        R.id.action_nav_create_cards_list_to_nav_set_cards,
-                        requireActivity(),
-                        b
-                    )
+
+                    Glide.with(requireActivity()).load(resource[position])
+                        .centerCrop()
+                        .placeholder(R.drawable.loading_img)
+                        .into(b.createimageview)
+                    addbgdialog?.dismiss()
+
                 }
             })
         addbgbinding!!.addbgrecycleid.adapter = adapter
@@ -170,8 +266,8 @@ class SetCardFrag : Fragment() {
                                 pickDilog()
                                 addbgcolordialog?.dismiss()
                             } else {
-//                                binding.createimageview.setImageDrawable(null)
-//                                binding.createimageview.setBackgroundColor(bgcolorlist[position].color)
+//                                b.createimageview.setImageDrawable(null)
+//                                b.createimageview.setBackgroundColor(bgcolorlist[position].color)
                                 addbgcolordialog?.dismiss()
                             }
                         }
@@ -197,7 +293,7 @@ class SetCardFrag : Fragment() {
                         requireContext(),
                         object : OnItemClickListener {
                             override fun onClick(position: Int) {
-//                                binding.createimageview.setImageDrawable(null)
+//                                b.createimageview.setImageDrawable(null)
 
                                 if (position == 0) {
                                     gradentpickDilog()
@@ -212,7 +308,7 @@ class SetCardFrag : Fragment() {
                                     )
                                     gd.cornerRadius = 0f
 
-//                                    binding.createimageview.setBackgroundDrawable(gd)
+//                                    b.createimageview.setBackgroundDrawable(gd)
                                     addbgcolordialog?.dismiss()
 
                                 }
@@ -280,10 +376,10 @@ class SetCardFrag : Fragment() {
 
 
         done_btn.setOnClickListener {
-//            binding.createimageview.setImageResource(0)
-//            binding.cardrootlayout.setBackgroundResource(0)
-//            binding.create.visibility = View.GONE
-//            binding.createimageview.setBackgroundColor(envelope2!!.color)
+//            b.createimageview.setImageResource(0)
+//            b.cardrootlayout.setBackgroundResource(0)
+//            b.create.visibility = View.GONE
+//            b.createimageview.setBackgroundColor(envelope2!!.color)
             colorpickdialog?.dismiss()
         }
 
@@ -394,15 +490,368 @@ class SetCardFrag : Fragment() {
 
 
         gradbinding.gokid.setOnClickListener {
-//            binding.createimageview.setImageResource(0)
-//            binding.cardrootlayout.setBackgroundResource(0)
-//            binding.create.visibility = View.GONE
-//            binding.createimageview.setBackgroundColor(env!!.color)
+//            b.createimageview.setImageResource(0)
+//            b.cardrootlayout.setBackgroundResource(0)
+//            b.create.visibility = View.GONE
+//            b.createimageview.setBackgroundColor(env!!.color)
             gradDialog?.dismiss()
         }
 
         gradDialog?.show()
     }
 
+    fun addTextDilog() {
+        addtextbinding = AddtextDialogLayBinding.inflate(layoutInflater)
+        addtextdialog = Dialog(requireContext(), R.style.WideDialog)
+        addtextdialog?.getWindow()?.getAttributes()?.windowAnimations = R.style.DialogTheme2
+
+        addtextdialog?.setCancelable(true)
+        addtextdialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
+        addtextbinding!!.cancelBtn.setOnClickListener {
+            addtextdialog?.dismiss()
+        }
+        addtextbinding!!.addokbtn.setOnClickListener {
+
+            dtextView?.text = addtextbinding!!.textid.text.toString()
+
+            addtextdialog?.dismiss()
+        }
+        addtextbinding!!.canclebtn2.setOnClickListener {
+            addtextdialog?.dismiss()
+        }
+
+        addtextdialog?.show()
+    }
+
+
+    override fun onClick(v: View?) {
+        when (v) {
+            b.addbgid -> {
+                addBgClick()
+            }
+
+            b.addtextid -> {
+                addTextClick()
+            }
+
+            b.quoteid -> {
+                quotesIDClick()
+            }
+
+            b.fontsid -> {
+                fontsIDClick()
+            }
+
+            b.textcolorid -> {
+                textColorClick()
+            }
+
+            b.stickersid -> {
+                b.toolbartitle.setText(R.string.stickers)
+
+                stickersDilog()
+                b.nextBtn.visibility = View.VISIBLE
+            }
+
+        }
+    }
+
+    fun addBgClick() {
+        b.toolbartitle.apply {
+            this.setText(R.string.add_bgtitle)
+
+        }
+        b.fontcolorlistlayout.visibility = View.GONE
+        addbgDilog()
+        b.nextBtn.visibility = View.VISIBLE
+
+        val mListener = MultiTouchListener()
+        mListener.minimumScale = 0.1f
+        b.createimageview.setOnTouchListener(mListener)
+    }
+
+    fun addTextClick() {
+        b.fontcolorlistlayout.visibility = View.GONE
+        b.create.visibility = View.GONE
+        b.toolbartitle.setText(R.string.add_text)
+        addTextDilog()
+
+        dtextView = TextView(requireContext())
+
+        dtextView?.layoutParams = RelativeLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+//            dtextView?.setTextSize(TypedValue.COMPLEX_UNIT_SP,13f)
+
+        dtextView?.gravity = (Gravity.CENTER)
+
+        val typeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.font11b)
+        dtextView?.setTypeface(typeface)
+        dtextView?.textSize = 40f
+
+        dtextView?.setOnTouchListener(MultiTouchListener())
+        b.cardrootlayout.apply {
+            this.addView(dtextView)
+        }
+    }
+
+    fun quotesIDClick() {
+        b.create.visibility = View.GONE
+        b.toolbartitle.setText(R.string.text_Quotes)
+
+        quotesListDilog()
+        b.nextBtn.visibility = View.VISIBLE
+    }
+
+    fun fontsIDClick() {
+        b.toolbartitle.setText(R.string.fonts)
+        b.fontcolorlistlayout.visibility = View.VISIBLE
+        b.fontcolorlistlayout.setBackgroundColor(Color.WHITE)
+
+
+
+        fontlist = "fontABCD"
+        val anim: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_ups)
+        b.fontcolorlistlayout.startAnimation(anim)
+        b.listfontcolorrecyclerview.apply {
+            createCardViewModel.fontlivedata.observe(
+                requireActivity(),
+                androidx.lifecycle.Observer { fontdatalist ->
+                    val fontsAdapter = FontsAdapter(
+                        fontdatalist,
+                        requireActivity(),
+                        object : OnItemClickListener {
+                            override fun onClick(position: Int) {
+                                val fontstyle = ResourcesCompat.getFont(
+                                    context,
+                                    fontdatalist[position].fontstyle!!
+                                )
+                                dtextView?.typeface = fontstyle
+                                quotetext?.typeface = fontstyle
+                            }
+                        })
+                    fontdatalist.shuffle()
+                    adapter = fontsAdapter
+
+                })
+
+        }
+    }
+
+    fun textColorClick() {
+        b.toolbartitle.setText(R.string.text_color)
+        b.fontcolorlistlayout.visibility = View.VISIBLE
+        b.fontcolorlistlayout.setBackgroundColor(Color.WHITE)
+
+//            b.fontcolorlistlayout.visibility = View.GONE
+        val anim2: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left)
+        b.fontcolorlistlayout.startAnimation(anim2)
+
+        b.listfontcolorrecyclerview.apply {
+            createCardViewModel.colorlivedata.observe(
+                requireActivity(),
+                androidx.lifecycle.Observer { fonttextcolor ->
+                    val textAdapter = TextChooseColorAdapter(
+                        fonttextcolor,
+                        requireContext(),
+                        object : OnItemClickListener {
+                            override fun onClick(position: Int) {
+                                if (position == 0) {
+                                    textPickDilog()
+                                } else {
+                                    dtextView?.setTextColor(fonttextcolor[position].color)
+                                    quotetext?.setTextColor(fonttextcolor[position].color)
+                                }
+                            }
+                        })
+                    adapter = textAdapter
+
+                })
+        }
+
+        b.nextBtn.visibility = View.VISIBLE
+    }
+
+
+    fun quotesListDilog() {
+
+        quotesbinding = QuoteslistdlayoutBinding.inflate(layoutInflater)
+        quotelistdialog = Dialog(requireContext(), R.style.WideDialog)
+        quotelistdialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        quotelistdialog?.setContentView(quotesbinding.root)
+        val lout = WindowManager.LayoutParams()
+        lout.copyFrom(quotelistdialog?.getWindow()?.getAttributes())
+        lout.width = WindowManager.LayoutParams.MATCH_PARENT
+        lout.height = WindowManager.LayoutParams.MATCH_PARENT
+        quotelistdialog?.setCancelable(true)
+        quotelistdialog?.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        quotelistdialog?.getWindow()?.setAttributes(lout)
+
+//        SmAdds.showNativeBannerAdd(requireActivity(), quotesbinding.bottomaddsccard)
+
+        quotesbinding.quotesbackid.setOnClickListener {
+            quotelistdialog?.dismiss()
+        }
+
+        quotesbinding.recyclerquote.apply {
+
+            quoteViewModel.getData(cat_addrs + "/quotes").observe(requireActivity()) { list ->
+
+
+                var quotesAdapter = QuotesAdapter(
+                    list,
+                    requireContext(),
+                    object : OnItemClickListener_Quotes {
+                        override fun onClick(position: Int) {
+
+                            quotetext?.text = list[position]
+                            val typeface: Typeface? =
+                                ResourcesCompat.getFont(requireContext(), R.font.font11b)
+                            quotetext?.setTypeface(typeface)
+                            quotetext?.textSize = 30f
+
+                            quotetext?.setOnTouchListener(MultiTouchListener())
+
+                            if (quotetext?.getParent() != null) {
+                                (quotetext?.getParent() as ViewGroup).removeView(quotetext)
+                            }
+                            b.cardrootlayout.addView(quotetext)
+                            quotelistdialog?.dismiss()
+
+                        }
+                    })
+                adapter = quotesAdapter
+                quotesbinding.quoteprocessid.progresbarid.visibility = View.GONE
+            }
+        }
+
+
+
+
+        quotelistdialog?.show()
+    }
+
+
+    fun textPickDilog() {
+        val colorpiclayout = layoutInflater.inflate(R.layout.colorpicklayout, null)
+        colorpickdialog = Dialog(requireContext(), R.style.WideDialog)
+        colorpickdialog?.setContentView(colorpiclayout)
+        colorpickdialog?.setCancelable(true)
+        colorpickdialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        colorpickdialog?.window?.setGravity(Gravity.CENTER_HORIZONTAL)
+
+        val cancelbtn: ImageView = colorpiclayout.findViewById(R.id.cancelbtnid)
+        val colorpickview: ColorPickerView = colorpiclayout.findViewById(R.id.colorPickerView)
+        val alphaSlidebar: AlphaSlideBar = colorpiclayout.findViewById(R.id.alphaSlideBar)
+        val brightnessslide: BrightnessSlideBar = colorpiclayout.findViewById(R.id.brightnessSlide)
+        aalphaTileview = colorpiclayout.findViewById(R.id.alphatileView)
+        val done_btn: TextView = colorpiclayout.findViewById(R.id.okid)
+        val percenTage: TextView = colorpiclayout.findViewById(R.id.percentage)
+        var seekbarid: SeekBar = colorpiclayout.findViewById(R.id.seekbar)
+
+        cancelbtn.setOnClickListener {
+            colorpickdialog?.dismiss()
+        }
+
+        val bubbleFlag = BubbleFlag(requireContext())
+        bubbleFlag.flagMode = FlagMode.ALWAYS
+        var envelope2: ColorEnvelope? = null
+        colorpickview.flagView = bubbleFlag
+        colorpickview.setColorListener(
+            ColorEnvelopeListener { envelope: ColorEnvelope, fromUser: Boolean ->
+                envelope2 = envelope
+
+                aalphaTileview?.setPaintColor(envelope.color)
+                Timber.d("color: %s", envelope.hexCode)
+//                        percenTage.text = setColorAlpha(100,"#" + envelope.hexCode)
+
+
+            })
+
+        colorpickview.attachAlphaSlider(alphaSlidebar)
+        colorpickview.attachBrightnessSlider(brightnessslide)
+        colorpickview.setLifecycleOwner(this)
+
+        done_btn.setOnClickListener {
+
+            b.create.visibility = View.GONE
+            dtextView?.setTextColor(envelope2!!.color)
+            quotetext?.setTextColor(envelope2!!.color)
+
+            colorpickdialog?.dismiss()
+        }
+
+        seekbarid.visibility = View.GONE
+        seekbarid.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+
+                percenTage.setText("" + progress + "%")
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+
+        })
+
+        colorpickdialog?.show()
+    }
+
+    fun stickersDilog() {
+        stickerBinding = StickerdiloglayoutBinding.inflate(layoutInflater)
+        stickerdialog = Dialog(requireContext(), R.style.addbgWideDialog)
+        stickerdialog?.setContentView(stickerBinding.root)
+        stickerdialog?.setCancelable(true)
+
+        stickerdialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        stickerdialog?.window?.setGravity(Gravity.BOTTOM)
+        stickerdialog?.getWindow()?.getAttributes()?.windowAnimations = R.style.DialogTheme4;
+
+
+//        SmAdds.showBannerAdd(this@CreateCardActivity, stickerBinding.bottomaddscstickerid)
+
+        mainViewModel.loadImagesStorage(cat_addrs + "/stickers")
+        stickerBinding.stickerrecycleid.apply {
+
+            mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
+            { resource ->
+//                createAdapter(resource)
+                val stickerAdpter =
+                    StickerAdpter(
+                        resource,
+                        requireActivity(),
+                        object : StickerOnItemClick {
+                            override fun onClick(view: View, position: Int) {
+                                stickerImageView = StickerImageView(requireContext())
+                                stickerImageView.imageBitmap = view?.drawToBitmap()
+                                b.cardrootlayout.addView(stickerImageView)
+                                stickerdialog?.dismiss()
+
+                            }
+                        })
+
+//                adapter =
+                stickerBinding.stickerrecycleid.adapter = stickerAdpter
+            }
+//            createCardViewModel.getALLSticker(cat_addrs + "/stickers").observe(
+//                requireActivity(),
+//                androidx.lifecycle.Observer { datalist ->
+//
+//
+//                    stickerBinding.backgroundpbarid.progresbarid.visibility = View.GONE
+//
+//
+//                })
+        }
+
+
+        stickerdialog?.show()
+    }
 
 }

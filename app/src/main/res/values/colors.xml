@@ -25,4 +25,6 @@
     <color name="quotes_bg">#FF99DB</color>
     <color name="cardbg">#E1EEF8</color>
     <color name="win_def_bg">#F5F9F5</color>
+    <color name="createCard_fontitembg">#FCDCF0</color>
+    <color name="createCard_fontitencolor">#FE4BB9</color>
 </resources>

@@ -15,4 +15,11 @@
     <files-path
         name="files"
         path="." />
+
+    <files-path name="ifiles"  path="./"/>
+    <external-path name="external_files" path="."/>
+    <files-path
+        name="camera_paths"
+        path="./"/>
+
 </paths>

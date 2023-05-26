@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.MainFragmentLayoutNewBinding
 import com.examp.allwishes.ui.activity.Holidays_List
+import com.examp.allwishes.ui.activity.MainActivity
 import com.examp.allwishes.ui.adapter.CreateCardsAdapter
 import com.examp.allwishes.ui.model.Root_HlNew
 import com.examp.allwishes.ui.util.AppUtils
@@ -53,6 +54,7 @@ class MainFragment : Fragment(), View.OnClickListener {
             CreateCardsAdapter(
                 requireActivity(), it, object : CreateCardsAdapter.RecyclerViewClickListener {
                     override fun onClick(view: View?, position: Int, catName: String?) {
+//                        startActivity(Intent(requireContext(), MainActivity::class.java))
                         val b = Bundle()
                         b.putString("catName", catName)
                         AppUtils.changeFragmentWithPosition(

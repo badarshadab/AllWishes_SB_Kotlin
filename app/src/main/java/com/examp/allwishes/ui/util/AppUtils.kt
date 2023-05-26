@@ -8,6 +8,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -16,6 +17,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.view.View
 import android.view.Window
 import android.view.animation.Animation
@@ -26,6 +28,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -51,6 +55,11 @@ object AppUtils {
     private const val FADE_DURATION = 700
     private val GALLERY: Int = 1
     private val CAMERA: Int = 2
+
+    private val PERMISSIONS_STORAGE = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 
     public fun openUrl(context: Context, url: String?) {
         try {
@@ -423,6 +432,50 @@ object AppUtils {
         intent.setType("image/*")
         intent.setAction(Intent.ACTION_GET_CONTENT)
         activity.startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY)
+    }
+
+    fun camshow(activity: Activity) {
+
+        if (ContextCompat.checkSelfPermission(
+                activity, Manifest.permission.ACCESS_FINE_LOCATION
+            ) !== PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    activity,
+                    Manifest.permission.CAMERA
+                )
+            ) {
+                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA), 1)
+            } else {
+                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA), 1)
+
+            }
+        }
+
+
+    }
+
+    fun captercamera(activity: Activity) {
+        val camera_intent =
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        // Start the activity with camera_intent, and request pic id
+        activity.startActivityForResult(camera_intent, CAMERA)
+    }
+
+
+    fun getBitmapFromView(view: View): Bitmap {
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(returnedBitmap)
+        val bgDrawable = view.background
+        if (bgDrawable != null) {
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas)
+        } else {
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE)
+        }
+        view.draw(canvas)
+        return returnedBitmap
     }
 
 }
