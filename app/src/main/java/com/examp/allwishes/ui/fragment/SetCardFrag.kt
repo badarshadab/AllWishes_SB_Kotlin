@@ -2,6 +2,7 @@ package com.examp.allwishes.ui.fragment
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -67,6 +68,8 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 import com.skydoves.colorpickerview.sliders.AlphaSlideBar
 import com.skydoves.colorpickerview.sliders.BrightnessSlideBar
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
 
 
 class SetCardFrag : Fragment(), View.OnClickListener {
@@ -126,6 +129,10 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         b.fontsid.setOnClickListener(this)
         b.textcolorid.setOnClickListener(this)
         b.stickersid.setOnClickListener(this)
+        b.nextBtn.setOnClickListener {
+            nextBtnClick()
+        }
+
         return b.root
     }
 
@@ -147,8 +154,9 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         addbgdialog?.window?.setGravity(Gravity.BOTTOM)
 
         addbgbinding!!.colorid.setOnClickListener {
-            Toast.makeText(requireContext(), "clicked on ColorID", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), "clicked on ColorID", Toast.LENGTH_SHORT).show()
             colorDilog()
+            addbgdialog?.dismiss()
         }
 
         addbgbinding!!.galleryid.setOnClickListener {
@@ -195,7 +203,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                         ) ==
                                 PackageManager.PERMISSION_GRANTED)
                     ) {
-                        AppUtils.captercamera(requireActivity())
+                        AppUtils.captercamera(MainActivity.activity)
                     }
                 }
                 return
@@ -266,8 +274,8 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                                 pickDilog()
                                 addbgcolordialog?.dismiss()
                             } else {
-//                                b.createimageview.setImageDrawable(null)
-//                                b.createimageview.setBackgroundColor(bgcolorlist[position].color)
+                                b.createimageview.setImageDrawable(null)
+                                b.createimageview.setBackgroundColor(bgcolorlist[position].color)
                                 addbgcolordialog?.dismiss()
                             }
                         }
@@ -293,7 +301,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                         requireContext(),
                         object : OnItemClickListener {
                             override fun onClick(position: Int) {
-//                                b.createimageview.setImageDrawable(null)
+                                b.createimageview.setImageDrawable(null)
 
                                 if (position == 0) {
                                     gradentpickDilog()
@@ -308,12 +316,10 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                                     )
                                     gd.cornerRadius = 0f
 
-//                                    b.createimageview.setBackgroundDrawable(gd)
+                                    b.createimageview.setBackgroundDrawable(gd)
                                     addbgcolordialog?.dismiss()
 
                                 }
-
-
                             }
                         })
 
@@ -345,9 +351,6 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         var seekbarid: SeekBar = colorpiclayout.findViewById(R.id.seekbar)
 
 
-
-
-
         cancelbtn.setOnClickListener {
             colorpickdialog?.dismiss()
         }
@@ -370,10 +373,6 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         colorpickview.attachAlphaSlider(alphaSlidebar)
         colorpickview.attachBrightnessSlider(brightnessslide)
         colorpickview.setLifecycleOwner(this)
-
-
-
-
 
         done_btn.setOnClickListener {
 //            b.createimageview.setImageResource(0)
@@ -418,42 +417,6 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         gradbinding.cancelbtnid.setOnClickListener {
             gradDialog?.dismiss()
         }
-
-
-//        val bubbleFlag = BubbleFlag(this)
-//        bubbleFlag.flagMode = FlagMode.ALWAYS
-//        var envelopeGr1: ColorEnvelope? = null
-//        gradbinding.colorPickerViewgr1.flagView = bubbleFlag
-//
-//        gradbinding.colorPickerViewgr1.setColorListener(
-//            ColorEnvelopeListener { envelope: ColorEnvelope, fromUser: Boolean ->
-//                envelopeGr1 = envelope
-//
-//                Timber.d("color: %s", envelope.hexCode)
-//                gradbinding.alphatileView?.setPaintColor(envelope.color)
-//
-//            })
-//
-//        gradbinding.colorPickerViewgr1.attachAlphaSlider(gradbinding.graalphaSlideBar)
-//        gradbinding.colorPickerViewgr1.setLifecycleOwner(this)
-
-
-//--2
-//        val bubbleFlag2 = BubbleFlag(this)
-//        bubbleFlag2.flagMode = FlagMode.ALWAYS
-//        var envelopeGr2: ColorEnvelope? = null
-//        gradbinding.colorPickerViewgr2.flagView = bubbleFlag2
-//        gradbinding.colorPickerViewgr2.setColorListener(
-//            ColorEnvelopeListener {envelope2: ColorEnvelope, fromUser: Boolean ->
-//                envelopeGr2 = envelope2
-//
-//                Timber.d("color: %s", envelope2.hexCode)
-//                gradbinding.alphatileView?.setPaintColor(envelope2.color)
-//
-//            })
-//        gradbinding.colorPickerViewgr2.attachAlphaSlider(gradbinding.graalphaSlideBar)
-//        gradbinding.colorPickerViewgr2.setLifecycleOwner(this)
-
 
         val pk = BubbleFlag(requireContext())
         pk.flagMode = FlagMode.ALWAYS
@@ -505,6 +468,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         addtextdialog = Dialog(requireContext(), R.style.WideDialog)
         addtextdialog?.getWindow()?.getAttributes()?.windowAnimations = R.style.DialogTheme2
 
+        addtextdialog?.setContentView(addtextbinding!!.root)
         addtextdialog?.setCancelable(true)
         addtextdialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -584,7 +548,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
-//            dtextView?.setTextSize(TypedValue.COMPLEX_UNIT_SP,13f)
+            dtextView?.setTextSize(TypedValue.COMPLEX_UNIT_SP,13f)
 
         dtextView?.gravity = (Gravity.CENTER)
 
@@ -853,5 +817,33 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
         stickerdialog?.show()
     }
+
+    fun saveBitmap(bitmap: Bitmap): String? {
+        var fileName: String? = "ImageName" //no .png or .jpg needed
+        try {
+            val bytes = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+            val fo: FileOutputStream = requireContext().openFileOutput(fileName, Context.MODE_PRIVATE)
+            fo.write(bytes.toByteArray())
+            // remember close file output
+            fo.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            fileName = null
+        }
+        return fileName
+    }
+
+    fun nextBtnClick(){
+        var viewdata = AppUtils.getBitmapFromView(b.cardsharesaveid)
+        val bun = Bundle()
+        bun.putString("bitimgkey", saveBitmap(viewdata))
+//                var intent = Intent(requireContext(), CardpreviewActivity::class.java)
+//                intent.putExtra("bitimgkey", saveBitmap(viewdata))
+//                startActivity(intent)
+        AppUtils.changeFragment(requireActivity() , R.id.nav_card_preview , bun)
+    }
+
+
 
 }

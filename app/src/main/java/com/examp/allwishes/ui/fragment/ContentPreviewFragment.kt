@@ -8,9 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.examp.allwishes.R
 import com.examp.allwishes.databinding.FragmentContentPreviewBinding
+import com.examp.allwishes.ui.adapter.AddbgCardAdapter
+import com.examp.allwishes.ui.adapter.ContentPreviewAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
 import com.examp.allwishes.ui.util.AppUtils
+import com.examp.allwishes.ui.util.OnItemClickListener
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
@@ -41,6 +46,7 @@ class ContentPreviewFragment : Fragment() {
         index = arguments?.getInt("position", 0)
         println("arguments?.getInt(pos) " + index)
         setupViewModel()
+        mainViewModel.loadImagesStorage(category + "/" + type)
         setupObservers(category)
 //        AdUtils.showNativeBanner(
 //            Holidays_List.activity,
@@ -67,40 +73,65 @@ class ContentPreviewFragment : Fragment() {
 
     private fun setupObservers(categoryName: String) {
 
-//        mainViewModel.loadImagesStorage(categoryName + "/" + type)
-//            .observe(requireActivity(), Observer { it ->
-//                it.let { resource ->
-//                    when (resource.status) {
-//                        Status.SUCCESS -> {
-////                            listtoShare = it
-//                            println("setupObservers Status.SUCCESS" + resource.data)
-//                            this.list = resource.data
-//                            val adapter = list?.let {
-//                                ContentPreviewAdapter(
-//                                    requireActivity(),
-//                                    it,
-//                                    type
-//                                )
-//                            }
-//                            println("the value of index ")
-//                            b.vp.adapter = adapter
-//                            index?.let {
-//                                b.vp.postDelayed({
-//                                    println("the value of index " + index)
-//                                    b.vp.setCurrentItem(it, true)
-//                                }, 100)
-//                            }
-//                        }
-//                        Status.ERROR -> {
-//                            println("setupObservers Status.ERROR" + resource.data)
-//                        }
-//                        Status.LOADING -> {
-//                            println("setupObservers Status.LOADING" + resource.data)
-//                        }
-//                    }
-//                }
-//            })
+        mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()){ resource ->
+            val adapter = ContentPreviewAdapter(
+                requireActivity(), resource , type)
+            b.vp.adapter = adapter
+            b.vp.setCurrentItem(resource[index]., true)
+        }
+
+        mainViewModel.loadImagesStorage(categoryName + "/" + type)
+            .observe(requireActivity(), Observer { it ->
+                it.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+//                            listtoShare = it
+                            println("setupObservers Status.SUCCESS" + resource.data)
+                            this.list = resource.data
+                            val adapter = list?.let {
+                                ContentPreviewAdapter(
+                                    requireActivity(),
+                                    it,
+                                    type
+                                )
+                            }
+                            println("the value of index ")
+                            b.vp.adapter = adapter
+                            index?.let {
+                                b.vp.postDelayed({
+                                    println("the value of index " + index)
+                                    b.vp.setCurrentItem(it, true)
+                                }, 100)
+                            }
+                        }
+                        Status.ERROR -> {
+                            println("setupObservers Status.ERROR" + resource.data)
+                        }
+                        Status.LOADING -> {
+                            println("setupObservers Status.LOADING" + resource.data)
+                        }
+                    }
+                }
+            })
 
 
+    }
+    private fun createAdapter(resource: List<StorageReference>) {
+
+
+        val adapter = ContentPreviewAdapter(
+            requireActivity(), resource, object : OnItemClickListener {
+                override fun onClick(position: Int) {
+                    val b = Bundle()
+                    AppUtils.changeFragmentWithPosition(
+                        findNavController(),
+                        R.id.action_nav_create_cards_list_to_nav_set_cards,
+                        requireActivity(),
+                        b
+                    )
+                }
+            })
+        b.addbgrecycleid.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 }

@@ -41,4 +41,5 @@
     <string name="myquotes">"Enter Text Here..."</string>
     <string name="ab">AB</string>
     <string name="choose_stic">Choose Stickers </string>
+    <string name="save">Save</string>
 </resources>

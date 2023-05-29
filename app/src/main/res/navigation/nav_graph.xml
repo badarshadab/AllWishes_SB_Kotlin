@@ -89,7 +89,11 @@
         android:id="@+id/daily_catFrag"
         android:name="com.examp.allwishes.ui.fragment.DailyWishes_CategoryFrag"
         android:label="daily_cat"
-        tools:layout="@layout/daily_wishes_category_activity"/>
+        tools:layout="@layout/daily_wishes_category_activity">
+        <action
+            android:id="@+id/action_daily_catFrag_to_nav_daily_type"
+            app:destination="@id/nav_daily_type" />
+    </fragment>
 
 
         <fragment
@@ -103,7 +107,11 @@
         android:id="@+id/nav_daily_type"
         android:name="com.examp.allwishes.ui.fragment.DailyWishes_TypeFrag"
         android:label="daily_type"
-        tools:layout="@layout/dailywishes_type_lay"/>
+        tools:layout="@layout/dailywishes_type_lay">
+        <action
+            android:id="@+id/action_nav_daily_type_to_daily_catFrag"
+            app:destination="@id/daily_catFrag" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_content_list"
@@ -131,6 +139,20 @@
         android:id="@+id/nav_set_cards"
         android:name="com.examp.allwishes.ui.fragment.SetCardFrag"
         android:label="setcards"
-        tools:layout="@layout/activity_create"/>
+        tools:layout="@layout/activity_create">
+        <action
+            android:id="@+id/action_nav_set_cards_to_nav_card_preview"
+            app:destination="@id/nav_card_preview" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_card_preview"
+        android:name="com.examp.allwishes.ui.fragment.CardPreviewFragment"
+        android:label="card_preview"
+        tools:layout="@layout/activity_cardpreview">
+        <action
+            android:id="@+id/action_nav_card_preview_to_nav_set_cards"
+            app:destination="@id/nav_set_cards" />
+    </fragment>
 
 </navigation>

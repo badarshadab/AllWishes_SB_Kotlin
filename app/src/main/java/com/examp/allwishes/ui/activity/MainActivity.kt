@@ -1,5 +1,6 @@
 package com.examp.allwishes.ui.activity
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -86,6 +87,15 @@ class MainActivity : AppCompatActivity() {
 
         } else {
             super.onBackPressed()
+        }
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, imageData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, imageData)
+        for (fragment in supportFragmentManager.primaryNavigationFragment!!
+            .childFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, imageData)
         }
     }
 
