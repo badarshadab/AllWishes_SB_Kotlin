@@ -21,14 +21,14 @@ import kotlinx.coroutines.launch
 class HolidayFragment(val pos: Int, val title: String) : Fragment() {
 
     lateinit var _binding: FragmentHolidayBinding
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var mainViewModel: HolidayViewModel
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHolidayBinding.inflate(inflater, container, false)
         val view = binding.root
         activity?.setTitle("Holiday List")
@@ -49,7 +49,7 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
 
     private fun observEvents(title: String) {
         GlobalScope.launch {
-            mainViewModel.arrayListLiveData?.collect { model ->
+            mainViewModel.arrayListLiveData.collect { model ->
                 getMonthEvents(model, title)
             }
         }
@@ -81,7 +81,7 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
 
     private fun setDataInList(event: ArrayList<Event>?) {
         GlobalScope.launch(Dispatchers.Main) {
-            val adapter = HolidayAdapter(requireActivity(), event)
+            val adapter = HolidayAdapter(Holidays_List.activity, event)
             _binding.rv.adapter = adapter
             _binding.rv.layoutManager =
                 LinearLayoutManager(Holidays_List.activity, LinearLayoutManager.VERTICAL, false)

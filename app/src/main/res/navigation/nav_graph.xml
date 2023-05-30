@@ -34,6 +34,9 @@
         <action
             android:id="@+id/nav_home_to_nav_category"
             app:destination="@id/nav_theme_cat" />
+        <action
+            android:id="@+id/action_nav_home_to_holiday_list"
+            app:destination="@id/holiday_list" />
 
     </fragment>
     <fragment
@@ -45,6 +48,12 @@
         <action
             android:id="@+id/nav_home_to_nav_category"
             app:destination="@id/nav_theme_cat" />
+        <action
+            android:id="@+id/action_holiday_list_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_holiday_list_to_nav_cat_main"
+            app:destination="@id/nav_cat_main" />
 
     </fragment>
 
@@ -70,7 +79,11 @@
         android:id="@+id/nav_cat_main"
         android:name="com.examp.allwishes.ui.fragment.CategoryMainFragment"
         android:label="themeCatFragment"
-        tools:layout="@layout/categorymainfragment"/>
+        tools:layout="@layout/categorymainfragment">
+        <action
+            android:id="@+id/action_nav_cat_main_to_holiday_list"
+            app:destination="@id/holiday_list" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_contentPreview"

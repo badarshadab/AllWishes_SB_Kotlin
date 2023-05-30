@@ -382,6 +382,7 @@ object AppUtils {
                         b
                     )
                 } catch (e: Exception) {
+                    print("catch Exception   " + e)
 //                            AppUtils.getInstance().showToast(activity, "Something went wrong")
                 }
             }, dTime

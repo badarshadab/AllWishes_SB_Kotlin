@@ -30,11 +30,9 @@ class HolidayMainFragment : Fragment() {
 
     lateinit var tablayout: TabLayout
     lateinit var viewpager: ViewPager2
-    lateinit var shad: String
 
     private lateinit var mainViewModel: HolidayViewModel
 
-    private var arrayList: ArrayList<EventByMonth>? = null
     var month: String = ""
     val monthArray = arrayOf(
         "January", "February", "March", "April", "May", "June", "July",
@@ -81,9 +79,9 @@ class HolidayMainFragment : Fragment() {
         }
 
 
-        tablayout.setSelectedTabIndicatorColor(Color.parseColor("#1B7DE6"));
-        tablayout.setSelectedTabIndicatorHeight(((7 * getResources().getDisplayMetrics().density).toInt()));
-        tablayout.setTabTextColors(Color.parseColor("#A3A0A0"), Color.parseColor("#1B7DE6"));
+        tablayout.setSelectedTabIndicatorColor(Color.parseColor("#1B7DE6"))
+        tablayout.setSelectedTabIndicatorHeight(((7 * getResources().getDisplayMetrics().density).toInt()))
+        tablayout.setTabTextColors(Color.parseColor("#A3A0A0"), Color.parseColor("#1B7DE6"))
 
 
 
@@ -131,7 +129,7 @@ class HolidayMainFragment : Fragment() {
                         arraylistLocal
                     )
                     for (month in monthtablist) {
-                        println(" month " + month)
+//                        println(" month " + month)
                         TabLayoutMediator(tablayout, viewpager) { tab, position ->
                             tab.text = monthtablist.get(position)
                         }.attach()
@@ -144,39 +142,6 @@ class HolidayMainFragment : Fragment() {
         return month
     }
 
-    fun getSString(str: String, start: Int, end: Int): String {
-        val asubstring = str.substring(start, end)
-        return asubstring
-    }
-
-//    fun convertMonth(monthNo: Int): String {
-//        println("month in  convertMonth" + monthNo)
-//        var monthName: String
-//        monthName = when (monthNo) {
-//            1 -> "January"
-//            2 -> "February"
-//            3 -> "March"
-//            4 -> "April"
-//            5 -> "May"
-//            6 -> "June"
-//            7 -> "July"
-//            8 -> "August"
-//            9 -> "September"
-//            10 -> "October"
-//            11 -> "November"
-//            12 -> "December"
-//            else -> ""
-//        }
-//        return monthName
-//
-//
-//    }
-
-    fun setTab(tab: TabLayout, vp: ViewPager2) {
-        TabLayoutMediator(tab, vp) { tab, position ->
-            tab.text = monthArray[position]
-        }.attach()
-    }
 
 
 }

@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.ActivityHolidaysListBinding
 import com.examp.allwishes.ui.fragment.HolidayMainFragment
-import com.examp.allwishes.ui.util.AppUtils
 import com.google.firebase.storage.StorageReference
 
 class Holidays_List : AppCompatActivity() {
@@ -38,10 +37,10 @@ class Holidays_List : AppCompatActivity() {
 
 
     private fun openMainFragment(fragment: Fragment) {
-        val b = Bundle()
-        AppUtils.changeFragment(this , R.id.nav_home , b)
-//        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.replace(R.id.nav_host_fragment_content_main, fragment)
-//        transaction.commit()
+//        val b = Bundle()
+//        AppUtils.changeFragment(this , R.id.nav_home , b)
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment_holiday_list, fragment)
+        transaction.commit()
     }
 }

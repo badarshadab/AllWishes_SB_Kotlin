@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    android:background="@color/bg"
+    android:background="@color/cardbg"
     android:elevation="4dp"
     android:orientation="vertical">
 
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/card_bg"
         app:cardCornerRadius="3dp">
 
         <ImageView
