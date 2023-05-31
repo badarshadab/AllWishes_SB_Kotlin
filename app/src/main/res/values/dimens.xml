@@ -1,0 +1,18 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+ <dimen name="activity_horizontal_margin">16dp</dimen>
+ <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="all_wishes_textsize">12sp</dimen>
+    <dimen name="seealltextsize">14sp</dimen>
+
+
+    <dimen name="addbgtextsize">@dimen/_12ssp</dimen>
+    <dimen name="addbgdilogtitlesize">@dimen/_15ssp</dimen>
+    <dimen name="toolbartitlesize">@dimen/_16ssp</dimen>
+    <dimen name="searchbg">@dimen/_200sdp</dimen>
+    <dimen name="title_textSize">@dimen/_12ssp</dimen>
+    <dimen name="title_te">@dimen/_12ssp</dimen>
+
+
+
+</resources>
