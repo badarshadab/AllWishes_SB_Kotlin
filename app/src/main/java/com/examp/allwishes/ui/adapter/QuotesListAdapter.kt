@@ -1,14 +1,12 @@
 package com.examp.allwishes.ui.adapter
 
 import android.app.Activity
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.examp.allwishes.databinding.QoutesListRowLayoutBinding
-import com.examp.allwishes.databinding.RecyclerGifImgRowBinding
-import com.examp.allwishes.ui.util.AppUtils
-import com.google.firebase.storage.StorageReference
 
 class QuotesListAdapter(
     val activity: Activity,
@@ -32,11 +30,18 @@ class QuotesListAdapter(
     }
 
     override fun onBindViewHolder(holder: ContentPreviewHolder, position: Int) {
-        holder.b.quotesText.text = list.get(position).toString()
 
-        holder.b.quotesText.setOnClickListener(object : View.OnClickListener{
+
+        if (position % 2 == 0) {
+            holder.b.card.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+        } else {
+            holder.b.card.setCardBackgroundColor(Color.parseColor("#FFFAF8FD"));
+        }
+
+        holder.b.quotesText.text = list.get(position).toString()
+        holder.b.quotesText.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                mListener?.onClick(v , position )
+                mListener?.onClick(v, position)
             }
 
         })
@@ -62,6 +67,7 @@ class QuotesListAdapter(
 //            AppUtils.setImageWithRoundCorner(list.get(position), b.gifImgView, 20, 500)
         }
     }
+
     interface RecyclerViewClickListener {
         fun onClick(view: View?, position: Int)
     }

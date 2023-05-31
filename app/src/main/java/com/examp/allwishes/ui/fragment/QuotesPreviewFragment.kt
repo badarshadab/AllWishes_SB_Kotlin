@@ -40,7 +40,7 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
         val quoteViewModel =
             ViewModelProvider(requireActivity())[QuoteViewModel::class.java]
 
-        quoteViewModel.getData(name + "/Quotes").observe(requireActivity()) { list ->
+        quoteViewModel.getData(name + "/Quote").observe(requireActivity()) { list ->
             if (!list.isNullOrEmpty()) {
                 b.copy.setOnClickListener(this)
                 b.save.setOnClickListener(this)

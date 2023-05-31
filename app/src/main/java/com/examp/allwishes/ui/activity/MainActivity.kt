@@ -3,6 +3,7 @@ package com.examp.allwishes.ui.activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -97,6 +98,28 @@ class MainActivity : AppCompatActivity() {
             .childFragmentManager.fragments) {
             fragment.onActivityResult(requestCode, resultCode, imageData)
         }
+    }
+
+    fun shareApp(v: View) {
+        AppUtils.shareApp(this)
+    }
+
+    fun downloaded(v: View) {
+        val bun = Bundle()
+//                    bun.putString("name", str)
+//                    bun.putString("type", "Frame")
+        b.drawerLayout.close()
+        AppUtils.changeFragment(this, R.id.nav_saved_main, bun)
+//        AppUtils.getInstance().shareApp(this)
+    }
+
+
+    fun rateUs(v: View) {
+        AppUtils.rateUs(this)
+    }
+
+    fun pp(v: View) {
+        AppUtils.openUrl(this, getString(R.string.pp_url))
     }
 
 }

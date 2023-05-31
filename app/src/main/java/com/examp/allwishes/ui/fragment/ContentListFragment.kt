@@ -43,7 +43,7 @@ class ContentListFragment : Fragment() {
         nameType = "DailyWishes/" + name + "/" + type
         setupObservers(nameType)
 
-        if (type.equals("Quotes")) {
+        if (type.equals("Quote")) {
             b.rv.layoutManager = GridLayoutManager(requireContext(), 1)
 
         } else {
@@ -63,7 +63,7 @@ class ContentListFragment : Fragment() {
 
     private fun setupObservers(categoryName: String) {
         mainViewModel.loadImagesStorage(categoryName)
-        if (type.equals("Quotes")) {
+        if (type.equals("Quote")) {
             quotesViewModel.getData(categoryName).observe(requireActivity()) { list ->
                 if (list != null) {
                     b.pb.visibility = View.GONE

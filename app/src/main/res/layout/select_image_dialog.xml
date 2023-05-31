@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:src="@drawable/gallery" />
+            android:src="@drawable/ic_gallery_new" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -35,6 +35,6 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:src="@drawable/photos" />
+            android:src="@drawable/ic_camera_new" />
     </androidx.cardview.widget.CardView>
 </LinearLayout>
