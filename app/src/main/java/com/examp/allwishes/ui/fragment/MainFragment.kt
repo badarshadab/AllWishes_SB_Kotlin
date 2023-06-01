@@ -1,6 +1,5 @@
 package com.examp.allwishes.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.MainFragmentLayoutNewBinding
-import com.examp.allwishes.ui.activity.Holidays_List
-import com.examp.allwishes.ui.activity.MainActivity
 import com.examp.allwishes.ui.adapter.CreateCardsAdapter
 import com.examp.allwishes.ui.model.Root_HlNew
 import com.examp.allwishes.ui.util.AppUtils
@@ -58,12 +55,17 @@ class MainFragment : Fragment(), View.OnClickListener {
                         val b = Bundle()
                         b.putString("catName", catName)
                         AppUtils.changeFragmentWithPosition(
-                            findNavController(),R.id.action_nav_main_to_nav_set_cards , requireActivity() , b)
+                            findNavController(),
+                            R.id.action_nav_main_to_nav_set_cards,
+                            requireActivity(),
+                            b
+                        )
 //                        AppUtils.changeFragment(requireActivity(), R.id.action_nav_main_to_nav_create_cards_list, b)
                     }
                 })
         }
     }
+
 
     override fun onClick(v: View?) {
         when (v) {
@@ -78,11 +80,13 @@ class MainFragment : Fragment(), View.OnClickListener {
             }
 
             b.holidayBtn -> {
-                val inten1 = Intent(requireContext(), Holidays_List::class.java)
-                startActivity(inten1)
+//                val inten1 = Intent(requireContext(), Holidays_List::class.java)
+//                startActivity(inten1)
+                val b = Bundle()
+                AppUtils.changeFragment(requireActivity(), R.id.nav_home, b)
             }
 
-            b.viewAll->{
+            b.viewAll -> {
                 val b = Bundle()
                 AppUtils.changeFragment(requireActivity(), R.id.nav_view_create_cards, b)
             }

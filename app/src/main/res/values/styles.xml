@@ -23,6 +23,7 @@
 
     <style name="ToolTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorControlNormal">@color/toolbar_text_colo</item>
+        <item name="fontFamily">@font/qumpellkano</item>
     </style>
 
     <style name="Download_Theme_Dialog" parent="ThemeOverlay.AppCompat.Light">

@@ -1,17 +1,16 @@
 package com.examp.allwishes.ui.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.examp.allwishes.databinding.FragmentContentPreviewBinding
 import com.examp.allwishes.ui.adapter.ContentPreviewAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
-import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
@@ -22,14 +21,17 @@ class ContentPreviewFragment : Fragment() {
 
     private var type: String = ""
     private var category: String = ""
-    private var list: List<StorageReference>? = null
-    var saveType: String = ""
     var index: Int? = 0
     private lateinit var mainViewModel: HomeViewModel
 
-    lateinit var listtoShare: List<StorageReference>
-    lateinit var toolbar: Toolbar
 
+    lateinit var activity: Activity
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as Activity
+//        https://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
+//        Fragment ContentPreviewFragment{fb22d83} (743b8906-1fa7-4828-8024-cc60ff8aac63) not attached to an activity.
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,18 +47,9 @@ class ContentPreviewFragment : Fragment() {
         mainViewModel.loadImagesStorage(category + "/" + type)
         setupObservers()
 //        AdUtils.showNativeBanner(
-//            Holidays_List.activity,
+//            requireActivity(),
 //            b.nativeAdContainer
 //        )
-
-        toolbar = b.toolbar.toolbar
-
-        AppUtils.setUpToolbar(
-            requireActivity() as AppCompatActivity,
-            toolbar,
-            type + " Preview",
-            true
-        )
 
         return b.root
     }
@@ -64,37 +57,24 @@ class ContentPreviewFragment : Fragment() {
     private fun setupViewModel() {
         val myViewModelFactory = MyViewModelFactory(FirebaseHelper())
         mainViewModel =
-            ViewModelProvider(requireActivity(), myViewModelFactory)[HomeViewModel::class.java]
+            ViewModelProvider(this, myViewModelFactory)[HomeViewModel::class.java]
     }
 
     private fun setupObservers() {
 
         mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()) { resource ->
-            val adapter = ContentPreviewAdapter(
-                requireActivity(), resource, type
-            )
-            b.vp.adapter = adapter
-            b.vp.setCurrentItem(index!!, true)
+            setAdapter(resource)
         }
 
 
     }
-//    private fun createAdapter(resource: List<StorageReference>) {
-//
-//
-//        val adapter = ContentPreviewAdapter(
-//            requireActivity(), resource, object : OnItemClickListener {
-//                override fun onClick(position: Int) {
-//                    val b = Bundle()
-//                    AppUtils.changeFragmentWithPosition(
-//                        findNavController(),
-//                        R.id.action_nav_create_cards_list_to_nav_set_cards,
-//                        requireActivity(),
-//                        b
-//                    )
-//                }
-//            })
-//        b.addbgrecycleid.adapter = adapter
-//        adapter.notifyDataSetChanged()
-//    }
+
+    private fun setAdapter(resource: List<StorageReference>) {
+        val adapter = ContentPreviewAdapter(
+            activity, resource, type
+        )
+        b.vp.adapter = adapter
+        b.vp.setCurrentItem(index!!, true)
+    }
+
 }

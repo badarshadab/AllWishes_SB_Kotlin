@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.examp.allwishes.databinding.SavedmainfragmentBinding
 import com.examp.allwishes.ui.adapter.SavedViewpagerAdapter
-import com.examp.allwishes.ui.util.AppUtils
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -21,7 +18,6 @@ class SavedMainFragment : Fragment() {
 
     lateinit var tablayout: TabLayout
     lateinit var viewpager: ViewPager2
-    lateinit var toolbar: Toolbar
     lateinit var typeArray: Array<String>
     private var clickedType: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,29 +35,19 @@ class SavedMainFragment : Fragment() {
         tablayout = _binding.tl
         clickedType = arguments?.getString("from").toString()
 
-        if(clickedType.equals("daily")){
+        if (clickedType.equals("daily")) {
             typeArray = arrayOf(
                 "Gifs", "Cards", "Quotes"
             )
-        }
-        else{
+        } else {
             typeArray = arrayOf(
                 "Gifs", "Frames", "Cards", "Quotes"
             )
         }
 
-
-
-        toolbar = _binding.toolbar.toolbar
-        AppUtils.setUpToolbar(
-            requireActivity() as AppCompatActivity,
-            toolbar,
-            "Saved List",
-            true
-        )
 //        println("in oncreate of Holday_list")
 //        AdUtils.showNativeBanner(
-//            Holidays_List.activity,
+//            requireActivity(),
 //            _binding.nativeAdContainer.nativeAdContainer
 //        )
         viewpager.adapter = SavedViewpagerAdapter(

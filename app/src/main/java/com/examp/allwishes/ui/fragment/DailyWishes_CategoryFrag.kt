@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.DailyWishesCategoryActivityBinding
-import com.examp.allwishes.ui.activity.MainActivity
 import com.examp.allwishes.ui.adapter.BannerAdapter
 import com.examp.allwishes.ui.model.DailyWishe
 import com.examp.allwishes.ui.util.AppUtils
@@ -30,8 +29,8 @@ class DailyWishes_CategoryFrag : Fragment() {
 
         b.cateRecycler.layoutManager =
             GridLayoutManager(requireContext(), 1)
-        b.toolbar.tooText.text = "Daily Wishes"
-        AppUtils.setUpToolbar(MainActivity.activity , b.toolbar.toolbar , "Daily Wishes" , true)
+//        b.toolbar.tooText.text = "Daily Wishes"
+//        AppUtils.setupToolbar(MainActivity.activity , b.toolbar.toolbar , "Daily Wishes" , true)
 
         mainViewModel.repositoryResponseLiveData.observe(requireActivity()) { model ->
             model?.dailyWishes?.let { createAdapter(it) }

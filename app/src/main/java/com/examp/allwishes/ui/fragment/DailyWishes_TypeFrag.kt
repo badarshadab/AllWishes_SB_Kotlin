@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.DailywishesTypeLayBinding
@@ -34,20 +34,28 @@ class DailyWishes_TypeFrag : Fragment(), View.OnClickListener {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Shadab"
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun onClick(v: View?) {
 
         when (v) {
             b.typeBtns.gifBtn -> {
                 move("Gif")
             }
+
             b.typeBtns.imgBtn ->
                 move("Card")
+
             b.typeBtns.quotes ->
                 move("Quote")
         }
 
     }
-    fun move(type : String){
+
+    fun move(type: String) {
         val b = Bundle()
         b.putString("catName", catName)
         b.putString("type", type)

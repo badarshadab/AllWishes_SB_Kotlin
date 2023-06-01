@@ -1,6 +1,5 @@
 package com.examp.allwishes.ui.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.ktx.Firebase
@@ -10,13 +9,13 @@ import java.io.File
 
 class QuoteViewModel : ViewModel() {
 
-    private var quotes = MutableLiveData<List<String>>()
+    var quotes = MutableLiveData<List<String>>()
 
-    fun getData(catName: String): LiveData<List<String>> {
-        getQuotes(catName)
-        println("folder name is  " + catName)
-        return quotes
-    }
+//    fun getData(catName: String): LiveData<List<String>> {
+//        getQuotes(catName)
+////        println("folder name is  " + catName)
+//        return quotes
+//    }
 
     fun getQuotes(catName: String) {
 

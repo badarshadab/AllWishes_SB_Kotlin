@@ -1,6 +1,7 @@
 package com.examp.allwishes.ui.fragment
 
 import android.Manifest
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -24,11 +25,11 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -48,6 +49,7 @@ import com.examp.allwishes.ui.adapter.QuotesAdapter
 import com.examp.allwishes.ui.adapter.StickerAdpter
 import com.examp.allwishes.ui.adapter.TextChooseColorAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
+import com.examp.allwishes.ui.model.ColorModel
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.util.MultiTouchListener
 import com.examp.allwishes.ui.util.OnItemClickListener
@@ -100,6 +102,14 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     var fontlist: String = ""
     var quotetext: TextView? = null
     private var addtextdialog: Dialog? = null
+
+    lateinit var activity: Activity
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as Activity
+//        https://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
+//        Fragment ContentPreviewFragment{fb22d83} (743b8906-1fa7-4828-8024-cc60ff8aac63) not attached to an activity.
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -227,21 +237,25 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         if (resource.size > 0) {
             addbgbinding!!.bgprogressbarid.progresbarid.visibility = View.GONE
         }
+        if (isAdded) {
+            val activity = requireActivity()
+            activity?.let {
+                val adapter = AddbgCardAdapter(
+                    activity = activity, resource, object : OnItemClickListener {
+                        override fun onClick(position: Int) {
 
-        val adapter = AddbgCardAdapter(
-            requireActivity(), resource, object : OnItemClickListener {
-                override fun onClick(position: Int) {
+                            Glide.with(requireContext()).load(resource[position])
+                                .centerCrop()
+                                .placeholder(R.drawable.loading_img)
+                                .into(b.createimageview)
+                            addbgdialog?.dismiss()
 
-                    Glide.with(requireActivity()).load(resource[position])
-                        .centerCrop()
-                        .placeholder(R.drawable.loading_img)
-                        .into(b.createimageview)
-                    addbgdialog?.dismiss()
-
-                }
-            })
-        addbgbinding!!.addbgrecycleid.adapter = adapter
-        adapter.notifyDataSetChanged()
+                        }
+                    })
+                addbgbinding!!.addbgrecycleid.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
     fun colorDilog() {
@@ -548,7 +562,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
-            dtextView?.setTextSize(TypedValue.COMPLEX_UNIT_SP,13f)
+        dtextView?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
 
         dtextView?.gravity = (Gravity.CENTER)
 
@@ -574,8 +588,6 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         b.toolbartitle.setText(R.string.fonts)
         b.fontcolorlistlayout.visibility = View.VISIBLE
         b.fontcolorlistlayout.setBackgroundColor(Color.WHITE)
-
-
 
         fontlist = "fontABCD"
         val anim: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_ups)
@@ -614,31 +626,40 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         val anim2: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left)
         b.fontcolorlistlayout.startAnimation(anim2)
 
-        b.listfontcolorrecyclerview.apply {
-            createCardViewModel.colorlivedata.observe(
-                requireActivity(),
-                androidx.lifecycle.Observer { fonttextcolor ->
-                    val textAdapter = TextChooseColorAdapter(
-                        fonttextcolor,
-                        requireContext(),
-                        object : OnItemClickListener {
-                            override fun onClick(position: Int) {
-                                if (position == 0) {
-                                    textPickDilog()
-                                } else {
-                                    dtextView?.setTextColor(fonttextcolor[position].color)
-                                    quotetext?.setTextColor(fonttextcolor[position].color)
-                                }
-                            }
-                        })
-                    adapter = textAdapter
+        createCardViewModel.colorlivedata.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { fonttextcolor ->
 
-                })
-        }
+            })
 
-        b.nextBtn.visibility = View.VISIBLE
+
+                createCardViewModel.colorlivedata.observe(
+                    requireActivity(),
+                    androidx.lifecycle.Observer { fonttextcolor ->
+                        setFontColorAdapter(fonttextcolor)
+
+                    })
+
+
+                    b . nextBtn . visibility = View . VISIBLE
     }
 
+    fun setFontColorAdapter(fonttextcolor : ArrayList<ColorModel>){
+        val textAdapter = TextChooseColorAdapter(
+            fonttextcolor,
+            requireContext(),
+            object : OnItemClickListener {
+                override fun onClick(position: Int) {
+                    if (position == 0) {
+                        textPickDilog()
+                    } else {
+                        dtextView?.setTextColor(fonttextcolor[position].color)
+                        quotetext?.setTextColor(fonttextcolor[position].color)
+                    }
+                }
+            })
+        b.listfontcolorrecyclerview.adapter = textAdapter
+    }
 
     fun quotesListDilog() {
 
@@ -660,39 +681,11 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             quotelistdialog?.dismiss()
         }
 
-        quotesbinding.recyclerquote.apply {
 
-            quoteViewModel.getData(cat_addrs + "/quotes").observe(requireActivity()) { list ->
-
-
-                var quotesAdapter = QuotesAdapter(
-                    list,
-                    requireContext(),
-                    object : OnItemClickListener_Quotes {
-                        override fun onClick(position: Int) {
-
-                            quotetext?.text = list[position]
-                            val typeface: Typeface? =
-                                ResourcesCompat.getFont(requireContext(), R.font.font11b)
-                            quotetext?.setTypeface(typeface)
-                            quotetext?.textSize = 30f
-
-                            quotetext?.setOnTouchListener(MultiTouchListener())
-
-                            if (quotetext?.getParent() != null) {
-                                (quotetext?.getParent() as ViewGroup).removeView(quotetext)
-                            }
-                            b.cardrootlayout.addView(quotetext)
-                            quotelistdialog?.dismiss()
-
-                        }
-                    })
-                adapter = quotesAdapter
-                quotesbinding.quoteprocessid.progresbarid.visibility = View.GONE
+            quoteViewModel.getQuotes(cat_addrs + "/quotes")
+            quoteViewModel.quotes.observe(requireActivity()) { list ->
+                setQuotesAdapter(list)
             }
-        }
-
-
 
 
         quotelistdialog?.show()
@@ -785,37 +778,57 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
             mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
             { resource ->
-//                createAdapter(resource)
-                val stickerAdpter =
-                    StickerAdpter(
-                        resource,
-                        requireActivity(),
-                        object : StickerOnItemClick {
-                            override fun onClick(view: View, position: Int) {
-                                stickerImageView = StickerImageView(requireContext())
-                                stickerImageView.imageBitmap = view?.drawToBitmap()
-                                b.cardrootlayout.addView(stickerImageView)
-                                stickerdialog?.dismiss()
-
-                            }
-                        })
-
-//                adapter =
-                stickerBinding.stickerrecycleid.adapter = stickerAdpter
+                setStickersAdapter(resource)
             }
-//            createCardViewModel.getALLSticker(cat_addrs + "/stickers").observe(
-//                requireActivity(),
-//                androidx.lifecycle.Observer { datalist ->
-//
-//
-//                    stickerBinding.backgroundpbarid.progresbarid.visibility = View.GONE
-//
-//
-//                })
         }
 
 
         stickerdialog?.show()
+    }
+
+    fun setStickersAdapter(resource: List<StorageReference>) {
+        val stickerAdpter =
+            StickerAdpter(
+                resource,
+                activity,
+                object : StickerOnItemClick {
+                    override fun onClick(view: View, position: Int) {
+                        stickerImageView = StickerImageView(requireContext())
+                        stickerImageView.imageBitmap = view?.drawToBitmap()
+                        b.cardrootlayout.addView(stickerImageView)
+                        stickerdialog?.dismiss()
+
+                    }
+                })
+
+        stickerBinding.stickerrecycleid.adapter = stickerAdpter
+    }
+
+    fun setQuotesAdapter(list: List<String>) {
+        var quotesAdapter = QuotesAdapter(
+            list,
+            requireContext(),
+            object : OnItemClickListener_Quotes {
+                override fun onClick(position: Int) {
+
+                    quotetext?.text = list[position]
+                    val typeface: Typeface? =
+                        ResourcesCompat.getFont(requireContext(), R.font.font11b)
+                    quotetext?.setTypeface(typeface)
+                    quotetext?.textSize = 30f
+
+                    quotetext?.setOnTouchListener(MultiTouchListener())
+
+                    if (quotetext?.getParent() != null) {
+                        (quotetext?.getParent() as ViewGroup).removeView(quotetext)
+                    }
+                    b.cardrootlayout.addView(quotetext)
+                    quotelistdialog?.dismiss()
+
+                }
+            })
+        quotesbinding.recyclerquote.adapter = quotesAdapter
+        quotesbinding.quoteprocessid.progresbarid.visibility = View.GONE
     }
 
     fun saveBitmap(bitmap: Bitmap): String? {
@@ -823,7 +836,8 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         try {
             val bytes = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-            val fo: FileOutputStream = requireContext().openFileOutput(fileName, Context.MODE_PRIVATE)
+            val fo: FileOutputStream =
+                requireContext().openFileOutput(fileName, Context.MODE_PRIVATE)
             fo.write(bytes.toByteArray())
             // remember close file output
             fo.close()
@@ -834,16 +848,15 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         return fileName
     }
 
-    fun nextBtnClick(){
+    fun nextBtnClick() {
         var viewdata = AppUtils.getBitmapFromView(b.cardsharesaveid)
         val bun = Bundle()
         bun.putString("bitimgkey", saveBitmap(viewdata))
 //                var intent = Intent(requireContext(), CardpreviewActivity::class.java)
 //                intent.putExtra("bitimgkey", saveBitmap(viewdata))
 //                startActivity(intent)
-        AppUtils.changeFragment(requireActivity() , R.id.nav_card_preview , bun)
+        AppUtils.changeFragment(requireActivity(), R.id.nav_card_preview, bun)
     }
-
 
 
 }

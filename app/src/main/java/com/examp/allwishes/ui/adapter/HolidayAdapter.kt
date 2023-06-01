@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.HolidayRowLayoutBinding
-import com.examp.allwishes.ui.activity.Holidays_List
 import com.examp.allwishes.ui.model.Event
 import com.examp.allwishes.ui.util.AppUtils
 
@@ -19,13 +18,14 @@ class HolidayAdapter(public val activity: Activity, val msgList: ArrayList<Event
 
     var layoutInflater: LayoutInflater? = null
 
-    class HolidayViewHolder(val b: HolidayRowLayoutBinding) : RecyclerView.ViewHolder(b.root) {
+    class HolidayViewHolder(val b: HolidayRowLayoutBinding, val activity: Activity) :
+        RecyclerView.ViewHolder(b.root) {
 
         fun ViewHolder(itemView: View) {
 
 
             val typeface = Typeface.createFromAsset(
-                Holidays_List.activity.getAssets(),
+                activity.getAssets(),
                 "fonts/ALEO-REGULAR.OTF"
             )
             b.quotesText.setTypeface(typeface)
@@ -38,7 +38,7 @@ class HolidayAdapter(public val activity: Activity, val msgList: ArrayList<Event
             layoutInflater = LayoutInflater.from(parent.context)
         }
         val b = HolidayRowLayoutBinding.inflate(layoutInflater!!, parent, false)
-        return HolidayViewHolder(b)
+        return HolidayViewHolder(b, activity)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.examp.allwishes.databinding.FragmentHolidayBinding
-import com.examp.allwishes.ui.activity.Holidays_List
 import com.examp.allwishes.ui.adapter.HolidayAdapter
 import com.examp.allwishes.ui.model.Event
 import com.examp.allwishes.ui.model.EventByMonth
@@ -81,10 +80,10 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
 
     private fun setDataInList(event: ArrayList<Event>?) {
         GlobalScope.launch(Dispatchers.Main) {
-            val adapter = HolidayAdapter(Holidays_List.activity, event)
+            val adapter = HolidayAdapter(requireActivity(), event)
             _binding.rv.adapter = adapter
             _binding.rv.layoutManager =
-                LinearLayoutManager(Holidays_List.activity, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }
 }

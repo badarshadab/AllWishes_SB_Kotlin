@@ -7,18 +7,14 @@
     android:background="@drawable/bg"
     tools:context=".ui.activity.Holidays_List">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/_5sdp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:tabBackground="@color/white"
         app:tabGravity="center"
         app:tabMode="scrollable" />

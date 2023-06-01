@@ -31,8 +31,11 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -136,9 +139,9 @@ object AppUtils {
         isHomeUp: Boolean
     ) {
         activity.setSupportActionBar(toolbar)
-        val titleTv = toolbar.findViewById<TextView>(R.id.tooText)
-        titleTv.text = title
-        titleTv.setTextColor(activity.getColor(R.color.toolbar_text_colo))
+//        val titleTv = toolbar.findViewById<TextView>(R.id.tooText)
+//        titleTv.text = title
+//        titleTv.setTextColor(activity.getColor(R.color.toolbar_text_colo))
         activity.supportActionBar!!.setDisplayShowTitleEnabled(false)
         activity.supportActionBar!!.setDisplayHomeAsUpEnabled(isHomeUp)
         activity.supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_back_new);
@@ -477,6 +480,18 @@ object AppUtils {
         }
         view.draw(canvas)
         return returnedBitmap
+    }
+
+    fun setupToolbar(view:Toolbar , activity: Activity , drawerLayout : DrawerLayout) {
+        view.setNavigationOnClickListener {
+            val navController = activity.findNavController(R.id.nav_host_fragment)
+            val destination = navController.currentDestination
+            if (destination?.id == R.id.nav_main){
+                drawerLayout.openDrawer(GravityCompat.START)
+            } else{
+                navController.popBackStack()
+            }
+        }
     }
 
 }

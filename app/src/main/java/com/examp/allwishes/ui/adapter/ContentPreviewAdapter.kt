@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.examp.allwishes.databinding.ContentPreviewRowBinding
-import com.examp.allwishes.ui.activity.Holidays_List
 import com.examp.allwishes.ui.util.AppUtils
 import com.google.firebase.storage.StorageReference
 import com.sm.allwishes.greetings.util.ShareUtils
@@ -35,19 +34,19 @@ class ContentPreviewAdapter(
     override fun onBindViewHolder(holder: ContentPreviewHolder, position: Int) {
         holder.setData(position)
 
-        holder.b.actionLay.download.setOnClickListener({
+        holder.b.actionLay.download.setOnClickListener {
             ShareUtils.saveItem(activity, list.get(position), type)
-        })
-        holder.b.actionLay.share.setOnClickListener({
+        }
+        holder.b.actionLay.share.setOnClickListener {
             ShareUtils.shareGIF(
                 activity, list.get(position)
             )
-        })
-        holder.b.actionLay.whatsapp.setOnClickListener({
+        }
+        holder.b.actionLay.whatsapp.setOnClickListener {
             ShareUtils.shareGIFOnWhatsApp(
                 activity, list.get(position)
             )
-        })
+        }
 //        val text = list[position].toString()
 //        holder.b.tv.setText(text)
     }

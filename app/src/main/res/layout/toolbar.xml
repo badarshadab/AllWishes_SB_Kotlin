@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="wrap_content"
     android:background="@color/transparent"
     android:theme="@style/ToolTheme"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" >
-
-    <TextView
-        android:id="@+id/tooText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="@string/app_name"
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:layout_marginRight="40dp"
-        android:textStyle="bold"
-        android:textColor="@color/toolbar_text_colo"/>
-
-</androidx.appcompat.widget.Toolbar>
+    app:navigationIcon="@drawable/ic_home"
+    app:title="Greeting Wishes"
+    app:titleCentered="true"
+    app:titleTextColor="@color/toolbar_text_colo" />

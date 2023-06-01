@@ -1,12 +1,13 @@
 package com.examp.allwishes.ui.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.examp.allwishes.R
@@ -14,13 +15,11 @@ import com.examp.allwishes.databinding.FragmentCategoryBinding
 import com.examp.allwishes.ui.activity.Holidays_List
 import com.examp.allwishes.ui.data.api.FirebaseHelper
 import com.examp.allwishes.ui.util.AppUtils
-import com.examp.allwishes.ui.util.Status
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.examp.allwishes.ui.viewmodel.QuoteViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.adapter.ImageAdapter
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
-import com.greetings.allwishes.util.AdUtils
 
 
 class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
@@ -32,6 +31,14 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
     private lateinit var quotesViewModel: QuoteViewModel
     private var list: List<StorageReference>? = null
     lateinit var toolbar: Toolbar
+
+    lateinit var activity: Activity
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as Activity
+//        https://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
+//        Fragment ContentPreviewFragment{fb22d83} (743b8906-1fa7-4828-8024-cc60ff8aac63) not attached to an activity.
+    }
 
 
     override fun onCreateView(
@@ -69,8 +76,9 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
     }
 
     private fun setupObservers(categoryName: String, cat: Int) {
+        mainViewModel.loadImagesStorage(categoryName)
         if (cat != 3) {
-            mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()){resource->
+            mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()) { resource ->
                 this.list = resource.asReversed()
                 setCatCards(this.list)
                 b.progressBar.visibility = View.GONE
@@ -95,7 +103,8 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
 //                    }
 //                })
         } else {
-            quotesViewModel.getData(categoryName).observe(requireActivity()) { list ->
+            quotesViewModel.getQuotes(categoryName)
+            quotesViewModel.quotes.observe(requireActivity()) { list ->
                 setCatCards(list)
                 b.progressBar.visibility = View.GONE
             }
@@ -119,9 +128,9 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
             activity?.let {
             }
             if (pos != 3) {
-                b.rv.layoutManager = GridLayoutManager(requireContext(), 3)
+                b.rv.layoutManager = GridLayoutManager(activity, 3)
             } else {
-                b.rv.layoutManager = GridLayoutManager(requireContext(), 1)
+                b.rv.layoutManager = GridLayoutManager(activity, 1)
             }
             b.rv.getCallerID("contentlist")
             if (type.isEmpty()) {

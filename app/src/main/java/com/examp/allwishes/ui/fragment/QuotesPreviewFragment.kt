@@ -10,11 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.FragmentQuotesPreviewBinding
-import com.examp.allwishes.ui.activity.Holidays_List
 import com.examp.allwishes.ui.adapter.QuotesPreviewAdapter
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.QuoteViewModel
-import com.greetings.allwishes.util.AdUtils
 import com.sm.allwishes.greetings.util.ShareUtils
 
 class QuotesPreviewFragment : Fragment(), View.OnClickListener {
@@ -39,8 +37,9 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
         b = FragmentQuotesPreviewBinding.inflate(inflater, container, false)
         val quoteViewModel =
             ViewModelProvider(requireActivity())[QuoteViewModel::class.java]
+        quoteViewModel.getQuotes(name + "/Quote")
+        quoteViewModel.quotes.observe(requireActivity()) { list ->
 
-        quoteViewModel.getData(name + "/Quote").observe(requireActivity()) { list ->
             if (!list.isNullOrEmpty()) {
                 b.copy.setOnClickListener(this)
                 b.save.setOnClickListener(this)
@@ -57,7 +56,7 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
 //            )
 
 //            AdUtils.showNativeBanner(
-//                Holidays_List.activity,
+//                requireActivity(),
 //                b.adContainer.nativeAdContainer
 //            )
 
@@ -78,18 +77,22 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
                     val adapter = b.vp.adapter as QuotesPreviewAdapter
                     adapter.getTextView(b.vp.currentItem)?.let { it1 -> shareImage(it1) }
                 }
+
                 R.id.save -> {
                     val adapter = b.vp.adapter as QuotesPreviewAdapter
                     adapter.getTextView(b.vp.currentItem)?.let { it1 -> saveImage(it1) }
                 }
+
                 R.id.copy -> {
                     val adapter = b.vp.adapter as QuotesPreviewAdapter
                     copyText(adapter.getItem(b.vp.currentItem))
                 }
+
                 R.id.shareText -> {
                     val adapter = b.vp.adapter as QuotesPreviewAdapter
                     shareText(adapter.getItem(b.vp.currentItem))
                 }
+
                 else -> {
 
                 }

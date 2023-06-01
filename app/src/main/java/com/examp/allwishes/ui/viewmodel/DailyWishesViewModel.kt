@@ -35,7 +35,7 @@ class DailyWishesViewModel : ViewModel() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    println("Anshu  Database from fiebase" + databaseError.message)
+                    println("Shadab  Database from fiebase" + databaseError.message)
                 }
             }
             database.addValueEventListener(postListener)

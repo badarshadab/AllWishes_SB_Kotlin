@@ -5,15 +5,11 @@
     android:background="@drawable/bg"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal" />
 
