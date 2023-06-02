@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import com.examp.allwishes.databinding.ActivityCardpreviewBinding
 import com.examp.allwishes.ui.util.AppUtils
@@ -37,7 +38,8 @@ class CardPreviewFragment : Fragment() {
         b.cardimgid.setImageBitmap(src)
 
         b.cardssaveBtn.setOnClickListener {
-            val bmp: Bitmap? = AppUtils.captureScreen(b.cardimgid)
+//            val bmp: Bitmap? = AppUtils.captureScreen(b.cardimgid)
+            val bmp: Bitmap? = b.cardimgid.drawToBitmap()
             val file = AppUtils.getFile(requireContext(), bmp)
             if (file != null) {
                 ShareUtils.saveItem(requireActivity(), file, "Cards")

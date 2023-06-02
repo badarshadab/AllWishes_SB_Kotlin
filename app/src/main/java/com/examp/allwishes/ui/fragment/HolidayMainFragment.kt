@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -35,6 +36,11 @@ class HolidayMainFragment : Fragment() {
         "January", "February", "March", "April", "May", "June", "July",
         "August", "September", "October", "November", "December"
     )
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Holidays List"
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,16 +103,11 @@ class HolidayMainFragment : Fragment() {
                 withContext(Dispatchers.Main)
                 {
 
-
                     monthtablist.add("All")
                     arraylistLocal.add("All")
 
                     for (event in arrayList) {
 
-//                        val monthName = event.date?.let { it1 -> getSString(it1, 3, 5) }
-//                        val date = Integer.parseInt(monthName)
-//                        month = convertMonth(date)
-//                        println("month in  getMonthName" + month)
                         month = event.monthName.toString()
 
                         monthtablist.add(month)
@@ -119,7 +120,6 @@ class HolidayMainFragment : Fragment() {
                         arraylistLocal
                     )
                     for (month in monthtablist) {
-//                        println(" month " + month)
                         TabLayoutMediator(tablayout, viewpager) { tab, position ->
                             tab.text = monthtablist.get(position)
                         }.attach()

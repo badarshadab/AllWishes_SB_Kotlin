@@ -7,7 +7,7 @@
 
 
     <dimen name="addbgtextsize">@dimen/_12ssp</dimen>
-    <dimen name="addbgdilogtitlesize">@dimen/_15ssp</dimen>
+    <dimen name="addbgdilogtitlesize">@dimen/_14ssp</dimen>
     <dimen name="toolbartitlesize">@dimen/_16ssp</dimen>
     <dimen name="searchbg">@dimen/_200sdp</dimen>
     <dimen name="title_textSize">@dimen/_12ssp</dimen>

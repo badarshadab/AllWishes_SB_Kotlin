@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
@@ -25,11 +26,13 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -40,7 +43,6 @@ import com.examp.allwishes.databinding.AddtextDialogLayBinding
 import com.examp.allwishes.databinding.GradentpicklayoutBinding
 import com.examp.allwishes.databinding.QuoteslistdlayoutBinding
 import com.examp.allwishes.databinding.StickerdiloglayoutBinding
-import com.examp.allwishes.ui.activity.MainActivity
 import com.examp.allwishes.ui.adapter.AddbgCardAdapter
 import com.examp.allwishes.ui.adapter.ChooseColorAdapter
 import com.examp.allwishes.ui.adapter.ChooseGradCloreAdapter
@@ -102,6 +104,17 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     var fontlist: String = ""
     var quotetext: TextView? = null
     private var addtextdialog: Dialog? = null
+    lateinit var imageUri: Uri
+
+    private val contract = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        b.createimageview.setImageURI(null)
+        b.createimageview.setImageURI(imageUri)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Create Cards"
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     lateinit var activity: Activity
     override fun onAttach(context: Context) {
@@ -127,9 +140,10 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
+        imageUri = AppUtils.createImageUri(requireContext())!!
         quotetext?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5f)
         quotetext?.gravity = (Gravity.BOTTOM)
-        addbgDilog()
+//        addbgDilog()
         createCardViewModel.colorList()
         createCardViewModel.fontList()
         createCardViewModel.gradientList()
@@ -181,14 +195,24 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             val mListener = MultiTouchListener()
             mListener.minimumScale = 0.1f
             b.createimageview.setOnTouchListener(mListener)
-//            .setOnTouchListener(MultiTouchListener())
+            AppUtils.checkCameraPermission(requireContext()) { it ->
+                if (it) {
+                    contract.launch(imageUri)
+                }
+            }
 
-            AppUtils.camshow(MainActivity.activity)
+//            if (AppUtils.checkPermissionFor33(requireContext(), activity)) {
+//                contract.launch(imageUri)
+//            } else {
+//                AppUtils.requestPermission(activity)
+//            }
+
+
             addbgdialog?.dismiss()
 
         }
-
-        addbgbinding!!.catname.setText(name)
+        addbgbinding!!.chooseBg.setText(name)
+//        addbgbinding!!.catname.setText(name)
 
         mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
         { resource ->
@@ -200,23 +224,18 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String>,
+        permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
         when (requestCode) {
-            1 -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if ((ContextCompat.checkSelfPermission(
-                            requireContext(),
-                            Manifest.permission.CAMERA
-                        ) ==
-                                PackageManager.PERMISSION_GRANTED)
-                    ) {
-                        AppUtils.captercamera(MainActivity.activity)
-                    }
+            AppUtils.RECORD_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    AppUtils.requestPermission(activity)
+                } else {
+                    contract.launch(imageUri)
                 }
-                return
             }
         }
     }
@@ -633,18 +652,18 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             })
 
 
-                createCardViewModel.colorlivedata.observe(
-                    requireActivity(),
-                    androidx.lifecycle.Observer { fonttextcolor ->
-                        setFontColorAdapter(fonttextcolor)
+        createCardViewModel.colorlivedata.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { fonttextcolor ->
+                setFontColorAdapter(fonttextcolor)
 
-                    })
+            })
 
 
-                    b . nextBtn . visibility = View . VISIBLE
+        b.nextBtn.visibility = View.VISIBLE
     }
 
-    fun setFontColorAdapter(fonttextcolor : ArrayList<ColorModel>){
+    fun setFontColorAdapter(fonttextcolor: ArrayList<ColorModel>) {
         val textAdapter = TextChooseColorAdapter(
             fonttextcolor,
             requireContext(),
@@ -682,10 +701,10 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         }
 
 
-            quoteViewModel.getQuotes(cat_addrs + "/quotes")
-            quoteViewModel.quotes.observe(requireActivity()) { list ->
-                setQuotesAdapter(list)
-            }
+        quoteViewModel.getQuotes(cat_addrs + "/quotes")
+        quoteViewModel.quotes.observe(requireActivity()) { list ->
+            setQuotesAdapter(list)
+        }
 
 
         quotelistdialog?.show()
@@ -858,5 +877,37 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         AppUtils.changeFragment(requireActivity(), R.id.nav_card_preview, bun)
     }
 
+
+    fun camshow() {
+        try {
+
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+                ) !== PackageManager.PERMISSION_GRANTED
+            ) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        activity,
+                        Manifest.permission.CAMERA
+                    )
+                ) {
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf(Manifest.permission.CAMERA),
+                        1
+                    )
+                } else {
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf(Manifest.permission.CAMERA),
+                        1
+                    )
+
+                }
+            }
+
+        } catch (e: java.lang.Exception) {
+            print("errror is " + e)
+        }
+    }
 
 }

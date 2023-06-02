@@ -31,13 +31,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.FragmentFrameEditBinding
 import com.examp.allwishes.databinding.SelectImageDialogBinding
-import com.examp.allwishes.ui.util.*
+import com.examp.allwishes.ui.util.AddImage
+import com.examp.allwishes.ui.util.AddText
+import com.examp.allwishes.ui.util.AppUtils
+import com.examp.allwishes.ui.util.BubbleTextView
+import com.examp.allwishes.ui.util.MultiTouchListener
+import com.examp.allwishes.ui.util.PicColor
+import com.examp.allwishes.ui.util.RecyclerViewClickListener
 import com.examp.allwishes.ui.viewmodel.SelectedImageViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 
@@ -72,7 +83,7 @@ class FrameEditFragment : Fragment() {
         sticker.layoutParams = lp
 //        mTv_text.setLayoutParams(lp);
         //        mTv_text.setLayoutParams(lp);
-        sticker.setOnTouchListener(com.examp.allwishes.ui.util.MultiTouchListener())
+        sticker.setOnTouchListener(MultiTouchListener())
 
         b.container.addView(sticker)
     }
@@ -110,7 +121,7 @@ class FrameEditFragment : Fragment() {
         b.chooseImage.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 //                selectImage()
-                openAddPhotoDialog()
+                openAddPhotoDialog(requireContext(), true)
             }
         })
         b.btnShare.setOnClickListener(object : View.OnClickListener {
@@ -169,28 +180,28 @@ class FrameEditFragment : Fragment() {
         var addText = AddText(colorPicker)
         addText(requireContext()) {
             val string = it.first
-            val bubbleTextView = com.examp.allwishes.ui.util.BubbleTextView(
+            val bubbleTextView = BubbleTextView(
                 context,
                 it.second,
                 it.third,
                 0
             )
-            bubbleTextView.setOperationListener(object : com.examp.allwishes.ui.util.BubbleTextView.OperationListener {
+            bubbleTextView.setOperationListener(object : BubbleTextView.OperationListener {
                 override fun onDeleteClick() {
                     b.card.removeView(bubbleTextView)
                 }
 
-                override fun onEdit(bubbleTextView: com.examp.allwishes.ui.util.BubbleTextView?) {
+                override fun onEdit(bubbleTextView: BubbleTextView?) {
                     bubbleTextView.let {
                         val onEdit = !bubbleTextView?.isInEditMode!!
                         bubbleTextView.setInEdit(onEdit)
                     }
                 }
 
-                override fun onClick(bubbleTextView: com.examp.allwishes.ui.util.BubbleTextView?) {
+                override fun onClick(bubbleTextView: BubbleTextView?) {
                 }
 
-                override fun onTop(bubbleTextView: com.examp.allwishes.ui.util.BubbleTextView?) {
+                override fun onTop(bubbleTextView: BubbleTextView?) {
                 }
             })
 
@@ -251,7 +262,7 @@ class FrameEditFragment : Fragment() {
         dialog.show()
     }
 
-    private fun openAddPhotoDialog() {
+    private fun openAddPhotoDialog(context: Context, isCancelable: Boolean) {
         AppUtils.checkCameraPermission(requireContext()) { it ->
             if (it) {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
@@ -317,47 +328,9 @@ class FrameEditFragment : Fragment() {
     private fun addImageBetweenFrame(context: Context, bitmap: Bitmap?) {
         bitmap.let {
             b.galleryImageView.setImageBitmap(bitmap)
-            b.galleryImageView.setOnTouchListener(com.examp.allwishes.ui.util.MultiTouchListener())
+            b.galleryImageView.setOnTouchListener(MultiTouchListener())
         }
     }
-
-//    private fun addStickers(context: Context, bitmap: Bitmap?) {
-//        bitmap.let {
-//            val sticker = StickerView(context)
-//            sticker.setOperationListener(object : StickerView.OperationListener {
-//                override fun onDeleteClick() {
-//                    b.card.removeView(sticker)
-//                }
-//
-//                override fun onEdit(stickerView: StickerView?) {
-//                    stickerView.let {
-//                        val onEdit = !stickerView?.isInEditMode!!
-//                        sticker.setInEdit(onEdit)
-//                    }
-//                }
-//
-//                override fun onTop(stickerView: StickerView?) {
-//                }
-//            })
-//            sticker.setBitmap(bitmap)
-//            b.card.addView(sticker)
-//        }
-//    }
-
-//    fun selectSticker() {
-//        val fragmentManager = requireActivity().supportFragmentManager
-//
-//        val addSticker = AddSticker(fragmentManager)
-//        addSticker(requireContext()) {
-//            UrlToBitmap.downloadBitmap(requireContext(), it) {
-////                val imageView = ImageView(requireContext())
-////                imageView.setImageBitmap(it)
-////                imageView.setOnTouchListener(com.greetingsnwishes.scrapbook.utils.MultiTouchListener())
-////                b.card.addView(imageView)
-//                addStickers(requireContext(), it)
-//            }
-//        }
-//    }
 
     fun selectImageChooseDialog() {
 
@@ -393,7 +366,7 @@ class FrameEditFragment : Fragment() {
         val viewModel = ViewModelProvider(this)[SelectedImageViewModel::class.java]
         viewModel.getAllImage()!!.observe(this) { storageReferenceList ->
             val listener =
-                com.examp.allwishes.ui.util.RecyclerViewClickListener { view, position ->
+                RecyclerViewClickListener { view, position ->
 //                    UtilFunctions.setImage(
 //                        sticker,
 //                        storageReferenceList!![position]

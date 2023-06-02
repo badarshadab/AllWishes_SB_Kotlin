@@ -46,9 +46,6 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
         b = FragmentCategoryBinding.inflate(inflater, container, false)
-//        trending_cat = arguments?.getString("trending_cat").toString()
-//        name = arguments?.getString("name").toString()
-//        b.toolbar.toolbar.title = resources.getString(R.string.app_name)
         setupViewModel()
 //        AdUtils.showBanner(requireActivity(), b.adContainer.nativeAdContainer)
         type = when (pos) {
@@ -83,25 +80,7 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
                 setCatCards(this.list)
                 b.progressBar.visibility = View.GONE
             }
-//            mainViewModel.loadImagesStorage(categoryName)
-//                .observe(requireActivity(), Observer { it ->
-//                    it.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                println("setupObservers Status.SUCCESS" + resource.data)
-//                                this.list = resource.data
-//                                setCatCards(resource.data)
-//                                b.progressBar.visibility = View.GONE
-//                            }
-//                            Status.ERROR -> {
-//                                println("setupObservers Status.ERROR" + resource.data)
-//                            }
-//                            Status.LOADING -> {
-//                                println("setupObservers Status.LOADING" + resource.data)
-//                            }
-//                        }
-//                    }
-//                })
+
         } else {
             quotesViewModel.getQuotes(categoryName)
             quotesViewModel.quotes.observe(requireActivity()) { list ->

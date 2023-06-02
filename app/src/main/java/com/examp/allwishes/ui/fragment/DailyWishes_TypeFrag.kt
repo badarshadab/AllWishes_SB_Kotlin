@@ -22,6 +22,11 @@ class DailyWishes_TypeFrag : Fragment(), View.OnClickListener {
         catName = arguments?.getString("catName").toString()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = catName
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,10 +39,7 @@ class DailyWishes_TypeFrag : Fragment(), View.OnClickListener {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "Shadab"
-        super.onViewCreated(view, savedInstanceState)
-    }
+
 
     override fun onClick(v: View?) {
 

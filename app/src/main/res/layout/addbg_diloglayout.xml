@@ -14,7 +14,7 @@
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center_horizontal"
         android:text="@string/choose_background"
-        android:textColor="#E7CDCD"
+        android:textColor="@color/toolbar_text_colo"
         android:textSize="@dimen/addbgdilogtitlesize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,18 +97,6 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/catname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="@string/good_morning"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/addbgdilogtitlesize"
-        app:layout_constraintBottom_toTopOf="@+id/recylayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/recylayout"

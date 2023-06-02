@@ -14,6 +14,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -23,7 +24,6 @@ import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -32,6 +32,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
+import androidx.core.view.drawToBitmap
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -58,6 +59,7 @@ object AppUtils {
     private const val FADE_DURATION = 700
     private val GALLERY: Int = 1
     private val CAMERA: Int = 2
+    val RECORD_REQUEST_CODE = 101
 
     private val PERMISSIONS_STORAGE = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -176,6 +178,7 @@ object AppUtils {
         if (view == null) {
             return null
         }
+        view.drawToBitmap()
         var bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888)
         var canvas = Canvas(bitmap)
         var drawable: Drawable = view.getBackground()
@@ -439,24 +442,35 @@ object AppUtils {
     }
 
     fun camshow(activity: Activity) {
+        try {
 
-        if (ContextCompat.checkSelfPermission(
-                activity, Manifest.permission.ACCESS_FINE_LOCATION
-            ) !== PackageManager.PERMISSION_GRANTED
-        ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    activity,
-                    Manifest.permission.CAMERA
-                )
+            if (ContextCompat.checkSelfPermission(
+                    activity, Manifest.permission.ACCESS_FINE_LOCATION
+                ) !== PackageManager.PERMISSION_GRANTED
             ) {
-                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA), 1)
-            } else {
-                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CAMERA), 1)
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        activity,
+                        Manifest.permission.CAMERA
+                    )
+                ) {
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf(Manifest.permission.CAMERA),
+                        1
+                    )
+                } else {
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf(Manifest.permission.CAMERA),
+                        1
+                    )
 
+                }
             }
+
+        } catch (e: java.lang.Exception) {
+            print("errror is " + e)
         }
-
-
     }
 
     fun captercamera(activity: Activity) {
@@ -482,15 +496,62 @@ object AppUtils {
         return returnedBitmap
     }
 
-    fun setupToolbar(view:Toolbar , activity: Activity , drawerLayout : DrawerLayout) {
+    fun setupToolbar(view: Toolbar, activity: Activity, drawerLayout: DrawerLayout) {
         view.setNavigationOnClickListener {
             val navController = activity.findNavController(R.id.nav_host_fragment)
             val destination = navController.currentDestination
-            if (destination?.id == R.id.nav_main){
+            if (destination?.id == R.id.nav_main) {
                 drawerLayout.openDrawer(GravityCompat.START)
-            } else{
+            } else {
                 navController.popBackStack()
             }
+        }
+    }
+
+    fun createImageUri(context: Context): Uri? {
+        val img = File(context.filesDir, "camera_photo.png")
+        return getProviderUri(context, img)
+    }
+
+    fun checkPermissionFor33(context: Context, activity: Activity): Boolean {
+        if (Build.VERSION.SDK_INT >= 33) {
+            return ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.READ_MEDIA_IMAGES
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            return ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    fun requestPermission(activity: Activity) {
+        if (Build.VERSION.SDK_INT >= 33) {
+            activity.requestPermissions(
+                arrayOf(
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.CAMERA
+                ), RECORD_REQUEST_CODE
+            )
+        } else {
+            activity.requestPermissions(
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+                ), RECORD_REQUEST_CODE
+            )
         }
     }
 

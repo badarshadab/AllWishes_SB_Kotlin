@@ -34,13 +34,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
                     android:layout_margin="5dp"
-                    android:background="#DDDEE5"
+                    android:background="@color/card_bg"
                     android:fontFamily="@font/font11b"
                     android:gravity="center"
                     android:hint="@string/myquotes"
                     android:padding="10dp"
-                    android:textColor="#3A3939"
-                    android:textColorHint="#6E6969"
+                    android:textColor="@color/toolbar_text_colo"
+                    android:textColorHint="@color/toolbar_text_colo"
                     android:textSize="30sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -67,37 +67,34 @@
                 app:layout_constraintTop_toBottomOf="@+id/edittextout">
 
 
-                <Button
+                <TextView
                     android:id="@+id/cancel_btn"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/addtextbtnbg"
+                    android:background="@drawable/ic_btnbg_new"
                     android:fontFamily="@font/montserrat"
                     android:text="Cancel"
+                    android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/addbgdilogtitlesize"
                     app:layout_constraintEnd_toStartOf="@+id/addokbtn"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-
-                    />
-
-                <Button
+                <TextView
                     android:id="@+id/addokbtn"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/addtextbtnbg"
+                    android:background="@drawable/ic_btnbg_new"
                     android:fontFamily="@font/montserrat"
                     android:text="Done"
+                    android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/addbgdilogtitlesize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cancel_btn"
-                    app:layout_constraintTop_toTopOf="parent"
-
-                    />
+                    app:layout_constraintTop_toTopOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

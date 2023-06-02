@@ -60,7 +60,6 @@ class MainFragment : Fragment(), View.OnClickListener {
                             requireActivity(),
                             b
                         )
-//                        AppUtils.changeFragment(requireActivity(), R.id.action_nav_main_to_nav_create_cards_list, b)
                     }
                 })
         }
