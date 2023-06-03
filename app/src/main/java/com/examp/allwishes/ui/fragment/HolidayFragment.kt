@@ -35,10 +35,12 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
         _binding.progressBar.visibility = View.VISIBLE
         mainViewModel = ViewModelProvider(requireActivity())[HolidayViewModel::class.java]
 
+
         val arrayList = mainViewModel.getComModel()
         if (arrayList == null) {
             observEvents(title)
         } else {
+
             getMonthEvents(arrayList, title)
         }
 

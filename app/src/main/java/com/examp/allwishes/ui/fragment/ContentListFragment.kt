@@ -37,6 +37,7 @@ class ContentListFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = name + " " + type + "s"
         super.onViewCreated(view, savedInstanceState)
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as Activity
@@ -60,12 +61,29 @@ class ContentListFragment : Fragment() {
         setupObservers(nameType)
 
         if (type.equals("Quote")) {
+            b.shimmerLayImages.visibility = View.GONE
             b.rv.layoutManager = GridLayoutManager(requireContext(), 1)
+//            b.shimmerLayQuotes.startShimmer()
 
         } else {
+            b.shimmerLayQuotes.visibility = View.GONE
             b.rv.layoutManager = GridLayoutManager(requireContext(), 3)
         }
         return b.root
+    }
+
+    override fun onResume() {
+        if (type.equals("Quote")) {
+            b.shimmerLayImages.visibility = View.GONE
+            b.shimmerLayQuotes.visibility = View.VISIBLE
+                b.rv.layoutManager = GridLayoutManager(requireContext(), 1)
+//            b.shimmerLayQuotes.startShimmer()
+
+        } else {
+            b.shimmerLayQuotes.visibility = View.GONE
+            b.rv.layoutManager = GridLayoutManager(requireContext(), 3)
+        }
+        super.onResume()
     }
 
     private fun setupViewModel() {
@@ -78,6 +96,9 @@ class ContentListFragment : Fragment() {
 
     private fun setQuotesAdapter(list: List<String>) {
         if (list != null) {
+            b.shimmerLayQuotes.stopShimmer()
+            b.rv.visibility = View.VISIBLE
+            b.shimmerLayQuotes.visibility = View.GONE
             b.pb.visibility = View.GONE
         }
         b.rv.adapter = QuotesListAdapter(
@@ -98,7 +119,12 @@ class ContentListFragment : Fragment() {
     }
 
     private fun setImageAdapter(resource: List<StorageReference>) {
-        b.pb.visibility = View.GONE
+        if(resource != null){
+            b.shimmerLayImages.stopShimmer()
+            b.rv.visibility = View.VISIBLE
+            b.shimmerLayImages.visibility = View.GONE
+            b.pb.visibility = View.GONE
+        }
         this.list = resource
         b.rv.adapter = this.list?.let { it1 ->
             GifImageAdapter(
@@ -118,7 +144,6 @@ class ContentListFragment : Fragment() {
                             b
                         )
                     }
-
                 }
             )
         }
@@ -133,58 +158,15 @@ class ContentListFragment : Fragment() {
             }
             // if we use `Dispatchers.Main` as a coroutine context next two lines will be executed on UI thread.
 
+        } else {
+            mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
+            { resource ->
+                // if we use `Dispatchers.Main` as a coroutine context next two lines will be executed on UI thread.
+                setImageAdapter(resource)
+            }
         }
 
-     else
-    {
-        mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
-        { resource ->
-            // if we use `Dispatchers.Main` as a coroutine context next two lines will be executed on UI thread.
-            setImageAdapter(resource)
-        }
-//            mainViewModel.loadImagesStorage(categoryName)
-//                .observe(requireActivity(), Observer { it ->
-//                    it.let { resource ->
-//                        when (resource.status) {
-//                            Status.SUCCESS -> {
-//                                b.pb.visibility = View.GONE
-//                                this.list = resource.data
-//                                b.rv.adapter = resource.data?.let { it1 ->
-//                                    GifImageAdapter(
-//                                        requireActivity(),
-//                                        it1, object : GifImageAdapter.RecyclerViewClickListener {
-//                                            override fun onClick(
-//                                                view: View?,
-//                                                position: Int
-//                                            ) {
-//                                                val b = Bundle()
-//                                                b.putString("type", type)
-//                                                b.putString("catName", "DailyWishes/" + name)
-//                                                b.putInt("position", position)
-//                                                AppUtils.changeFragment(
-//                                                    requireActivity(),
-//                                                    R.id.nav_contentPreview,
-//                                                    b
-//                                                )
-//                                            }
-//
-//                                        }
-//                                    )
-//                                }
-//                            }
-//                            Status.ERROR -> {
-//                                b.retry.root.visibility = View.VISIBLE
-//                                println("setupObservers Status.ERROR" + resource.data)
-//                            }
-//                            Status.LOADING -> {
-//                                println("setupObservers Status.LOADING" + resource.data)
-//                            }
-//                        }
-//                    }
-//                })
+
     }
-
-
-}
 
 }

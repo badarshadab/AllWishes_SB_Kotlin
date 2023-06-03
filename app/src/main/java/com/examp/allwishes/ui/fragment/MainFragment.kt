@@ -28,6 +28,7 @@ class MainFragment : Fragment(), View.OnClickListener {
         b.startBtn.setOnClickListener(this)
         b.holidayBtn.setOnClickListener(this)
         b.viewAll.setOnClickListener(this)
+        b.shimmerLay.startShimmer()
 //        b.sharepanel.privacy.setOnClickListener(this)
 //        b.sharepanel.rate.setOnClickListener(this)
 //        b.sharepanel.sharePkg.setOnClickListener(this)
@@ -47,22 +48,47 @@ class MainFragment : Fragment(), View.OnClickListener {
     }
 
     private fun createAdapter(model: Root_HlNew) {
-        b.createCardRv.adapter = model?.let {
-            CreateCardsAdapter(
-                requireActivity(), it, object : CreateCardsAdapter.RecyclerViewClickListener {
-                    override fun onClick(view: View?, position: Int, catName: String?) {
-//                        startActivity(Intent(requireContext(), MainActivity::class.java))
-                        val b = Bundle()
-                        b.putString("catName", catName)
-                        AppUtils.changeFragmentWithPosition(
-                            findNavController(),
-                            R.id.action_nav_main_to_nav_set_cards,
-                            requireActivity(),
-                            b
-                        )
-                    }
-                })
+
+        if (model.createcards?.size!! > 0) {
+            b.shimmerLay.stopShimmer()
+            b.shimmerLay.visibility = View.GONE
+            b.card.visibility = View.VISIBLE
         }
+        val adapter = CreateCardsAdapter(
+            requireActivity(),
+            model,
+            object : CreateCardsAdapter.RecyclerViewClickListener {
+                override fun onClick(view: View?, position: Int, catName: String?) {
+                    val b = Bundle()
+                    b.putString("catName", catName)
+                    AppUtils.changeFragmentWithPosition(
+                        findNavController(),
+                        R.id.action_nav_main_to_nav_set_cards,
+                        requireActivity(),
+                        b
+                    )
+                }
+
+
+            })
+        b.createCardRv.adapter = adapter
+
+//        b.createCardRv.adapter = model?.let {
+//            CreateCardsAdapter(
+//                requireActivity(), it, object : CreateCardsAdapter.RecyclerViewClickListener {
+//                    override fun onClick(view: View?, position: Int, catName: String?) {
+////                        startActivity(Intent(requireContext(), MainActivity::class.java))
+//                        val b = Bundle()
+//                        b.putString("catName", catName)
+//                        AppUtils.changeFragmentWithPosition(
+//                            findNavController(),
+//                            R.id.action_nav_main_to_nav_set_cards,
+//                            requireActivity(),
+//                            b
+//                        )
+//                    }
+//                })
+//        }
     }
 
 

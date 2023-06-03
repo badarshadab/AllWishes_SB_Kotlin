@@ -30,9 +30,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl" />
 
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/nativeAdContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl"
+        android:id="@+id/shimmer_lay">
+
+        <include layout="@layout/holiday_list_row_shimmer"/>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp"
         android:layout_width="0dp"
+        android:visibility="visible"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:defaultNavHost="true"

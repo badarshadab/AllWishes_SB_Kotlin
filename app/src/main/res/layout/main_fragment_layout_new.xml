@@ -26,6 +26,42 @@
                 android:layout_margin="3dp" />
         </LinearLayout>
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/main_lay">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_shimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/main_lay"
+                android:layout_margin="5dp"
+                android:focusable="true"
+                android:padding="10dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="5dp"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/create_cards_shimmer" />
+
+                    <include layout="@layout/create_cards_shimmer" />
+
+                    <include layout="@layout/create_cards_shimmer" />
+
+                    <include layout="@layout/create_cards_shimmer" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card"
@@ -35,6 +71,7 @@
             android:layout_margin="5dp"
             android:focusable="true"
             android:padding="10dp"
+            android:visibility="gone"
             app:cardCornerRadius="15dp"
             app:cardElevation="5dp"
             app:strokeColor="@color/white"

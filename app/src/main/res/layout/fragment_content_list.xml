@@ -7,13 +7,33 @@
     android:fillViewport="true"
     tools:context=".ui.fragment.ContentListFragment">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_lay_quotes"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/qoutes_list_shimmer" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_lay_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/image_list_shimmer" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/adContainer"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/pb"

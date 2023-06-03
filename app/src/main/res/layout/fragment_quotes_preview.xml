@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:orientation="vertical">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/shimmer_lay">
+
+        <include layout="@layout/quotes_preview_shimmer"/>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp"
@@ -88,4 +97,4 @@
         android:layout_gravity="center"
         android:layout_margin="3dp" />
 
-</RelativeLayout>
+</LinearLayout>

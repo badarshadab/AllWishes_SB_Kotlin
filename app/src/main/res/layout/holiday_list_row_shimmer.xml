@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/shimmer_lay"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/cardbg"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/curved_card_bg"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textColor="@color/tool_text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/curved_card_bg"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textColor="@color/tool_text"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/cardbg"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/curved_card_bg"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textColor="@color/tool_text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/curved_card_bg"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textColor="@color/tool_text"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/cardbg"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/curved_card_bg"
+            android:maxLines="3"
+            android:padding="10dp"
+            android:textColor="@color/tool_text"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/curved_card_bg"
+            android:maxLines="3"
+            android:padding="10dp"
+            android:textColor="@color/tool_text"
+            android:textSize="20sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/cardbg"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/curved_card_bg"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textColor="@color/tool_text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/curved_card_bg"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textColor="@color/tool_text"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="@color/cardbg"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/curved_card_bg"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textColor="@color/tool_text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/curved_card_bg"
+                android:maxLines="3"
+                android:padding="10dp"
+                android:textColor="@color/tool_text"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+</LinearLayout>

@@ -48,6 +48,8 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
 //                AdUtils.showNativeBanner(requireActivity(), b.adContainer.adContainer)
             }
 
+            b.shimmerLay.startShimmer()
+
 //            AppUtils.setUpToolbar(
 //                requireActivity(),
 //                b.toolbar.toolbar,
@@ -61,6 +63,11 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
 //            )
 
             listA = list as ArrayList<String>
+            if (listA.size > 0) {
+                b.shimmerLay.stopShimmer()
+                b.vp.visibility = View.VISIBLE
+                b.shimmerLay.visibility = View.GONE
+            }
             val adapter = list?.let { activity?.let { it1 -> QuotesPreviewAdapter(it1, it) } }
             b.vp.adapter = adapter
             index?.let {
