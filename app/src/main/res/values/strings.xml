@@ -7,7 +7,8 @@
     <string name="no_Saved">Nothing Saved Here!!</string>
     <string name="removeConfirm">You are about to Remove this item From Saved List ?</string>
     <string name="contentPreview">ContentPreview</string>
-    <string name="share">Share\nImage</string>
+    <string name="share">Share</string>
+    <string name="share_image">Share\nImage</string>
     <string name="add_text_btn_ttl">Add\nText</string>
     <string name="remove_text_btn_ttl">Remove\nText</string>
     <string name="remove_stickers_btn_ttl">Remove\nStickers</string>
@@ -33,6 +34,8 @@
     <string name="add_bg">Add Bg</string>
     <string name="create">CREATE</string>
     <string name="add_text">Add Text</string>
+    <string name="remove_text">Remove Text</string>
+
     <string name="fonts">Fonts</string>
     <string name="text_color">Text Color</string>
     <string name="stickers">Stickers</string>

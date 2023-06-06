@@ -142,24 +142,12 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
             bun.putString("catName", catName)
             bun.putInt("position", index)
             if (storageReference is StorageReference) {
-                Holidays_List.storageRef = storageReference as StorageReference
+                Holidays_List.storageRef = storageReference
             }
             AppUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
-//            AdUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
         }
 
     }
-
-//    override fun onCardClick(view: View, obj: Any, index: Int) {
-//        val bun = Bundle()
-//
-//        if (obj is StorageReference) {
-//            DrawerActivity.storageRef = obj as StorageReference
-//        } else {
-//
-//        }
-//        AdUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
-//    }
 
 
 }

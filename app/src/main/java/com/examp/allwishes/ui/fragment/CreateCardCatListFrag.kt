@@ -1,6 +1,8 @@
 package com.examp.allwishes.ui.fragment
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
@@ -22,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.AddbgDiloglayoutBinding
 import com.examp.allwishes.databinding.GradentpicklayoutBinding
-import com.examp.allwishes.ui.activity.MainActivity
 import com.examp.allwishes.ui.adapter.AddbgCardAdapter
 import com.examp.allwishes.ui.adapter.ChooseColorAdapter
 import com.examp.allwishes.ui.adapter.ChooseGradCloreAdapter
@@ -55,6 +56,14 @@ class CreateCardCatListFrag : Fragment() {
     private var name: String = ""
     private var cat_addrs: String = ""
 
+    lateinit var activity: Activity
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as Activity
+//        https://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
+//        Fragment ContentPreviewFragment{fb22d83} (743b8906-1fa7-4828-8024-cc60ff8aac63) not attached to an activity.
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,7 +83,7 @@ class CreateCardCatListFrag : Fragment() {
         createCardViewModel.fontList()
         createCardViewModel.gradientList()
         b.colorid.setOnClickListener {
-            Toast.makeText(requireContext() , "clicked on ColorID" , Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "clicked on ColorID", Toast.LENGTH_SHORT).show()
             colorDilog()
         }
         b.galleryid.setOnClickListener {
@@ -98,7 +107,7 @@ class CreateCardCatListFrag : Fragment() {
         }
 
         val adapter = AddbgCardAdapter(
-            requireActivity(), resource, object : OnItemClickListener {
+            activity, resource, object : OnItemClickListener {
                 override fun onClick(position: Int) {
                     val b = Bundle()
                     AppUtils.changeFragmentWithPosition(

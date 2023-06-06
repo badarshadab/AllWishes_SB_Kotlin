@@ -73,22 +73,6 @@ class MainFragment : Fragment(), View.OnClickListener {
             })
         b.createCardRv.adapter = adapter
 
-//        b.createCardRv.adapter = model?.let {
-//            CreateCardsAdapter(
-//                requireActivity(), it, object : CreateCardsAdapter.RecyclerViewClickListener {
-//                    override fun onClick(view: View?, position: Int, catName: String?) {
-////                        startActivity(Intent(requireContext(), MainActivity::class.java))
-//                        val b = Bundle()
-//                        b.putString("catName", catName)
-//                        AppUtils.changeFragmentWithPosition(
-//                            findNavController(),
-//                            R.id.action_nav_main_to_nav_set_cards,
-//                            requireActivity(),
-//                            b
-//                        )
-//                    }
-//                })
-//        }
     }
 
 

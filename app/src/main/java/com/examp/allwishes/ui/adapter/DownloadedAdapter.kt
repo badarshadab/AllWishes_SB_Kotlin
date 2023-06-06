@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.DownloadedListRowBinding
-import com.examp.allwishes.ui.activity.SavedHolidayGreetings
 import com.examp.allwishes.ui.util.AppUtils
 import com.greetings.allwishes.util.AdUtils
 import com.sm.allwishes.greetings.util.ShareUtils
 
-class DownloadedAdapter(private var list: ArrayList<String> ,var activity:Activity) :
+class DownloadedAdapter(private var list: ArrayList<String>, var activity: Activity) :
     RecyclerView.Adapter<DownloadedAdapter.ImageHolder>() {
 
     var layoutInflater: LayoutInflater? = null
@@ -48,22 +47,22 @@ class DownloadedAdapter(private var list: ArrayList<String> ,var activity:Activi
             0
         )
         holder.b.actionLay.download.setText("Remove")
-        holder.b.actionLay.download.setOnClickListener({
+        holder.b.actionLay.download.setOnClickListener {
             AdUtils.removeFromFavDialog(
-                activity ,
+                activity,
                 list,
                 position,
                 imageName, this
             )
 //            notifyDataSetChanged()
-        })
-        holder.b.actionLay.share.setOnClickListener({
+        }
+        holder.b.actionLay.share.setOnClickListener {
 //            println("image url is " + position)
-            ShareUtils.shareGIF(SavedHolidayGreetings.activity, list[position])
-        })
-        holder.b.actionLay.whatsapp.setOnClickListener({
-            ShareUtils.shareGIFOnWhatsApp(SavedHolidayGreetings.activity, list[position])
-        })
+            ShareUtils.shareGIF(activity, list[position])
+        }
+        holder.b.actionLay.whatsapp.setOnClickListener {
+            ShareUtils.shareGIFOnWhatsApp(activity, list[position])
+        }
     }
 
     override fun getItemCount(): Int {

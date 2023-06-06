@@ -4,10 +4,8 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 
-class ScaleGestureDetector(listener: OnScaleGestureListener?) {
+class ScaleGestureDetector(val listener: OnScaleGestureListener?) {
 
-    private val TAG = "ScaleGestureDetector"
-    private val PRESSURE_THRESHOLD = 0.67f
     private var mListener: OnScaleGestureListener? = null
     private var mGestureInProgress = false
     private var mPrevEvent: MotionEvent? = null
@@ -30,7 +28,8 @@ class ScaleGestureDetector(listener: OnScaleGestureListener?) {
     private var mActiveId1 = 0
     private var mActive0MostRecent = false
 
-    fun ScaleGestureDetector(listener: OnScaleGestureListener?) {
+
+    init {
         mListener = listener
         mCurrSpanVector = Vector2D()
     }

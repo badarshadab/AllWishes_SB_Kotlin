@@ -1,6 +1,5 @@
 package com.examp.allwishes.ui.fragment
 
-import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -26,10 +25,9 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
@@ -92,6 +90,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     lateinit var stickerBinding: StickerdiloglayoutBinding
     private var stickerdialog: Dialog? = null
     lateinit var stickerImageView: StickerImageView
+    var msgToAdd: String = ""
 
 
     private var colorpickdialog: Dialog? = null
@@ -156,6 +155,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         b.nextBtn.setOnClickListener {
             nextBtnClick()
         }
+        b.create.setOnClickListener(this)
 
         return b.root
     }
@@ -206,6 +206,9 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 //            } else {
 //                AppUtils.requestPermission(activity)
 //            }
+            if(b.createimageview != null){
+                b.create.visibility = View.GONE
+            }
 
 
             addbgdialog?.dismiss()
@@ -510,9 +513,11 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             addtextdialog?.dismiss()
         }
         addtextbinding!!.addokbtn.setOnClickListener {
-
-            dtextView?.text = addtextbinding!!.textid.text.toString()
-
+            msgToAdd = addtextbinding!!.textid.text.toString()
+            dtextView?.text = msgToAdd
+            if (!msgToAdd.isEmpty()) {
+                b.addtextid.setText(R.string.remove_text)
+            }
             addtextdialog?.dismiss()
         }
         addtextbinding!!.canclebtn2.setOnClickListener {
@@ -530,7 +535,14 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             }
 
             b.addtextid -> {
-                addTextClick()
+
+                if (msgToAdd.isEmpty()) {
+                    addTextClick()
+                } else {
+                    b.addtextid.setText(R.string.add_text)
+                    dtextView?.text = ""
+                    msgToAdd = ""
+                }
             }
 
             b.quoteid -> {
@@ -552,14 +564,14 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                 b.nextBtn.visibility = View.VISIBLE
             }
 
+            b.create -> {
+                addBgClick()
+            }
         }
     }
 
     fun addBgClick() {
-        b.toolbartitle.apply {
-            this.setText(R.string.add_bgtitle)
 
-        }
         b.fontcolorlistlayout.visibility = View.GONE
         addbgDilog()
         b.nextBtn.visibility = View.VISIBLE
@@ -572,7 +584,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     fun addTextClick() {
         b.fontcolorlistlayout.visibility = View.GONE
         b.create.visibility = View.GONE
-        b.toolbartitle.setText(R.string.add_text)
+
         addTextDilog()
 
         dtextView = TextView(requireContext())
@@ -593,6 +605,8 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         b.cardrootlayout.apply {
             this.addView(dtextView)
         }
+
+
     }
 
     fun quotesIDClick() {
@@ -868,46 +882,15 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     }
 
     fun nextBtnClick() {
-        var viewdata = AppUtils.getBitmapFromView(b.cardsharesaveid)
-        val bun = Bundle()
-        bun.putString("bitimgkey", saveBitmap(viewdata))
-//                var intent = Intent(requireContext(), CardpreviewActivity::class.java)
-//                intent.putExtra("bitimgkey", saveBitmap(viewdata))
-//                startActivity(intent)
-        AppUtils.changeFragment(requireActivity(), R.id.nav_card_preview, bun)
-    }
-
-
-    fun camshow() {
-        try {
-
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
-                ) !== PackageManager.PERMISSION_GRANTED
-            ) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        activity,
-                        Manifest.permission.CAMERA
-                    )
-                ) {
-                    ActivityCompat.requestPermissions(
-                        activity,
-                        arrayOf(Manifest.permission.CAMERA),
-                        1
-                    )
-                } else {
-                    ActivityCompat.requestPermissions(
-                        activity,
-                        arrayOf(Manifest.permission.CAMERA),
-                        1
-                    )
-
-                }
-            }
-
-        } catch (e: java.lang.Exception) {
-            print("errror is " + e)
+        if (b.createimageview.drawable != null) {
+            var viewdata = AppUtils.getBitmapFromView(b.cardsharesaveid)
+            val bun = Bundle()
+            bun.putString("bitimgkey", saveBitmap(viewdata))
+            AppUtils.changeFragment(requireActivity(), R.id.nav_card_preview, bun)
+        } else {
+            Toast.makeText(requireContext(), "Set Image First", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 }
