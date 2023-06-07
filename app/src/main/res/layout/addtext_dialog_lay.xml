@@ -46,14 +46,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <ImageView
-                    android:id="@+id/canclebtn2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_margin="15dp"
-                    android:src="@drawable/canceladdtext"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -73,13 +66,13 @@
                     android:layout_height="@dimen/_35sdp"
                     android:background="@drawable/ic_btnbg_new"
                     android:fontFamily="@font/montserrat"
-                    android:text="Cancel"
                     android:gravity="center"
+                    android:text="Cancel"
                     android:textColor="@color/white"
                     android:textSize="@dimen/addbgdilogtitlesize"
                     app:layout_constraintEnd_toStartOf="@+id/addokbtn"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/addokbtn"
@@ -87,14 +80,14 @@
                     android:layout_height="@dimen/_35sdp"
                     android:background="@drawable/ic_btnbg_new"
                     android:fontFamily="@font/montserrat"
-                    android:text="Done"
                     android:gravity="center"
+                    android:text="Done"
                     android:textColor="@color/white"
                     android:textSize="@dimen/addbgdilogtitlesize"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cancel_btn"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

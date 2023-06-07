@@ -20,7 +20,6 @@ class CardPreviewFragment : Fragment() {
     private var intdata: String = ""
     var src: Bitmap? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,7 +49,6 @@ class CardPreviewFragment : Fragment() {
                 AppUtils.shareBitmap(requireContext(), bmp)
             }
         }
-
 
         return b.root
 

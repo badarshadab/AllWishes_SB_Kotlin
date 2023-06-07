@@ -178,8 +178,12 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         addbgdialog?.window?.setGravity(Gravity.BOTTOM)
 
         addbgbinding!!.colorid.setOnClickListener {
+
 //            Toast.makeText(requireContext(), "clicked on ColorID", Toast.LENGTH_SHORT).show()
             colorDilog()
+            if (b.createimageview != null) {
+                b.create.visibility = View.GONE
+            }
             addbgdialog?.dismiss()
         }
 
@@ -187,6 +191,9 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 //            b.create.visibility = View.GONE
             b.createimageview.setOnTouchListener(MultiTouchListener())
             AppUtils.getpicGallery(requireActivity())
+            if (b.createimageview != null) {
+                b.create.visibility = View.GONE
+            }
             addbgdialog?.dismiss()
         }
 
@@ -206,7 +213,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 //            } else {
 //                AppUtils.requestPermission(activity)
 //            }
-            if(b.createimageview != null){
+            if (b.createimageview != null) {
                 b.create.visibility = View.GONE
             }
 
@@ -271,7 +278,12 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                                 .placeholder(R.drawable.loading_img)
                                 .into(b.createimageview)
                             addbgdialog?.dismiss()
-
+                            val mListener = MultiTouchListener()
+                            mListener.minimumScale = 0.1f
+                            if (b.createimageview != null) {
+                                b.create.visibility = View.GONE
+                            }
+                            b.createimageview.setOnTouchListener(mListener)
                         }
                     })
                 addbgbinding!!.addbgrecycleid.adapter = adapter
@@ -517,12 +529,11 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             dtextView?.text = msgToAdd
             if (!msgToAdd.isEmpty()) {
                 b.addtextid.setText(R.string.remove_text)
+                b.create.visibility = View.GONE
             }
             addtextdialog?.dismiss()
         }
-        addtextbinding!!.canclebtn2.setOnClickListener {
-            addtextdialog?.dismiss()
-        }
+
 
         addtextdialog?.show()
     }
@@ -536,13 +547,9 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
             b.addtextid -> {
 
-                if (msgToAdd.isEmpty()) {
-                    addTextClick()
-                } else {
-                    b.addtextid.setText(R.string.add_text)
-                    dtextView?.text = ""
-                    msgToAdd = ""
-                }
+                addOrRemove(b.addtextid, getString(R.string.add_text),
+                    { addTextClick() })
+
             }
 
             b.quoteid -> {
@@ -559,9 +566,8 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
             b.stickersid -> {
                 b.toolbartitle.setText(R.string.stickers)
-
-                stickersDilog()
-                b.nextBtn.visibility = View.VISIBLE
+                addOrRemove(b.stickersid, getString(R.string.stickers),
+                    { stickersDilog() })
             }
 
             b.create -> {
@@ -576,14 +582,11 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         addbgDilog()
         b.nextBtn.visibility = View.VISIBLE
 
-        val mListener = MultiTouchListener()
-        mListener.minimumScale = 0.1f
-        b.createimageview.setOnTouchListener(mListener)
     }
 
     fun addTextClick() {
         b.fontcolorlistlayout.visibility = View.GONE
-        b.create.visibility = View.GONE
+
 
         addTextDilog()
 
@@ -827,6 +830,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                 object : StickerOnItemClick {
                     override fun onClick(view: View, position: Int) {
                         stickerImageView = StickerImageView(requireContext())
+                        b.stickersid.text = getString(R.string.remove)
                         stickerImageView.imageBitmap = view?.drawToBitmap()
                         b.cardrootlayout.addView(stickerImageView)
                         stickerdialog?.dismiss()
@@ -882,13 +886,26 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     }
 
     fun nextBtnClick() {
-        if (b.createimageview.drawable != null) {
+        if (b.createimageview.drawable != null || (dtextView != null && !msgToAdd.isEmpty())) {
             var viewdata = AppUtils.getBitmapFromView(b.cardsharesaveid)
             val bun = Bundle()
             bun.putString("bitimgkey", saveBitmap(viewdata))
             AppUtils.changeFragment(requireActivity(), R.id.nav_card_preview, bun)
         } else {
-            Toast.makeText(requireContext(), "Set Image First", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Set Image or Text First", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun addOrRemove(v: TextView, addText: String, lmbd: () -> Unit) {
+        if (v.getText().equals(addText)) {
+            lmbd()
+        } else {
+            v.text = addText
+            if (v == b.stickersid && stickerImageView != null) {
+                stickerImageView.setImageDrawable(null)
+            } else if (v == b.addtextid && dtextView != null) {
+                dtextView?.text = ""
+            }
         }
     }
 

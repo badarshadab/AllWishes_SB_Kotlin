@@ -34,6 +34,7 @@
     <string name="add_bg">Add Bg</string>
     <string name="create">CREATE</string>
     <string name="add_text">Add Text</string>
+    <string name="remove">Remove</string>
     <string name="remove_text">Remove Text</string>
 
     <string name="fonts">Fonts</string>
@@ -45,4 +46,6 @@
     <string name="ab">AB</string>
     <string name="choose_stic">Choose Stickers </string>
     <string name="save">Save</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>
