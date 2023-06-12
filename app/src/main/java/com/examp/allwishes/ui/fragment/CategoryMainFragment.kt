@@ -47,10 +47,10 @@ class CategoryMainFragment : Fragment() {
         viewpager = _binding.vp
         tablayout = _binding.tl
         trending_cat = arguments?.getString("trending_cat").toString()
-        tablayout.getTabAt(0)?.setIcon(R.drawable.colorbtn)
-        tablayout.getTabAt(1)?.setIcon(R.drawable.colorbtn)
-        tablayout.getTabAt(2)?.setIcon(R.drawable.colorbtn)
-        tablayout.getTabAt(3)?.setIcon(R.drawable.colorbtn)
+//        tablayout.getTabAt(0)?.setIcon(R.drawable.colorbtn)
+//        tablayout.getTabAt(1)?.setIcon(R.drawable.colorbtn)
+//        tablayout.getTabAt(2)?.setIcon(R.drawable.colorbtn)
+//        tablayout.getTabAt(3)?.setIcon(R.drawable.colorbtn)
         AdUtils.showNativeBanner(
             requireActivity(),
             _binding.nativeAdContainer

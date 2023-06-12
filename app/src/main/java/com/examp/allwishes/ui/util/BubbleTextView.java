@@ -1,5 +1,6 @@
 package com.examp.allwishes.ui.util;
 
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,10 +21,13 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MotionEventCompat;
+import androidx.fragment.app.FragmentManager;
 
 import com.examp.allwishes.R;
 import com.examp.allwishes.ui.model.BubblePropertyModel;
+import com.example.myallwishes3d.Utils.bubbletextview.MyTextEditerDilog;
 
 
 /**
@@ -35,7 +39,7 @@ public class BubbleTextView extends ImageView {
 
     private static final String TAG = "BubbleTextView";
 
-
+    private int bubbletextposition;
     private Bitmap deleteBitmap;
     private Bitmap flipVBitmap;
     private Bitmap topBitmap;
@@ -64,6 +68,8 @@ public class BubbleTextView extends ImageView {
     private PointF mid = new PointF();
     private OperationListener operationListener;
     private float lastRotateDegree;
+
+    private Context mycontext;
 
     //是否是第二根手指放下
     private boolean isPointerDown = false;
@@ -143,11 +149,13 @@ public class BubbleTextView extends ImageView {
 
     private boolean isInBitmap;
 
-    private final int fontColor;
+    private int fontColor;
 
     private Typeface typeface;
 
     private final long bubbleId;
+
+    private String myquotes;
 
 
     public BubbleTextView(Context context, AttributeSet attrs) {
@@ -174,14 +182,17 @@ public class BubbleTextView extends ImageView {
         init();
     }
 
+
     /**
      * @param context
      * @param fontColor
      * @param typeface
      * @param bubbleId  some fuck id
      */
-    public BubbleTextView(Context context, int fontColor, Typeface typeface, long bubbleId) {
+    public BubbleTextView(Context context, int fontColor, Typeface typeface, long bubbleId, String mytext) {
         super(context);
+        mycontext = context;
+        myquotes = mytext;
         defaultStr = getContext().getString(R.string.double_click_input_text);
         this.fontColor = fontColor;
         this.typeface = typeface;
@@ -209,6 +220,7 @@ public class BubbleTextView extends ImageView {
         mFontPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mFontSize, dm));
         mFontPaint.setColor(fontColor);
         mFontPaint.setTypeface(typeface);
+
         mFontPaint.setTextAlign(Paint.Align.CENTER);
         mFontPaint.setAntiAlias(true);
         fm = mFontPaint.getFontMetrics();
@@ -221,7 +233,6 @@ public class BubbleTextView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         if (mBitmap != null) {
-
 
             float[] arrayOfFloat = new float[9];
             matrix.getValues(arrayOfFloat);
@@ -286,10 +297,10 @@ public class BubbleTextView extends ImageView {
             dst_top.top = (int) (f2 - topBitmapHeight / 2);
             dst_top.bottom = (int) (f2 + topBitmapHeight / 2);
             //水平镜像在右下角
-//                dst_flipV.left = (int) (f5 - topBitmapWidth / 2);
-//                dst_flipV.right = (int) (f5 + topBitmapWidth / 2);
-//                dst_flipV.top = (int) (f6 - topBitmapHeight / 2);
-//                dst_flipV.bottom = (int) (f6 + topBitmapHeight / 2);
+            dst_flipV.left = (int) (f5 - topBitmapWidth / 2);
+            dst_flipV.right = (int) (f5 + topBitmapWidth / 2);
+            dst_flipV.top = (int) (f6 - topBitmapHeight / 2);
+            dst_flipV.bottom = (int) (f6 + topBitmapHeight / 2);
             if (isInEdit) {
 
                 canvas.drawLine(f1, f2, f3, f4, localPaint);
@@ -299,7 +310,7 @@ public class BubbleTextView extends ImageView {
 
                 canvas.drawBitmap(deleteBitmap, null, dst_delete, null);
                 canvas.drawBitmap(resizeBitmap, null, dst_resize, null);
-//                canvas.drawBitmap(flipVBitmap, null, dst_flipV, null);
+                canvas.drawBitmap(flipVBitmap, null, dst_flipV, null);
                 canvas.drawBitmap(topBitmap, null, dst_top, null);
             }
 
@@ -358,6 +369,8 @@ public class BubbleTextView extends ImageView {
         midX = midX - (w * scale) / 2 - offset;
         midY = midY - (h * scale) / 2 - offset;
         matrix.postTranslate(midX, midY);
+
+
         invalidate();
     }
 
@@ -365,15 +378,13 @@ public class BubbleTextView extends ImageView {
         mFontSize = mDefultSize;
         originBitmap = bitmap;
         mBitmap = originBitmap.copy(Bitmap.Config.ARGB_8888, true);
-
-
         canvasText = new Canvas(mBitmap);
         setDiagonalLength();
         initBitmaps();
         int w = mBitmap.getWidth();
         int h = mBitmap.getHeight();
         oringinWidth = w;
-        float topbarHeight = DensityU.INSTANCE.dip2px(getContext(), 50);
+        float topbarHeight = DensityUtils.dip2px(getContext(), 50);
         matrix.postTranslate(mScreenwidth / 2 - w / 2, (mScreenwidth) / 2 - h / 2);
         invalidate();
     }
@@ -396,9 +407,9 @@ public class BubbleTextView extends ImageView {
         } else {
             MAX_SCALE = 1.0f * mScreenwidth / mBitmap.getWidth();
         }
-        topBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_top_enable);
+        topBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.okbtn);
         deleteBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_delete);
-        flipVBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_flip);
+        flipVBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.editbtn);
         resizeBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_resize);
 
         deleteBitmapWidth = (int) (deleteBitmap.getWidth() * BITMAP_SCALE);
@@ -439,9 +450,16 @@ public class BubbleTextView extends ImageView {
                     isDown = false;
                 } else if (isInButton(event, dst_flipV)) {
                     PointF localPointF = new PointF();
-                    midDiagonalPoint(localPointF);
-                    matrix.postScale(-1.0F, 1.0F, localPointF.x, localPointF.y);
-                    isDown = false;
+//                    bubbletextposition = 0;
+
+
+                    FragmentManager ft = ((AppCompatActivity) mycontext).getSupportFragmentManager();
+                    MyTextEditerDilog myTextEditerDilog = new MyTextEditerDilog(myquotes);
+                    myTextEditerDilog.show(ft, "dd");
+
+//                    midDiagonalPoint(localPointF);
+//                    matrix.postScale(-1.0F, 1.0F, localPointF.x, localPointF.y);
+//                    isDown = false;
                     invalidate();
                 } else if (isInButton(event, dst_top)) {
                     //置顶
@@ -809,4 +827,5 @@ public class BubbleTextView extends ImageView {
     public String getmStr() {
         return mStr;
     }
+
 }

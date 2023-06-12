@@ -180,11 +180,14 @@ class FrameEditFragment : Fragment() {
         var addText = AddText(colorPicker)
         addText(requireContext()) {
             val string = it.first
+//            val bubbleTextView = BubbleTextView(
+//                context,
+//                it.second,
+//                it.third,
+//                0
+//            )
             val bubbleTextView = BubbleTextView(
-                context,
-                it.second,
-                it.third,
-                0
+                context
             )
             bubbleTextView.setOperationListener(object : BubbleTextView.OperationListener {
                 override fun onDeleteClick() {

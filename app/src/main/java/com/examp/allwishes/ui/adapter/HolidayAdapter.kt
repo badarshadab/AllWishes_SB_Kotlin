@@ -12,7 +12,7 @@ import com.examp.allwishes.databinding.HolidayRowLayoutBinding
 import com.examp.allwishes.ui.model.Event
 import com.examp.allwishes.ui.util.AppUtils
 
-class HolidayAdapter(public val activity: Activity, val msgList: ArrayList<Event>?) :
+class HolidayAdapter(val activity: Activity, val msgList: ArrayList<Event>?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -23,14 +23,12 @@ class HolidayAdapter(public val activity: Activity, val msgList: ArrayList<Event
 
         fun ViewHolder(itemView: View) {
 
-
             val typeface = Typeface.createFromAsset(
                 activity.getAssets(),
                 "fonts/ALEO-REGULAR.OTF"
             )
             b.quotesText.setTypeface(typeface)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

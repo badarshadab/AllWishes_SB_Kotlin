@@ -139,14 +139,13 @@ public abstract class StickerView extends FrameLayout{
         this.setOnTouchListener(mTouchListener);
         this.iv_scale.setOnTouchListener(mTouchListener);
 
-//        this.getMainView().setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                view.setOnTouchListener(mTouchListener);
-//                setInEdit(true);
-//
-//            }
-//        });
+        this.getMainView().setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setTag("DraggableViewGroup");
+                view.setOnTouchListener(mTouchListener);
+            }
+        });
 
 
         this.iv_delete.setOnClickListener(new OnClickListener() {
@@ -193,13 +192,13 @@ public abstract class StickerView extends FrameLayout{
     private OnTouchListener mTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
-
             if(view.getTag().equals("DraggableViewGroup")) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         Log.v(TAG, "sticker view action down");
                         move_orgX = event.getRawX();
                         move_orgY = event.getRawY();
+                        setInEdit(true);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         Log.v(TAG, "sticker view action move");

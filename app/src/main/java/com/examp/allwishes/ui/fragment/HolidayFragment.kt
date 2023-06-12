@@ -40,7 +40,6 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
         if (arrayList == null) {
             observEvents(title)
         } else {
-
             getMonthEvents(arrayList, title)
         }
 

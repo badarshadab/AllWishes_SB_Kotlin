@@ -15,7 +15,9 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
@@ -51,6 +53,7 @@ import com.examp.allwishes.ui.adapter.TextChooseColorAdapter
 import com.examp.allwishes.ui.data.api.FirebaseHelper
 import com.examp.allwishes.ui.model.ColorModel
 import com.examp.allwishes.ui.util.AppUtils
+import com.examp.allwishes.ui.util.BubbleTextView
 import com.examp.allwishes.ui.util.MultiTouchListener
 import com.examp.allwishes.ui.util.OnItemClickListener
 import com.examp.allwishes.ui.util.OnItemClickListener_Quotes
@@ -59,6 +62,7 @@ import com.examp.allwishes.ui.util.StickerOnItemClick
 import com.examp.allwishes.ui.viewmodel.CreateCardViewModel
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.examp.allwishes.ui.viewmodel.QuoteViewModel
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.skydoves.colorpickerview.AlphaTileView
@@ -76,6 +80,12 @@ import java.io.FileOutputStream
 
 class SetCardFrag : Fragment(), View.OnClickListener {
 
+    companion object {
+        lateinit var mainContainer: MaterialCardView
+    }
+
+    lateinit var fontdata: Typeface
+    var texteditcolor: Int = 0
 
     private lateinit var b: ActivityCreateBinding
     private var addbgcolordialog: Dialog? = null
@@ -139,6 +149,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
+        mainContainer = b.cardsharesaveid
         imageUri = AppUtils.createImageUri(requireContext())!!
         quotetext?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 5f)
         quotetext?.gravity = (Gravity.BOTTOM)
@@ -156,6 +167,11 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             nextBtnClick()
         }
         b.create.setOnClickListener(this)
+
+//        stickerImageView.setOnClickListener{
+////            stickerImageView
+//            Toast.makeText(requireContext(), "clicked on stickerImageView", Toast.LENGTH_SHORT).show()
+//        }
 
         return b.root
     }
@@ -519,18 +535,22 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         addtextdialog?.setContentView(addtextbinding!!.root)
         addtextdialog?.setCancelable(true)
         addtextdialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        fontdata = Typeface.createFromAsset(requireContext().assets, "1.ttf")
+        texteditcolor = Color.parseColor("#FF000000")
 
-
-        addtextbinding!!.cancelBtn.setOnClickListener {
+        addtextbinding?.cancelBtn?.setOnClickListener {
             addtextdialog?.dismiss()
         }
-        addtextbinding!!.addokbtn.setOnClickListener {
+        addtextbinding?.addokbtn?.setOnClickListener {
             msgToAdd = addtextbinding!!.textid.text.toString()
             dtextView?.text = msgToAdd
             if (!msgToAdd.isEmpty()) {
                 b.addtextid.setText(R.string.remove_text)
                 b.create.visibility = View.GONE
+//                dtextView!!.setOnClickListener(this)
             }
+//            val triple = Triple(msgToAdd, texteditcolor, fontdata);
+//            addStringToView(requireContext(), triple)
             addtextdialog?.dismiss()
         }
 
@@ -573,6 +593,10 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             b.create -> {
                 addBgClick()
             }
+
+            dtextView -> {
+                Toast.makeText(requireContext(), "clicked on dtextView", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -604,10 +628,24 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         dtextView?.setTypeface(typeface)
         dtextView?.textSize = 40f
 
-        dtextView?.setOnTouchListener(MultiTouchListener())
-        b.cardrootlayout.apply {
-            this.addView(dtextView)
-        }
+
+//        dtextView?.setOnTouchListener(object :View.OnTouchListener{
+//            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+//                Toast.makeText(requireContext(), "clicked on textview", Toast.LENGTH_SHORT).show()
+//            }
+//
+//        })
+
+//        dtextView?.setOnClickListener{
+//            Toast.makeText(requireContext(), "clicked on textview", Toast.LENGTH_SHORT).show()
+//        }
+//        dtextView?.setOnTouchListener(MultiTouchListener(requireContext()))
+//        b.cardrootlayout.apply {
+//            this.addView(dtextView)
+//        }
+
+        val triple = Triple("dtextView?.text.toString()", texteditcolor, typeface!!);
+        addStringToView(requireContext(), triple)
 
 
     }
@@ -816,6 +854,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             { resource ->
                 setStickersAdapter(resource)
             }
+
         }
 
 
@@ -830,11 +869,13 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                 object : StickerOnItemClick {
                     override fun onClick(view: View, position: Int) {
                         stickerImageView = StickerImageView(requireContext())
+                        println("onTouch stickerImageView" + stickerImageView.getTag())
                         b.stickersid.text = getString(R.string.remove)
+
+//                        stickerImageView.setImageResource(R.drawable.ic_stickers)
                         stickerImageView.imageBitmap = view?.drawToBitmap()
                         b.cardrootlayout.addView(stickerImageView)
                         stickerdialog?.dismiss()
-
                     }
                 })
 
@@ -907,6 +948,52 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                 dtextView?.text = ""
             }
         }
+    }
+
+    private fun addStringToView(context: Context, triple: Triple<String, Int, Typeface>) {
+        val string = triple.first
+        val tv_sticker = BubbleTextView(context, triple.second, triple.third, 0, string)
+        removeAddedView(tv_sticker)
+        tv_sticker.setOperationListener(object : BubbleTextView.OperationListener {
+            override fun onDeleteClick() {
+                removeAddedView(tv_sticker)
+            }
+
+            override fun onEdit(bubbleTextView: BubbleTextView?) {
+                bubbleTextView.let {
+                    val onEdit = !bubbleTextView?.isInEditMode!!
+                    tv_sticker.setInEdit(onEdit)
+                }
+            }
+
+            override fun onClick(bubbleTextView: BubbleTextView?) {
+            }
+
+            override fun onTop(bubbleTextView: BubbleTextView?) {
+            }
+        })
+
+        if (string.length <= 200) {
+            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_250)
+        } else if (string.length > 200 && string.length < 400) {
+            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_100)
+        } else if (string.length >= 400 && string.length < 800) {
+            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_500_200)
+        } else {
+            tv_sticker.setImageResource(R.mipmap.bubble_7_rb)
+        }
+
+        tv_sticker.setText(string)
+        addMovableItemOnView(tv_sticker)
+
+    }
+
+    private fun addMovableItemOnView(any: View) {
+        b.cardsharesaveid.addView(any)
+    }
+
+    private fun removeAddedView(view: View) {
+        b.cardsharesaveid.removeView(view)
     }
 
 
