@@ -20,7 +20,7 @@ import com.examp.allwishes.ui.fragment.SetCardFrag
 import com.examp.allwishes.ui.util.BubbleTextView
 import com.examp.allwishes.ui.util.OnItemClickListener
 
-class MyTextEditerDilog(val myquote:String ): DialogFragment() {
+class MyTextEditerDilog(val myquote:String,val bubbleTextView: BubbleTextView ): DialogFragment() {
 
     lateinit var myedittext:String
     var myqotesdata:String=""
@@ -107,18 +107,17 @@ class MyTextEditerDilog(val myquote:String ): DialogFragment() {
         setCancelable(isCancelable)
     }
 
-    private fun addStringToView(context: Context, triple: Triple<String, Int, Typeface>) {
-        val string = triple.first
-        var  tv_sticker = BubbleTextView(context, triple.second, triple.third, 0,string)
-        tv_sticker.setOperationListener(object : BubbleTextView.OperationListener {
+    private fun addStringToView(context: Context,triple: Triple<String, Int, Typeface>) {
+        val string = triple.first//        var  tv_sticker = BubbleTextView(context, triple.second, triple.third, 0,string)
+        bubbleTextView.setOperationListener(object : BubbleTextView.OperationListener {
             override fun onDeleteClick() {
-                    removeAddedView(tv_sticker)
+                    removeAddedView(bubbleTextView)
             }
 
             override fun onEdit(bubbleTextView: BubbleTextView?) {
                 bubbleTextView.let {
                     val onEdit = !bubbleTextView?.isInEditMode!!
-                    tv_sticker.setInEdit(onEdit)
+                    bubbleTextView.setInEdit(onEdit)
                 }
             }
             override fun onClick(bubbleTextView: BubbleTextView?) {
@@ -127,19 +126,20 @@ class MyTextEditerDilog(val myquote:String ): DialogFragment() {
             }
         })
         if (string.length <= 200) {
-            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_250)
+            bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_250)
         } else if (string.length > 200 && string.length < 400) {
-            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_100)
+            bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_100)
         } else if (string.length >= 400 && string.length < 800) {
-            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_500_200)
+            bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_500_200)
         } else {
-            tv_sticker.setImageResource(R.mipmap.bubble_7_rb)
+            bubbleTextView.setImageResource(R.mipmap.bubble_7_rb)
         }
-        tv_sticker.setText(string)
-        addMovableItemOnView(tv_sticker)
-        addMovableItemOnView(tv_sticker)
-        addMovableItemOnView(tv_sticker)
-        addMovableItemOnView(tv_sticker)
+        bubbleTextView.setColorNFont(triple.first,triple.second,triple.third);
+//        bubbleTextView.setText(string)
+        addMovableItemOnView(bubbleTextView)
+//        addMovableItemOnView(bubbleTextView)
+//        addMovableItemOnView(bubbleTextView)
+//        addMovableItemOnView(bubbleTextView)
     }
     private fun addMovableItemOnView(any: View) {
         removeAddedView(any)

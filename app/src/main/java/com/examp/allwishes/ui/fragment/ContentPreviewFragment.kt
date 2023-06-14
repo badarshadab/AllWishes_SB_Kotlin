@@ -71,16 +71,16 @@ class ContentPreviewFragment : Fragment() {
         mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()) { resource ->
             setAdapter(resource)
         }
-
-
     }
 
     private fun setAdapter(resource: List<StorageReference>) {
+        var list = resource.asReversed()
         val adapter = ContentPreviewAdapter(
-            activity, resource, type
+            activity, list, type
         )
         b.vp.adapter = adapter
         b.vp.setCurrentItem(index!!, true)
+
     }
 
 }

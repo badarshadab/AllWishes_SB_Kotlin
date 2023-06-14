@@ -155,7 +155,7 @@ public class BubbleTextView extends ImageView {
 
     private final long bubbleId;
 
-    private String myquotes;
+    public String myquotes;
 
 
     public BubbleTextView(Context context, AttributeSet attrs) {
@@ -199,8 +199,17 @@ public class BubbleTextView extends ImageView {
         this.bubbleId = bubbleId;
         init();
     }
-
-
+//    public void updateTextView(int fontColor, Typeface typeface, , String mytext) {
+//        myquotes = mytext;
+//        this.fontColor = fontColor;
+//        this.typeface = typeface;
+//    }
+    public void setColorNFont(String mytext,int fontColor, Typeface typeface){
+        this.myquotes = mytext;
+        this.fontColor = fontColor;
+        this.typeface = typeface;
+        init();
+    }
     private void init() {
         dm = getResources().getDisplayMetrics();
         dst_delete = new Rect();
@@ -454,7 +463,7 @@ public class BubbleTextView extends ImageView {
 
 
                     FragmentManager ft = ((AppCompatActivity) mycontext).getSupportFragmentManager();
-                    MyTextEditerDilog myTextEditerDilog = new MyTextEditerDilog(myquotes);
+                    MyTextEditerDilog myTextEditerDilog = new MyTextEditerDilog(myquotes,this);
                     myTextEditerDilog.show(ft, "dd");
 
 //                    midDiagonalPoint(localPointF);

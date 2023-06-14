@@ -549,8 +549,8 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                 b.create.visibility = View.GONE
 //                dtextView!!.setOnClickListener(this)
             }
-//            val triple = Triple(msgToAdd, texteditcolor, fontdata);
-//            addStringToView(requireContext(), triple)
+            val triple = Triple(msgToAdd, texteditcolor, fontdata);
+            addStringToView(requireContext(), triple)
             addtextdialog?.dismiss()
         }
 
@@ -611,7 +611,6 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     fun addTextClick() {
         b.fontcolorlistlayout.visibility = View.GONE
 
-
         addTextDilog()
 
         dtextView = TextView(requireContext())
@@ -627,26 +626,6 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         val typeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.font11b)
         dtextView?.setTypeface(typeface)
         dtextView?.textSize = 40f
-
-
-//        dtextView?.setOnTouchListener(object :View.OnTouchListener{
-//            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-//                Toast.makeText(requireContext(), "clicked on textview", Toast.LENGTH_SHORT).show()
-//            }
-//
-//        })
-
-//        dtextView?.setOnClickListener{
-//            Toast.makeText(requireContext(), "clicked on textview", Toast.LENGTH_SHORT).show()
-//        }
-//        dtextView?.setOnTouchListener(MultiTouchListener(requireContext()))
-//        b.cardrootlayout.apply {
-//            this.addView(dtextView)
-//        }
-
-        val triple = Triple("dtextView?.text.toString()", texteditcolor, typeface!!);
-        addStringToView(requireContext(), triple)
-
 
     }
 

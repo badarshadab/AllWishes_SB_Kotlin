@@ -19,11 +19,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -42,6 +44,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.examp.allwishes.BuildConfig
 import com.examp.allwishes.R
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.util.AdUtils
 import com.karumi.dexter.Dexter
@@ -553,6 +556,46 @@ object AppUtils {
                 ), RECORD_REQUEST_CODE
             )
         }
+    }
+
+    fun createTabIcons(context: Context, tabLayout: TabLayout) {
+        var tabOne = LayoutInflater.from(context).inflate(R.layout.custom_tab, null) as TextView
+        tabOne.text = "GIFs"
+        tabOne.textSize = 12F
+
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_gif_unselected, 0, 0)
+        tabLayout!!.getTabAt(0)!!.customView = tabOne
+
+
+        val tabTwo = LayoutInflater.from(context).inflate(R.layout.custom_tab, null) as TextView
+        tabTwo.text = "Cards"
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_cards_unselected, 0, 0)
+        tabTwo.textSize = 12F
+        tabLayout!!.getTabAt(1)!!.customView = tabTwo
+
+
+        val tabThree = LayoutInflater.from(context).inflate(R.layout.custom_tab, null) as TextView
+        tabThree.text = "Quotes"
+        tabThree.textSize = 12F
+
+        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_quotes_unselected, 0, 0)
+        tabLayout!!.getTabAt(2)!!.customView = tabThree
+
+        val tabfour = LayoutInflater.from(context).inflate(R.layout.custom_tab, null) as TextView
+        tabfour.text = "Frames"
+        tabfour.textSize = 12F
+
+        tabfour.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_frame_unselected, 0, 0)
+        tabLayout!!.getTabAt(3)!!.customView = tabfour
+
+//        val tabfive = LayoutInflater.from(context).inflate(R.layout.custom_tab, null) as TextView
+//        tabfive.text = "Create"
+//         tabfive.textSize = 12F
+//
+//        tabfive.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.create_btn,0,0)
+//        tabLayout!!.getTabAt(4)!!.customView = tabfive
+
+
     }
 
 }

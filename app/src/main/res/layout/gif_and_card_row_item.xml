@@ -2,16 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="4dp"
-        app:cardBackgroundColor="@color/text_col"
-        app:cardCornerRadius="11dp"
-        app:cardElevation="1dp"
+        android:layout_margin="1dp"
+        app:cardCornerRadius="@dimen/_13ssp"
+        app:cardElevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -19,18 +19,14 @@
         app:strokeWidth="2dp">
 
 
-        <TextView
-            android:id="@+id/qutes_id"
+        <ImageView
+            android:id="@+id/row_item_gif_card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="15dp"
-            android:textColor="@color/white"
-            android:textSize="20dp"
 
+            android:layout_height="@dimen/_120sdp"
+            android:scaleType="fitXY"
 
             />
-
     </com.google.android.material.card.MaterialCardView>
 
 
