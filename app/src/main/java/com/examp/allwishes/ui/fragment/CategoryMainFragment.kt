@@ -74,10 +74,8 @@ class CategoryMainFragment : Fragment() {
 
                 when (tab?.position) {
                     0 -> {
-
                         tablayout.getTabAt(0)?.setIcon(R.drawable.ic_gif_tab)
                         Toast.makeText(requireContext(), "clicked on Tab 1" , Toast.LENGTH_SHORT).show()
-//                        AppUtils.changeFragment(requireActivity() , R.id.)
                     }
 
                     1 -> {

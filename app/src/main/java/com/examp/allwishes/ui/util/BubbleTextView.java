@@ -419,7 +419,7 @@ public class BubbleTextView extends ImageView {
         int w = mBitmap.getWidth();
         int h = mBitmap.getHeight();
         oringinWidth = w;
-        float topbarHeight = DensityUtils.dip2px(getContext(), 50);
+        float topbarHeight = DensityU.INSTANCE.dip2px(getContext() , 50);
         matrix.postTranslate(mScreenwidth / 2 - w / 2, (mScreenwidth) / 2 - h / 2);
         invalidate();
     }

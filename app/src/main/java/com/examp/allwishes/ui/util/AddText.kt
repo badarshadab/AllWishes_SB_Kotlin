@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import com.examp.allwishes.R
+import com.examp.allwishes.ui.adapter.FontSpinnerAdapter
 import com.google.android.material.textfield.TextInputEditText
 
 
@@ -78,7 +79,7 @@ class AddText(private val colorPicker: PicColor) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.font_dialog_layout)
         val lv = dialog.findViewById<ListView>(R.id.lv)
-        lv.adapter = com.examp.allwishes.ui.adapter.FontSpinnerAdapter(
+        lv.adapter = FontSpinnerAdapter(
             context,
             R.layout.spinner_row,
             fonts
