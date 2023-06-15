@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.FragmentManager;
 
@@ -114,7 +115,7 @@ public class BubbleTextView extends ImageView {
     private String mStr = "";
 
     //字号默认16sp
-    private final float mDefultSize = 16;
+    private float mDefultSize = 16;
     private float mFontSize = 16;
     //最大最小字号
     private final float mMaxFontSize = 25;
@@ -149,9 +150,9 @@ public class BubbleTextView extends ImageView {
 
     private boolean isInBitmap;
 
-    private int fontColor;
+    public int fontColor;
 
-    private Typeface typeface;
+    public Typeface typeface;
 
     private final long bubbleId;
 
@@ -208,7 +209,12 @@ public class BubbleTextView extends ImageView {
         this.myquotes = mytext;
         this.fontColor = fontColor;
         this.typeface = typeface;
-        init();
+        mFontPaint.setColor(fontColor);
+        mFontPaint.setTypeface(typeface);
+        mDefultSize = mFontPaint.getTextSize();
+        mFontSize = mDefultSize;
+        mFontPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mFontSize, dm));
+        this.mStr = myquotes;
     }
     private void init() {
         dm = getResources().getDisplayMetrics();
@@ -238,7 +244,27 @@ public class BubbleTextView extends ImageView {
         isInit = true;
         mStr = defaultStr;
     }
+    private void refresh(){
+//        localPaint.setAntiAlias(true);
+//        localPaint.setDither(true);
+//        localPaint.setStyle(Paint.Style.STROKE);
+//        localPaint.setStrokeWidth(2.0f);
+//        mScreenwidth = dm.widthPixels;
+//        mScreenHeight = dm.heightPixels;
+//        mFontSize = mDefultSize;
+//        mFontPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mFontSize, dm));
+//
+//
+//        mFontPaint.setColor(fontColor);
+//        mFontPaint.setTypeface(typeface);
+//        mFontPaint.setTextAlign(Paint.Align.CENTER);
+//        mFontPaint.setAntiAlias(true);
+//        fm = mFontPaint.getFontMetrics();
+//        baseline = fm.descent - fm.ascent;
+//        isInit = true;
+//        mStr = defaultStr;
 
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         if (mBitmap != null) {
@@ -463,6 +489,7 @@ public class BubbleTextView extends ImageView {
 
 
                     FragmentManager ft = ((AppCompatActivity) mycontext).getSupportFragmentManager();
+
                     MyTextEditerDilog myTextEditerDilog = new MyTextEditerDilog(myquotes,this);
                     myTextEditerDilog.show(ft, "dd");
 

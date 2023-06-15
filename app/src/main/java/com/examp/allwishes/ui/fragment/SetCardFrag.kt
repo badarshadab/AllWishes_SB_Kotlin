@@ -542,6 +542,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             addtextdialog?.dismiss()
         }
         addtextbinding?.addokbtn?.setOnClickListener {
+
             msgToAdd = addtextbinding!!.textid.text.toString()
             dtextView?.text = msgToAdd
             if (!msgToAdd.isEmpty()) {

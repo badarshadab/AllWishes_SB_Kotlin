@@ -87,11 +87,18 @@ class MyTextEditerDilog(val myquote:String,val bubbleTextView: BubbleTextView ):
                        dialog?.cancel()
                    }
                 else{
-                       val face = Typeface.createFromAsset(view?.context!!.assets, "1.ttf")
-
+                       var typeface = Typeface.createFromAsset(view?.context!!.assets, "1.ttf")
                        binding.edittextid.setTextColor(Color.parseColor("#FF000000"))
-
-                       val triple = Triple( binding.edittextid.text.toString() ,colorcode, face);
+                       if(colorcode == 0){
+                           colorcode = bubbleTextView.fontColor;
+                       }
+                       if(fontstype == 0){
+                           typeface = bubbleTextView.typeface
+                       }else{
+                           typeface = ResourcesCompat.getFont(requireContext(), fontstype);
+                       }
+//                       if()
+                       val triple = Triple( binding.edittextid.text.toString() ,colorcode, typeface);
 
                        addStringToView(requireContext(), triple )
 

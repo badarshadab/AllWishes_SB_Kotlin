@@ -4,6 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.modlueinfotech.allwishesgif.ui.activites.gif.Cards
+import com.modlueinfotech.allwishesgif.ui.activites.gif.Frames
+import com.modlueinfotech.allwishesgif.ui.activites.gif.Gifs
 import com.modlueinfotech.allwishesgif.ui.activites.gif.Quotes
 
 class MyTAbAdapter(
@@ -19,8 +22,15 @@ class MyTAbAdapter(
         return array.size
     }
 
+
     override fun createFragment(position: Int): Fragment {
-        return Quotes(catName)
+        when (position) {
+            0 -> return Gifs(catName)
+            1 -> return Frames(catName)
+            2 -> return Cards(catName)
+            else -> return Quotes(catName)
+
+        }
     }
 
 }

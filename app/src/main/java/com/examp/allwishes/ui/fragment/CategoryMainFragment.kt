@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -54,19 +55,14 @@ class CategoryMainFragment : Fragment() {
             requireActivity(),
             _binding.nativeAdContainer
         )
-
+        myTAbAdapter = MyTAbAdapter(
+                requireActivity().supportFragmentManager,
+                lifecycle,
+                typeArray,
+                trending_cat
+        )
+        viewpager.adapter = myTAbAdapter
         tablayout.apply {
-            myTAbAdapter =
-                MyTAbAdapter(
-                    requireActivity().supportFragmentManager,
-                    lifecycle,
-                    typeArray,
-                    trending_cat
-                )
-
-
-            viewpager.adapter = myTAbAdapter
-
             TabLayoutMediator(tablayout, viewpager) { tab, position ->
                 tab.text = typeArray[position]
             }.attach()
@@ -78,19 +74,25 @@ class CategoryMainFragment : Fragment() {
 
                 when (tab?.position) {
                     0 -> {
+
                         tablayout.getTabAt(0)?.setIcon(R.drawable.ic_gif_tab)
+                        Toast.makeText(requireContext(), "clicked on Tab 1" , Toast.LENGTH_SHORT).show()
+//                        AppUtils.changeFragment(requireActivity() , R.id.)
                     }
 
                     1 -> {
                         tablayout.getTabAt(1)?.setIcon(R.drawable.ic_cards_tab)
+                        Toast.makeText(requireContext(), "clicked on Tab 2" , Toast.LENGTH_SHORT).show()
                     }
 
                     2 -> {
                         tablayout.getTabAt(2)?.setIcon(R.drawable.ic_quotes_tab)
+                        Toast.makeText(requireContext(), "clicked on Tab 3" , Toast.LENGTH_SHORT).show()
                     }
 
                     3 -> {
                         tablayout.getTabAt(3)?.setIcon(R.drawable.ic_frame_tab)
+                        Toast.makeText(requireContext(), "clicked on Tab 4" , Toast.LENGTH_SHORT).show()
                     }
                 }
             }
