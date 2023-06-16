@@ -1,4 +1,4 @@
-package com.modlueinfotech.allwishesgif.ui.activites.gif
+package com.examp.allwishes.ui.fragment
 
 import android.app.Activity
 import android.content.Context
@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.FragmentGifBinding
 import com.examp.allwishes.ui.data.api.FirebaseHelper
-import com.examp.allwishes.ui.fragment.FrameEditFragment
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.util.OnItemClickListener_Gif
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
@@ -24,6 +23,7 @@ class Frames(var catName: String) : Fragment() {
 
     lateinit var binding: FragmentGifBinding
     private lateinit var mainViewModel: HomeViewModel
+    private var trending_cat: String = ""
 
 
     private var list: List<StorageReference>? = null
@@ -42,8 +42,12 @@ class Frames(var catName: String) : Fragment() {
     ): View? {
         binding = FragmentGifBinding.inflate(inflater, container, false)
         setupViewModel()
-        setupObservers(catName + "/Frames")
-
+        if (catName == null) {
+            trending_cat = arguments?.getString("catName").toString()
+            setupObservers(trending_cat + "/Frames")
+        } else {
+            setupObservers(catName + "/Frames")
+        }
 
         return binding.root
     }
@@ -67,7 +71,7 @@ class Frames(var catName: String) : Fragment() {
     }
 
     private fun setAdapter(listA: List<StorageReference>) {
-        var adapter = GifCardAdapter(listA, requireContext(), object :
+        var adapter = GifCardAdapter(listA, activity, object :
             OnItemClickListener_Gif {
             override fun onClick(position: Int) {
                 val b = Bundle()

@@ -1,4 +1,4 @@
-package com.modlueinfotech.allwishesgif.ui.activites.gif
+package com.examp.allwishes.ui.fragment
 
 import android.app.Activity
 import android.content.Context
@@ -19,6 +19,7 @@ class Quotes(var catName: String) : Fragment() {
 
     lateinit var binding: QuoteslistdlayoutBinding
     private lateinit var quotesViewModel: QuoteViewModel
+    private var trending_cat: String = ""
 
 
     lateinit var activity: Activity
@@ -35,7 +36,13 @@ class Quotes(var catName: String) : Fragment() {
     ): View? {
         binding = QuoteslistdlayoutBinding.inflate(inflater, container, false)
         setupViewModel()
-        setupObservers(catName + "/Quotes")
+        if (catName == null) {
+            trending_cat = arguments?.getString("catName").toString()
+            setupObservers(trending_cat + "/Quotes")
+        }
+        else{
+            setupObservers(catName + "/Quotes")
+        }
 
 
         return binding.root

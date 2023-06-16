@@ -1,19 +1,19 @@
 package com.examp.allwishes.ui.fragment
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.CategorymainfragmentBinding
 import com.examp.allwishes.ui.adapter.MyTAbAdapter
-import com.examp.allwishes.ui.util.AppUtils
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.greetings.allgreetingwishes.adapter.HostTabPagerAdapter
 import com.greetings.allwishes.util.AdUtils
 
 
@@ -24,6 +24,13 @@ class CategoryMainFragment : Fragment() {
 
     lateinit var tablayout: TabLayout
     lateinit var viewpager: ViewPager2
+
+    val tabIcons = intArrayOf(
+        R.drawable.ic_gif_unselected,
+        R.drawable.ic_cards_unselected,
+        R.drawable.ic_quotes_unselected,
+        R.drawable.ic_frame_unselected
+    )
 
     val typeArray = arrayOf(
         "Gifs", "Frames", "Cards", "Quotes"
@@ -55,73 +62,68 @@ class CategoryMainFragment : Fragment() {
             requireActivity(),
             _binding.nativeAdContainer
         )
-        myTAbAdapter = MyTAbAdapter(
-                requireActivity().supportFragmentManager,
-                lifecycle,
-                typeArray,
-                trending_cat
+
+        val titles = listOf("Gifs", "Cards", "Quotes", "Frames")
+//        val icon = listOf(
+//            R.drawable.ic_gif_unselected,
+//            R.drawable.ic_cards_unselected,
+//            R.drawable.ic_quotes_unselected,
+//            R.drawable.ic_frame_unselected
+//        )
+
+        val list = listOf(
+            Gifs(trending_cat),
+            Cards(trending_cat),
+            Quotes(trending_cat),
+            Frames(trending_cat)
         )
-        viewpager.adapter = myTAbAdapter
-        tablayout.apply {
-            TabLayoutMediator(tablayout, viewpager) { tab, position ->
-                tab.text = typeArray[position]
-            }.attach()
 
-            AppUtils.createTabIcons(requireContext(), tablayout)
-        }
-        tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
+        viewpager.adapter = HostTabPagerAdapter(list, this)
+//        viewpager.adapter = MyTAbAdapter(
+//            requireActivity().supportFragmentManager,
+//            lifecycle,
+//            typeArray,
+//            trending_cat
+//        )
 
-                when (tab?.position) {
-                    0 -> {
-                        tablayout.getTabAt(0)?.setIcon(R.drawable.ic_gif_tab)
-                        Toast.makeText(requireContext(), "clicked on Tab 1" , Toast.LENGTH_SHORT).show()
-                    }
+        TabLayoutMediator(tablayout, viewpager) { tab, position ->
+            tablayout.getTabAt(position)?.setIcon(tabIcons[position])
+//            when (position) {
+//
+//                0 -> {
+//                    tab.icon =
+//                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_gif_unselected)
+//                }
+//
+//                1 -> {
+//                    tab.icon =
+//                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_cards_unselected)
+//                }
+//
+//                2 -> {
+//                    tab.icon =
+//                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_quotes_unselected)
+//                }
+//
+//                3 -> {
+//                    tab.icon =
+//                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_frame_unselected)
+//                }
+//            }
+            tab.text = titles[position]
+//            AppUtils.createTabIcons(requireContext(), tablayout)
 
-                    1 -> {
-                        tablayout.getTabAt(1)?.setIcon(R.drawable.ic_cards_tab)
-                        Toast.makeText(requireContext(), "clicked on Tab 2" , Toast.LENGTH_SHORT).show()
-                    }
-
-                    2 -> {
-                        tablayout.getTabAt(2)?.setIcon(R.drawable.ic_quotes_tab)
-                        Toast.makeText(requireContext(), "clicked on Tab 3" , Toast.LENGTH_SHORT).show()
-                    }
-
-                    3 -> {
-                        tablayout.getTabAt(3)?.setIcon(R.drawable.ic_frame_tab)
-                        Toast.makeText(requireContext(), "clicked on Tab 4" , Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> {
-                        tablayout.getTabAt(0)?.setIcon(R.drawable.ic_gif_unselected)
-                    }
-
-                    1 -> {
-                        tablayout.getTabAt(1)?.setIcon(R.drawable.ic_cards_unselected)
-                    }
-
-                    2 -> {
-                        tablayout.getTabAt(2)?.setIcon(R.drawable.ic_quotes_unselected)
-                    }
-
-                    3 -> {
-                        tablayout.getTabAt(3)?.setIcon(R.drawable.ic_frame_unselected)
-                    }
-                }
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
-            }
-
-        })
-
+//            tab.setIcon(icon[position])
+        }.attach()
+//        setUpTabIcons()
         return _binding.root
     }
 
+    fun setUpTabIcons() {
+        tablayout.getTabAt(0)?.setIcon(tabIcons[0])
+        tablayout.getTabAt(1)?.setIcon(tabIcons[1])
+        tablayout.getTabAt(2)?.setIcon(tabIcons[2])
+        tablayout.getTabAt(2)?.setIcon(tabIcons[3])
+    }
 }
+

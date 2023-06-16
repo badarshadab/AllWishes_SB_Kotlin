@@ -1,4 +1,4 @@
-package com.modlueinfotech.allwishesgif.ui.activites.gif
+package com.examp.allwishes.ui.fragment
 
 import android.app.Activity
 import android.content.Context
@@ -24,7 +24,7 @@ class Gifs(var catName: String) : Fragment() {
 
     lateinit var binding: FragmentGifBinding
     private lateinit var mainViewModel: HomeViewModel
-
+    private var trending_cat: String = ""
 
     private var list: List<StorageReference>? = null
 
@@ -42,8 +42,14 @@ class Gifs(var catName: String) : Fragment() {
     ): View? {
         binding = FragmentGifBinding.inflate(inflater, container, false)
         setupViewModel()
-        setupObservers(catName + "/Gifs")
 
+        if (catName == null) {
+            trending_cat = arguments?.getString("catName").toString()
+            setupObservers(trending_cat + "/Gifs")
+        }
+        else{
+            setupObservers(catName + "/Gifs")
+        }
 
         return binding.root
     }
@@ -67,7 +73,7 @@ class Gifs(var catName: String) : Fragment() {
     }
 
     private fun setAdapter(listA: List<StorageReference>) {
-        var adapter = GifCardAdapter(listA, requireContext(), object :
+        var adapter = GifCardAdapter(listA, activity, object :
             OnItemClickListener_Gif {
             override fun onClick(position: Int) {
                 val bun = Bundle()
@@ -75,7 +81,8 @@ class Gifs(var catName: String) : Fragment() {
                 bun.putString("catName", catName)
                 bun.putInt("position", position)
                 AppUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
-                Toast.makeText(requireContext(), "Clicked On Gif     $position", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Clicked On Gif     $position", Toast.LENGTH_SHORT)
+                    .show()
             }
 
         })

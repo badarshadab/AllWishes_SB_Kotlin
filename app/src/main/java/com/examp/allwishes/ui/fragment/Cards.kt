@@ -1,4 +1,4 @@
-package com.modlueinfotech.allwishesgif.ui.activites.gif
+package com.examp.allwishes.ui.fragment
 
 import android.app.Activity
 import android.content.Context
@@ -24,6 +24,7 @@ class Cards(var catName: String) : Fragment() {
 
     lateinit var binding: FragmentGifBinding
     private lateinit var mainViewModel: HomeViewModel
+    private var trending_cat: String = ""
 
 
     private var list: List<StorageReference>? = null
@@ -42,7 +43,13 @@ class Cards(var catName: String) : Fragment() {
     ): View? {
         binding = FragmentGifBinding.inflate(inflater, container, false)
         setupViewModel()
-        setupObservers(catName + "/Cards")
+        if (catName == null) {
+            trending_cat = arguments?.getString("catName").toString()
+            setupObservers(trending_cat + "/Cards")
+        }
+        else{
+            setupObservers(catName + "/Cards")
+        }
 
 
         return binding.root

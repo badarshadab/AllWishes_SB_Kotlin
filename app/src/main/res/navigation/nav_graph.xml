@@ -83,6 +83,18 @@
         <action
             android:id="@+id/action_nav_cat_main_to_holiday_list"
             app:destination="@id/holiday_list" />
+        <action
+            android:id="@+id/action_nav_cat_main_to_nav_gif_holiday"
+            app:destination="@id/nav_gif_holiday" />
+        <action
+            android:id="@+id/action_nav_cat_main_to_nav_card_holiday"
+            app:destination="@id/nav_card_holiday" />
+        <action
+            android:id="@+id/action_nav_cat_main_to_nav_frames_holiday"
+            app:destination="@id/nav_frames_holiday" />
+        <action
+            android:id="@+id/action_nav_cat_main_to_nav_quotes_holiday"
+            app:destination="@id/nav_quotes_holiday" />
     </fragment>
 
     <fragment
@@ -166,6 +178,46 @@
         <action
             android:id="@+id/action_nav_card_preview_to_nav_set_cards"
             app:destination="@id/nav_set_cards" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_gif_holiday"
+        android:name="com.examp.allwishes.ui.fragment.Gifs"
+        android:label="gif_holiday"
+        tools:layout="@layout/fragment_gif">
+        <action
+            android:id="@+id/action_nav_gif_holiday_to_nav_cat_main"
+            app:destination="@id/nav_cat_main" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_card_holiday"
+        android:name="com.examp.allwishes.ui.fragment.Cards"
+        android:label="card_holiday"
+        tools:layout="@layout/fragment_gif">
+        <action
+            android:id="@+id/action_nav_gif_holiday_to_nav_cat_main"
+            app:destination="@id/nav_cat_main" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_frames_holiday"
+        android:name="com.examp.allwishes.ui.fragment.Frames"
+        android:label="gif_holiday"
+        tools:layout="@layout/fragment_gif">
+        <action
+            android:id="@+id/action_nav_gif_holiday_to_nav_cat_main"
+            app:destination="@id/nav_cat_main" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_quotes_holiday"
+        android:name="com.examp.allwishes.ui.fragment.Cards"
+        android:label="card_holiday"
+        tools:layout="@layout/fragment_gif">
+        <action
+            android:id="@+id/action_nav_gif_holiday_to_nav_cat_main"
+            app:destination="@id/nav_cat_main" />
     </fragment>
 
 </navigation>
