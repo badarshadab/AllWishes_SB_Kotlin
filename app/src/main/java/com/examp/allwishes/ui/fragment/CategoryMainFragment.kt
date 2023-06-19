@@ -64,12 +64,12 @@ class CategoryMainFragment : Fragment() {
         )
 
         val titles = listOf("Gifs", "Cards", "Quotes", "Frames")
-//        val icon = listOf(
-//            R.drawable.ic_gif_unselected,
-//            R.drawable.ic_cards_unselected,
-//            R.drawable.ic_quotes_unselected,
-//            R.drawable.ic_frame_unselected
-//        )
+        val icon = listOf(
+            R.drawable.ic_gif_unselected,
+            R.drawable.ic_cards_unselected,
+            R.drawable.ic_quotes_unselected,
+            R.drawable.ic_frame_unselected
+        )
 
         val list = listOf(
             Gifs(trending_cat),
@@ -79,51 +79,25 @@ class CategoryMainFragment : Fragment() {
         )
 
         viewpager.adapter = HostTabPagerAdapter(list, this)
-//        viewpager.adapter = MyTAbAdapter(
-//            requireActivity().supportFragmentManager,
-//            lifecycle,
-//            typeArray,
-//            trending_cat
-//        )
 
         TabLayoutMediator(tablayout, viewpager) { tab, position ->
-            tablayout.getTabAt(position)?.setIcon(tabIcons[position])
-//            when (position) {
-//
-//                0 -> {
-//                    tab.icon =
-//                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_gif_unselected)
-//                }
-//
-//                1 -> {
-//                    tab.icon =
-//                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_cards_unselected)
-//                }
-//
-//                2 -> {
-//                    tab.icon =
-//                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_quotes_unselected)
-//                }
-//
-//                3 -> {
-//                    tab.icon =
-//                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_frame_unselected)
-//                }
-//            }
+
+
             tab.text = titles[position]
+//            tab.setIcon(resources.getDrawable(R.drawable.ic_gif_unselected))
 //            AppUtils.createTabIcons(requireContext(), tablayout)
 
-//            tab.setIcon(icon[position])
+//            tab.setIcon(resources.getDrawable(icon[position]))
         }.attach()
 //        setUpTabIcons()
         return _binding.root
     }
 
     fun setUpTabIcons() {
-        tablayout.getTabAt(0)?.setIcon(tabIcons[0])
-        tablayout.getTabAt(1)?.setIcon(tabIcons[1])
-        tablayout.getTabAt(2)?.setIcon(tabIcons[2])
-        tablayout.getTabAt(2)?.setIcon(tabIcons[3])
+        tablayout.getTabAt(0)?.setIcon(resources.getDrawable(tabIcons[0]))
+        tablayout.getTabAt(1)?.setIcon(resources.getDrawable(tabIcons[1]))
+        tablayout.getTabAt(2)?.setIcon(resources.getDrawable(tabIcons[2]))
+        tablayout.getTabAt(3)?.setIcon(resources.getDrawable(tabIcons[3]))
     }
 }
 

@@ -11,12 +11,12 @@ import com.examp.allwishes.R
 import com.examp.allwishes.ui.util.OnItemClickListener_Gif
 import com.google.firebase.storage.StorageReference
 
-class GifCardAdapter(
+class FramesAdapter(
     var list: List<StorageReference>,
     var context: Context,
     private val onitemclicklistenerGif: OnItemClickListener_Gif
 ) :
-    RecyclerView.Adapter<GifCardAdapter.ViewHolder>() {
+    RecyclerView.Adapter<FramesAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View, onitemclicklistenerGif: OnItemClickListener_Gif) :
         RecyclerView.ViewHolder(view) {
@@ -42,7 +42,7 @@ class GifCardAdapter(
             .load(list[position])
             .placeholder(R.drawable.loading_img)
             .error(R.drawable.error_img)
-            .into(holder.fest_imageView);
+            .into(holder.fest_imageView)
 
 //        holder.fest_imageView.setImageResource(list[position].img_and_cards!!)
     }

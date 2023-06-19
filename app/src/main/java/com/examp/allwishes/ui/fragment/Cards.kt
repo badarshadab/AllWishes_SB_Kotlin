@@ -17,7 +17,7 @@ import com.examp.allwishes.ui.util.OnItemClickListener_Gif
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
-import com.modlueinfotech.allwishesgif.adapters.recyclerview.GifCardAdapter
+import com.modlueinfotech.allwishesgif.adapters.recyclerview.CardAdapter
 
 
 class Cards(var catName: String) : Fragment() {
@@ -43,16 +43,19 @@ class Cards(var catName: String) : Fragment() {
     ): View? {
         binding = FragmentGifBinding.inflate(inflater, container, false)
         setupViewModel()
+
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         if (catName == null) {
             trending_cat = arguments?.getString("catName").toString()
             setupObservers(trending_cat + "/Cards")
-        }
-        else{
+        } else {
             setupObservers(catName + "/Cards")
         }
-
-
-        return binding.root
     }
 
     private fun setupViewModel() {
@@ -65,7 +68,7 @@ class Cards(var catName: String) : Fragment() {
     private fun setupObservers(categoryName: String) {
         mainViewModel.loadImagesStorage(categoryName)
 
-        mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()) { resource ->
+        mainViewModel.repositoryResponseLiveData_ImageStore.observe(viewLifecycleOwner) { resource ->
             this.list = resource.asReversed()
             setAdapter(list!!)
         }
@@ -74,7 +77,7 @@ class Cards(var catName: String) : Fragment() {
     }
 
     private fun setAdapter(listA: List<StorageReference>) {
-        var adapter = GifCardAdapter(listA, activity, object :
+        var adapter = CardAdapter(listA, activity, object :
             OnItemClickListener_Gif {
             override fun onClick(position: Int) {
                 val bun = Bundle()
@@ -82,7 +85,11 @@ class Cards(var catName: String) : Fragment() {
                 bun.putString("catName", catName)
                 bun.putInt("position", position)
                 AppUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
-                Toast.makeText(requireContext(), "Clicked On Cards     $position", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Clicked On Cards     $position",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         })

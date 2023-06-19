@@ -17,7 +17,7 @@ import com.examp.allwishes.ui.util.OnItemClickListener_Gif
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
-import com.modlueinfotech.allwishesgif.adapters.recyclerview.GifCardAdapter
+import com.modlueinfotech.allwishesgif.adapters.recyclerview.FramesAdapter
 
 class Frames(var catName: String) : Fragment() {
 
@@ -42,14 +42,20 @@ class Frames(var catName: String) : Fragment() {
     ): View? {
         binding = FragmentGifBinding.inflate(inflater, container, false)
         setupViewModel()
+
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+
         if (catName == null) {
             trending_cat = arguments?.getString("catName").toString()
             setupObservers(trending_cat + "/Frames")
         } else {
             setupObservers(catName + "/Frames")
         }
-
-        return binding.root
     }
 
     private fun setupViewModel() {
@@ -58,11 +64,11 @@ class Frames(var catName: String) : Fragment() {
             ViewModelProvider(requireActivity(), myViewModelFactory)[HomeViewModel::class.java]
     }
 
-
     private fun setupObservers(categoryName: String) {
+
         mainViewModel.loadImagesStorage(categoryName)
 
-        mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()) { resource ->
+        mainViewModel.repositoryResponseLiveData_ImageStore.observe(viewLifecycleOwner) { resource ->
             this.list = resource.asReversed()
             setAdapter(list!!)
         }
@@ -71,7 +77,7 @@ class Frames(var catName: String) : Fragment() {
     }
 
     private fun setAdapter(listA: List<StorageReference>) {
-        var adapter = GifCardAdapter(listA, activity, object :
+        var adapter = FramesAdapter(listA, activity, object :
             OnItemClickListener_Gif {
             override fun onClick(position: Int) {
                 val b = Bundle()
