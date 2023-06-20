@@ -10,6 +10,7 @@ import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import com.examp.allwishes.databinding.ActivityCardpreviewBinding
 import com.examp.allwishes.ui.util.AppUtils
+import com.greetings.allwishes.util.AdUtils
 import com.sm.allwishes.greetings.util.ShareUtils
 import java.io.FileNotFoundException
 
@@ -34,6 +35,8 @@ class CardPreviewFragment : Fragment() {
                 e.printStackTrace()
             }
         }
+
+        AdUtils.showNativeBanner(requireActivity() , b.adsLayout)
         b.cardimgid.setImageBitmap(src)
 
         b.cardssaveBtn.setOnClickListener {

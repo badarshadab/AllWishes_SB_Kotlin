@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.examp.allwishes.R
@@ -83,7 +82,7 @@ class Frames(var catName: String) : Fragment() {
                 val b = Bundle()
                 FrameEditFragment.any = listA.get(position)
                 AppUtils.changeFragment(requireActivity(), R.id.nav_frameEdit, b)
-                Toast.makeText(requireContext(), "Clicked On Gif", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Clicked On Gif", Toast.LENGTH_SHORT).show()
             }
         })
         binding.gifRecyclerview.adapter = adapter

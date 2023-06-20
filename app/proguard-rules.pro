@@ -15,6 +15,15 @@
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
+-keep class com.sm.newadlib.model.** {*;}
+#-keep class com.examp.allwishes.ui.model.Root_HlNew**  { *; }
+#-keep class com.examp.allwishes.ui.model.EventByMonth**  { *; }
+#-keep class com.examp.allwishes.ui.model.Event**  { *; }
+#-keep class com.examp.allwishes.ui.model.DailyWishe**  { *; }
+#-keep class com.greetings.allwishes.models.**{ *; }
+
+-keepattributes Annotation
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.

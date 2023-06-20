@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.DailywishesTypeLayBinding
 import com.examp.allwishes.ui.util.AppUtils
+import com.greetings.allwishes.util.AdUtils
 
 
 class DailyWishes_TypeFrag : Fragment(), View.OnClickListener {
@@ -35,6 +36,7 @@ class DailyWishes_TypeFrag : Fragment(), View.OnClickListener {
         b.typeBtns.gifBtn.setOnClickListener(this)
         b.typeBtns.imgBtn.setOnClickListener(this)
         b.typeBtns.quotes.setOnClickListener(this)
+        AdUtils.showNative(requireActivity() , b.adsLayout)
         val view = b.root
         return view
     }

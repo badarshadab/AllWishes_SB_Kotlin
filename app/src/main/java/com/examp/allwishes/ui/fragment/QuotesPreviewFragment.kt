@@ -13,6 +13,7 @@ import com.examp.allwishes.databinding.FragmentQuotesPreviewBinding
 import com.examp.allwishes.ui.adapter.QuotesPreviewAdapter
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.QuoteViewModel
+import com.greetings.allwishes.util.AdUtils
 import com.sm.allwishes.greetings.util.ShareUtils
 
 class QuotesPreviewFragment : Fragment(), View.OnClickListener {
@@ -37,6 +38,7 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
         b = FragmentQuotesPreviewBinding.inflate(inflater, container, false)
         val quoteViewModel =
             ViewModelProvider(requireActivity())[QuoteViewModel::class.java]
+        AdUtils.showNativeBanner(requireActivity(), b.adContainer.nativeAdContainer)
         quoteViewModel.getQuotes(name + "/Quote")
         quoteViewModel.quotes.observe(requireActivity()) { list ->
 
@@ -45,22 +47,10 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
                 b.save.setOnClickListener(this)
                 b.shareImg.setOnClickListener(this)
                 b.shareText.setOnClickListener(this)
-//                AdUtils.showNativeBanner(requireActivity(), b.adContainer.adContainer)
             }
 
             b.shimmerLay.startShimmer()
 
-//            AppUtils.setUpToolbar(
-//                requireActivity(),
-//                b.toolbar.toolbar,
-//                "Quotes Preview",
-//                true
-//            )
-
-//            AdUtils.showNativeBanner(
-//                requireActivity(),
-//                b.adContainer.nativeAdContainer
-//            )
 
             listA = list as ArrayList<String>
             if (listA.size > 0) {
@@ -124,9 +114,6 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
     }
 
     private fun saveImage(v: View) {
-//        val bm: Bitmap? = AppUtils.getInstance().captureScreen(v)
-//        UtilFunctions.saveViewAsBitmap(DrawerActivity.activity, v)
-//        UtilFunctions.saveImage()
         ShareUtils.saveQuotes(requireActivity(), v, "Quotes")
     }
 

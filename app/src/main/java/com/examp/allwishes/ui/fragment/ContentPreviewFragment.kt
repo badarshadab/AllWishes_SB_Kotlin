@@ -15,6 +15,7 @@ import com.examp.allwishes.ui.data.api.FirebaseHelper
 import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
+import com.greetings.allwishes.util.AdUtils
 
 
 class ContentPreviewFragment : Fragment() {
@@ -22,6 +23,7 @@ class ContentPreviewFragment : Fragment() {
 
     private var type: String = ""
     private var category: String = ""
+    private var wishesName: String = ""
     var index: Int? = 0
     private lateinit var mainViewModel: HomeViewModel
 
@@ -29,9 +31,10 @@ class ContentPreviewFragment : Fragment() {
     lateinit var activity: Activity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = category + " " + type
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = wishesName + " " +type
         super.onViewCreated(view, savedInstanceState)
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as Activity
@@ -47,15 +50,16 @@ class ContentPreviewFragment : Fragment() {
         b = FragmentContentPreviewBinding.inflate(inflater, container, false)
         type = arguments?.getString("type").toString()
         category = arguments?.getString("catName").toString()
+        wishesName = arguments?.getString("wishesName").toString()
         index = arguments?.getInt("position", 0)
-        println("arguments?.getInt(pos) " + index)
+//        println("arguments?.getInt(pos) " + index)
         setupViewModel()
-        mainViewModel.loadImagesStorage(category + "/" + type)
+        mainViewModel.loadImagesStorage(category + "/" + wishesName + "/" + type)
         setupObservers()
-//        AdUtils.showNativeBanner(
-//            requireActivity(),
-//            b.nativeAdContainer
-//        )
+        AdUtils.showNativeBanner(
+            requireActivity(),
+            b.nativeAdContainer
+        )
 
         return b.root
     }

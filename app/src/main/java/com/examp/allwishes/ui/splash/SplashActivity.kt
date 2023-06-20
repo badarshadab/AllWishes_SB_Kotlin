@@ -1,14 +1,15 @@
-package com.sm.allwishes.greetings.ui.splash
+package com.examp.allwishes.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
-import com.examp.allwishes.ui.activity.MainActivity
 import com.examp.allwishes.R
+import com.examp.allwishes.ui.activity.MainActivity
+import com.greetings.allwishes.util.AdUtils
+import com.sm.newadlib.app.LibSplashActivity
 
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : LibSplashActivity() {
 
 
     private var handler: Handler? = null
@@ -21,17 +22,19 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun scheduleSplashScreen() {
-        val SPLASH_TIME_OUT = 2000
+        val SPLASH_TIME_OUT = 7000
         handler!!.postDelayed({ goToMainActivity() }, SPLASH_TIME_OUT.toLong())
     }
 
     private fun goToMainActivity() {
         if (handler != null) {
             handler!!.removeCallbacksAndMessages(null)
-
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-            finish()
-
+            AdUtils.showEntryFullAd(this, object : AdUtils.AdListener {
+                override fun onComplete() {
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    finish()
+                }
+            })
         }
     }
 }

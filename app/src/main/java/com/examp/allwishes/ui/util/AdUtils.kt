@@ -2,57 +2,70 @@ package com.greetings.allwishes.util
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.navigation.Navigation.findNavController
+import com.android.volley.AuthFailureError
+import com.android.volley.NetworkError
+import com.android.volley.ParseError
+import com.android.volley.Request
+import com.android.volley.ServerError
+import com.android.volley.TimeoutError
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
 import com.examp.allwishes.R
 import com.examp.allwishes.ui.adapter.DownloadedAdapter
+import com.greetings.allgreetingwishes.utils.ServerRequest
+import com.sm.newadlib.handlers.AdsHandler
+import com.sm.newadlib.listeners.FullAdListener
+import org.json.JSONObject
 import java.io.File
 
 object AdUtils {
 
-//    fun showEntryFullAd(activity: Activity, listener: AdListener) {
-//
-//
-//        AdsHandler.showEntryFullAd(activity, object : FullAdListener {
-//            override fun onComplete(isAdDisplay: Boolean, adNetwork: String) {
-//                listener.onComplete()
-//            }
-//        })
-//    }
+
+    var isAdsCheck = true
+
+    fun showEntryFullAd(activity: Activity, listener: AdListener) {
+
+        AdsHandler.showEntryInterstitialAds(activity, object : FullAdListener {
+            override fun onComplete(isAdDisplay: Boolean, adNetwork: String) {
+                listener.onComplete()
+            }
+
+        })
+
+    }
 
     fun showFullAd(activity: Activity, listener: AdListener) {
-//        if (SplashActivityRelease.isAdsCheck) {
-//            showInterstitialAds(activity, object : FullAdListener {
-//                override fun onComplete(isAdDisplay: Boolean, adNetwork: String) {
-//                    listener.onComplete()
-//                }
-//            })
-//        } else {
-//            listener.onComplete()
-//        }
+        if (isAdsCheck) {
+            AdsHandler.showInterstitialAds(activity, object : FullAdListener {
+                override fun onComplete(isAdDisplay: Boolean, adNetwork: String) {
+                    listener.onComplete()
+                }
+            })
+        } else {
+            listener.onComplete()
+        }
     }
 
 
     fun showNativeBanner(activity: Activity, adContainer: ViewGroup) {
-//        if (SplashActivityRelease.isAdsCheck) {
-//            AdsHandler.showNativeBannerAd(activity, adContainer)
-//        }
+        if (isAdsCheck) {
+            AdsHandler.showNativeBannerAd(activity, adContainer)
+        }
     }
 
     fun showNative(activity: Activity, adContainer: CardView) {
-//        if (SplashActivityRelease.isAdsCheck) {
-//            AdsHandler.showNativeAd(activity, adContainer)
-//        }
+        if (isAdsCheck) {
+            AdsHandler.showNativeAd(activity, adContainer)
+        }
     }
 
     interface AdListener {
@@ -118,6 +131,63 @@ object AdUtils {
 
     interface ServerCallBack {
         fun onSuccess(isSuccess: Boolean, string: String)
+    }
+
+    fun enabledisable(context: Context) {
+        doStringRequest(
+            context,
+            context.resources.getString(R.string.enabledisable),
+            object : ServerCallBack {
+                override fun onSuccess(isSuccess: Boolean, string: String) {
+                    if (isSuccess) {
+                        try {
+                            val ob = JSONObject(string)
+                            val vcode = ob.getString("vCode")
+                            isAdsCheck = ob.getBoolean("enableCheck")
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+            })
+    }
+
+    fun doStringRequest(context: Context, url: String, serverCallBack: ServerCallBack) {
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            { response ->
+                serverCallBack.onSuccess(true, response)
+            },
+            { error ->
+                serverCallBack.onSuccess(false, getVolleyError(error))
+            })
+        ServerRequest.addToRequestQueue(context, stringRequest)
+    }
+
+    private fun getVolleyError(volleyError: VolleyError?): String {
+        var msg: String
+        msg = "Network Error"
+        when (volleyError) {
+            is NetworkError -> {
+                msg = "Cannot connect to Internet...Please check your connection!"
+            }
+
+            is ServerError -> {
+                msg = "The server could not be found. Please try again after some time!!"
+            }
+
+            is AuthFailureError -> {
+                msg = "Cannot connect to Internet...Please check your connection!"
+            }
+
+            is ParseError -> {
+                msg = "Parsing error! Please try again after some time!!"
+            }
+
+            is TimeoutError -> {
+                msg = "Connection TimeOut! Please check your internet connection."
+            }
+        }
+        return msg
     }
 
 

@@ -14,6 +14,7 @@ import com.examp.allwishes.ui.adapter.CreateCardsAdapter
 import com.examp.allwishes.ui.model.Root_HlNew
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.DailyWishesViewModel
+import com.greetings.allwishes.util.AdUtils
 
 
 class MainFragment : Fragment(), View.OnClickListener {
@@ -29,6 +30,8 @@ class MainFragment : Fragment(), View.OnClickListener {
         b.holidayBtn.setOnClickListener(this)
         b.viewAll.setOnClickListener(this)
         b.shimmerLay.startShimmer()
+
+        AdUtils.showNative(requireActivity() , b.nativeAdContainer.nativeAdContainer)
 //        b.sharepanel.privacy.setOnClickListener(this)
 //        b.sharepanel.rate.setOnClickListener(this)
 //        b.sharepanel.sharePkg.setOnClickListener(this)

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.examp.allwishes.R
@@ -83,8 +82,8 @@ class Gifs(var catName: String) : Fragment() {
                 bun.putString("catName", catName)
                 bun.putInt("position", position)
                 AppUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)
-                Toast.makeText(requireContext(), "Clicked On Gif     $position", Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(requireContext(), "Clicked On Gif     $position", Toast.LENGTH_SHORT)
+//                    .show()
             }
 
         })

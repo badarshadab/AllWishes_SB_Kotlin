@@ -14,6 +14,7 @@ import com.examp.allwishes.ui.adapter.BannerAdapter
 import com.examp.allwishes.ui.model.DailyWishe
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.DailyWishesViewModel
+import com.greetings.allwishes.util.AdUtils
 
 
 class DailyWishes_CategoryFrag : Fragment() {
@@ -32,26 +33,13 @@ class DailyWishes_CategoryFrag : Fragment() {
     ): View? {
         b = DailyWishesCategoryActivityBinding.inflate(inflater, container, false)
 
+        AdUtils.showNativeBanner(requireActivity() ,b.nativeAdContainer.nativeAdContainer)
         b.cateRecycler.layoutManager =
             GridLayoutManager(requireContext(), 1)
-//        b.toolbar.tooText.text = "Daily Wishes"
-//        AppUtils.setupToolbar(MainActivity.activity , b.toolbar.toolbar , "Daily Wishes" , true)
 
         mainViewModel.repositoryResponseLiveData.observe(requireActivity()) { model ->
             model?.dailyWishes?.let { createAdapter(it) }
         }
-//        mainViewModel.repositoryResponseLiveData
-//        mainViewModel.getComModel().observe(requireActivity()) { model ->
-//            b.cateRecycler.adapter = BannerAdapter(
-//                requireActivity(), model, object : BannerAdapter.RecyclerViewClickListener {
-//                    override fun onClick(view: View?, position: Int, catName: String) {
-//                        val b = Bundle()
-//                        b.putString("catName", catName)
-//                        AppUtils.changeFragment(requireActivity(), R.id.nav_daily_type, b)
-//                    }
-//                })
-//        }
-
         return b.root
     }
 

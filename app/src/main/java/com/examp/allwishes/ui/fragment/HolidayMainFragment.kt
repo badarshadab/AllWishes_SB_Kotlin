@@ -16,6 +16,7 @@ import com.examp.allwishes.ui.model.EventByMonth
 import com.examp.allwishes.ui.viewmodel.HolidayViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.greetings.allwishes.util.AdUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -64,7 +65,7 @@ class HolidayMainFragment : Fragment() {
         _binding.progressBar.visibility = View.VISIBLE
         mainViewModel = ViewModelProvider(requireActivity())[HolidayViewModel::class.java]
 
-//        AdUtils.showNativeBanner(requireActivity(), _binding.nativeAdContainer)
+        AdUtils.showNativeBanner(requireActivity(), _binding.nativeAdContainer)
 
         val arrayList = mainViewModel.getComModel()
         if (arrayList == null) {

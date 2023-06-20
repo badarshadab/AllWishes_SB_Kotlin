@@ -374,8 +374,8 @@ object AppUtils {
     }
 
     fun changeFragment(activity: Activity, resId: Int, b: Bundle) {
-//        AdUtils.showFullAd(activity, object : AdUtils.AdListener {
-//            override fun onComplete() {
+        AdUtils.showFullAd(activity, object : AdUtils.AdListener {
+            override fun onComplete() {
         var dTime = 10L
 //                if (adNetwork.equals("Mopub", ignoreCase = true)) {
 //                    dTime = 500L
@@ -396,8 +396,8 @@ object AppUtils {
                 }
             }, dTime
         )
-//            }
-//        })
+            }
+        })
     }
 
     fun setScaleAnimation(view: View) {

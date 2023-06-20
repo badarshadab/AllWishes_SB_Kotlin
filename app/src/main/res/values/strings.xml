@@ -3,6 +3,7 @@
     <string name="go_to_cat">Daily Wishes</string>
     <string name="go_to_holidays">Holiday Wishes</string>
     <string name="pp_url" translatable="false">https://s3.ap-south-1.amazonaws.com/greetingandwishes/privacypolicy.html</string>
+    <string name="enabledisable">https://www.mediafire.com/file/qfb306ynvn6emdh/AllWishes%2528greetingWishes%2529_OnOff/file</string>
     <string name="openSaved">Show Saved items from</string>
     <string name="no_Saved">Nothing Saved Here!!</string>
     <string name="removeConfirm">You are about to Remove this item From Saved List ?</string>
@@ -48,4 +49,33 @@
     <string name="save">Save</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+
+    <!--admob ads ids -->
+    <string name="fb_full_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
+    <string name="fb_entry_full_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
+    <string name="fb_native_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
+    <string name="fb_native_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
+    <string name="fb_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
+    <string name="fb_med_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
+
+    <!--    admob ads ids -->
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_full_ad_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_entry_full_ad_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_open_ad_id">ca-app-pub-3940256099942544/3419835294</string>
+    <string name="admob_banner_ad_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_native_advance_ad_id">ca-app-pub-3940256099942544/2247696110</string>
+
+    <string name="unity_game_id"></string>
+    <string name="unity_full_id">Android_Interstitial</string>
+    <string name="unity_entry_full_id">Android_Interstitial</string>
+    <string name="unity_banner_id">Banner_Android</string>
+
+    <string name="apploving_key">efS0Gr7d1lJ6oJaJteqiDHuQngxhAJ-pRf_eAAx8ds2CwfMWtCwcgLENtVrdBffXdBlXe05buiLZeTIMTnaSz0ne</string>
+    <string name="applovin_id_fullAd">sdgdfgdf</string>
+    <string name="applovin_id_banner">dffhfhfg</string>
+    <string name="applovin_id_rect">hfghfgh</string>
+    <string name="applovin_native_id">ghfghfg</string>
+    <string name="applovin_small_native_id">hfghfgh</string>
+
 </resources>

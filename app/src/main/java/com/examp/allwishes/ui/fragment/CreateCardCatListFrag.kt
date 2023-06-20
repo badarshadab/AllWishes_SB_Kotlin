@@ -16,7 +16,6 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -83,7 +82,7 @@ class CreateCardCatListFrag : Fragment() {
         createCardViewModel.fontList()
         createCardViewModel.gradientList()
         b.colorid.setOnClickListener {
-            Toast.makeText(requireContext(), "clicked on ColorID", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), "clicked on ColorID", Toast.LENGTH_SHORT).show()
             colorDilog()
         }
         b.galleryid.setOnClickListener {

@@ -20,6 +20,7 @@ import com.examp.allwishes.ui.viewmodel.HomeViewModel
 import com.examp.allwishes.ui.viewmodel.QuoteViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
+import com.greetings.allwishes.util.AdUtils
 
 
 class ContentListFragment : Fragment() {
@@ -56,7 +57,7 @@ class ContentListFragment : Fragment() {
         type = arguments?.getString("type").toString()
 
         setupViewModel()
-//        AdUtils.showBanner(requireActivity(), b.adContainer.nativeAdContainer)
+        AdUtils.showNativeBanner(requireActivity(), b.adContainer.nativeAdContainer)
         nameType = "DailyWishes/" + name + "/" + type
         setupObservers(nameType)
 
@@ -136,7 +137,8 @@ class ContentListFragment : Fragment() {
                     ) {
                         val b = Bundle()
                         b.putString("type", type)
-                        b.putString("catName", "DailyWishes/" + name)
+                        b.putString("wishesName", "" + name)
+                        b.putString("catName", "DailyWishes")
                         b.putInt("position", position)
                         AppUtils.changeFragment(
                             requireActivity(),

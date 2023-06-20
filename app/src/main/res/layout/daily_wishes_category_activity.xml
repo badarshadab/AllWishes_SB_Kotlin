@@ -11,5 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />
 
+    <include layout="@layout/native_ad_container"
+        android:id="@+id/nativeAdContainer"/>
+
 
 </RelativeLayout>

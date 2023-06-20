@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.examp.allwishes.R
 import com.examp.allwishes.databinding.ActivityMainBinding
 import com.examp.allwishes.ui.util.AppUtils
+import com.sm.newadlib.handlers.AdsHandler
 
 
 class MainActivity : AppCompatActivity() {
@@ -88,10 +89,10 @@ class MainActivity : AppCompatActivity() {
             AppUtils.fullExitScreen(this)
 
         } else {
-//            AdsHandler.launchReviewPopup(this, object : AdsHandler.ReviewCallBack {
-//                override fun onComplete(isSucces: Boolean) {
-//                }
-//            })
+            AdsHandler.launchReviewPopup(this, object : AdsHandler.ReviewCallBack {
+                override fun onComplete(isSucces: Boolean) {
+                }
+            })
             navController.popBackStack()
         }
     }

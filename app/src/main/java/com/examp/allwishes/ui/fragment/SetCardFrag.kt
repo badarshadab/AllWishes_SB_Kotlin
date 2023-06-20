@@ -15,9 +15,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
@@ -596,7 +594,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
             }
 
             dtextView -> {
-                Toast.makeText(requireContext(), "clicked on dtextView", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "clicked on dtextView", Toast.LENGTH_SHORT).show()
             }
         }
     }
