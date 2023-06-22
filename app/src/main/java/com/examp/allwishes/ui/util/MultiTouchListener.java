@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Toast;
 
 public class MultiTouchListener implements OnTouchListener {
     private static final int INVALID_POINTER_ID = -1;
@@ -83,7 +82,7 @@ public class MultiTouchListener implements OnTouchListener {
                     this.mPrevX = event.getX();
                     this.mPrevY = event.getY();
                     this.mActivePointerId = event.getPointerId(0);
-                    Toast.makeText(mContext, "clicked on textview", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "clicked on textview", Toast.LENGTH_SHORT).show();
                     break;
                 case 1:
                     this.mActivePointerId = -1;

@@ -13,6 +13,7 @@ import com.examp.allwishes.ui.adapter.ViewAllCardsAdapter
 import com.examp.allwishes.ui.model.Root_HlNew
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.DailyWishesViewModel
+import com.greetings.allwishes.util.AdUtils
 
 
 class ViewAllCreateCardsFragment : Fragment() {
@@ -24,7 +25,7 @@ class ViewAllCreateCardsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         b = ViewallCreatecardsFragmentBinding.inflate(inflater, container, false)
-
+        AdUtils.showNativeBanner(requireActivity(), b.nativeAdContainer.nativeAdContainer)
         b.createCardRv.layoutManager =
             GridLayoutManager(requireContext(), 3)
         mainViewModel.repositoryResponseLiveData.observe(requireActivity()) { model ->

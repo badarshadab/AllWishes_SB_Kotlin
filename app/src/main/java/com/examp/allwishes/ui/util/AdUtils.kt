@@ -29,8 +29,7 @@ import java.io.File
 
 object AdUtils {
 
-
-    var isAdsCheck = true
+    var isAdsCheck = false
 
     fun showEntryFullAd(activity: Activity, listener: AdListener) {
 
@@ -38,7 +37,6 @@ object AdUtils {
             override fun onComplete(isAdDisplay: Boolean, adNetwork: String) {
                 listener.onComplete()
             }
-
         })
 
     }

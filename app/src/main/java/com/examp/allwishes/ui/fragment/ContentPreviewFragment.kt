@@ -26,12 +26,20 @@ class ContentPreviewFragment : Fragment() {
     private var wishesName: String = ""
     var index: Int? = 0
     private lateinit var mainViewModel: HomeViewModel
+    var toolText = ""
 
 
     lateinit var activity: Activity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = wishesName + " " +type
+        if(!wishesName.equals("null")){
+            toolText = wishesName + " " +type
+        }
+        else{
+            toolText = category + " " +type
+        }
+
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = toolText
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -54,7 +62,13 @@ class ContentPreviewFragment : Fragment() {
         index = arguments?.getInt("position", 0)
 //        println("arguments?.getInt(pos) " + index)
         setupViewModel()
-        mainViewModel.loadImagesStorage(category + "/" + wishesName + "/" + type)
+        if(!wishesName.equals("null")){
+            mainViewModel.loadImagesStorage(category + "/" + wishesName + "/" + type)
+        }
+        else{
+            mainViewModel.loadImagesStorage(category + "/" +  type)
+        }
+
         setupObservers()
         AdUtils.showNativeBanner(
             requireActivity(),

@@ -39,7 +39,7 @@ class QuotesPreviewFragment : Fragment(), View.OnClickListener {
         val quoteViewModel =
             ViewModelProvider(requireActivity())[QuoteViewModel::class.java]
         AdUtils.showNativeBanner(requireActivity(), b.adContainer.nativeAdContainer)
-        quoteViewModel.getQuotes(name + "/Quote")
+        quoteViewModel.getQuotes(name + "/Quotes")
         quoteViewModel.quotes.observe(requireActivity()) { list ->
 
             if (!list.isNullOrEmpty()) {

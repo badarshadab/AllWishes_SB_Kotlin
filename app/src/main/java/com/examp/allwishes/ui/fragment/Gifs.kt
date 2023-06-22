@@ -78,7 +78,7 @@ class Gifs(var catName: String) : Fragment() {
             OnItemClickListener_Gif {
             override fun onClick(position: Int) {
                 val bun = Bundle()
-                bun.putString("type", "Cards")
+                bun.putString("type", "Gifs")
                 bun.putString("catName", catName)
                 bun.putInt("position", position)
                 AppUtils.changeFragment(requireActivity(), R.id.nav_contentPreview, bun)

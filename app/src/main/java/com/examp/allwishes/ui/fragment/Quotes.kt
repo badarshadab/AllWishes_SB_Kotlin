@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.examp.allwishes.R
-import com.examp.allwishes.databinding.QuoteslistdlayoutBinding
+import com.examp.allwishes.databinding.QuoteslistholidayBinding
 import com.examp.allwishes.ui.adapter.QuotesListHolidayAdapter
 import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.QuoteViewModel
@@ -17,10 +17,9 @@ import com.examp.allwishes.ui.viewmodel.QuoteViewModel
 
 class Quotes(var catName: String) : Fragment() {
 
-    lateinit var binding: QuoteslistdlayoutBinding
+    lateinit var binding: QuoteslistholidayBinding
     private lateinit var quotesViewModel: QuoteViewModel
     private var trending_cat: String = ""
-
 
     lateinit var activity: Activity
     override fun onAttach(context: Context) {
@@ -34,13 +33,12 @@ class Quotes(var catName: String) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = QuoteslistdlayoutBinding.inflate(inflater, container, false)
+        binding = QuoteslistholidayBinding.inflate(inflater, container, false)
         setupViewModel()
         if (catName == null) {
             trending_cat = arguments?.getString("catName").toString()
             setupObservers(trending_cat + "/Quotes")
-        }
-        else{
+        } else {
             setupObservers(catName + "/Quotes")
         }
 
@@ -57,8 +55,16 @@ class Quotes(var catName: String) : Fragment() {
     private fun setupObservers(categoryName: String) {
         quotesViewModel.getQuotes(categoryName)
         quotesViewModel.quotes.observe(requireActivity()) { list ->
+
+            if (list != null) {
+                binding.quoteprocessid.progresbarid.visibility = View.GONE
+            }
             setAdapter(list)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     private fun setAdapter(list: List<String>) {

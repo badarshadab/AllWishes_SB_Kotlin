@@ -22,7 +22,7 @@
         android:maxLines="3"
         android:padding="10dp"
         android:textAlignment="center"
-        android:textColor="@color/tool_text"
+        android:textColor="@color/text_col"
         android:textSize="20sp" />
 
 </com.google.android.material.card.MaterialCardView>

@@ -68,7 +68,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/main_lay"
-            android:layout_margin="5dp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:focusable="true"
             android:padding="10dp"
             android:visibility="gone"
@@ -118,50 +120,134 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:weightSum="1"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/start_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:focusable="true"
+                android:padding="10dp"
+                app:cardBackgroundColor="@color/cardbg"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="5dp"
+                app:layout_constraintBottom_toTopOf="@id/daily_tv"
+                app:layout_constraintEnd_toStartOf="@+id/holiday_card"
+                app:layout_constraintStart_toStartOf="parent"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp">
+
+                <ImageView
+                    android:id="@+id/startBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_daily_wishes"
+                    app:layout_constraintWidth_percent="0.46" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+
             <TextView
-                android:id="@+id/startBtn"
+                android:id="@+id/daily_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:drawableTop="@drawable/ic_daily_wishes"
-                android:gravity="center"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:text="@string/go_to_cat"
-                android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/_20ssp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/holiday_card"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/holiday_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/cardbg"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="5dp"
+                app:layout_constraintBottom_toTopOf="@id/holiday_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/start_card"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp">
+
+                <ImageView
+                    android:id="@+id/holidayBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_holiday_list"
+                    app:layout_constraintWidth_percent="0.46" />
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/holidayBtn"
+                android:id="@+id/holiday_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_holiday_list"
-                android:gravity="center"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:text="@string/go_to_holidays"
-                android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/_20ssp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_18ssp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/holiday_card" />
 
-        </LinearLayout>
+            <!--            <TextView-->
+            <!--                android:id="@+id/startBtn"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:layout_margin="@dimen/_5sdp"-->
+            <!--                android:clickable="true"-->
+            <!--                android:drawableTop="@drawable/ic_daily_wishes"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="@dimen/_5sdp"-->
+            <!--                android:text="@string/go_to_cat"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="@android:color/black"-->
+            <!--                android:textSize="@dimen/_18ssp"-->
+            <!--                android:textStyle="bold"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toStartOf="@+id/holidayBtn"-->
+            <!--                app:layout_constraintHeight_percent="0.45"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintWidth_percent="0.45" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/holidayBtn"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                android:layout_margin="@dimen/_5sdp"-->
+            <!--                android:drawableTop="@drawable/ic_holiday_list"-->
+            <!--                android:gravity="center"-->
+            <!--                android:padding="@dimen/_5sdp"-->
+            <!--                android:text="@string/go_to_holidays"-->
+            <!--                android:textAlignment="center"-->
+            <!--                android:textColor="@android:color/black"-->
+            <!--                android:textSize="@dimen/_18ssp"-->
+            <!--                android:textStyle="bold"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintHeight_percent="0.45"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/startBtn"-->
+            <!--                app:layout_constraintWidth_percent="0.45" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 
 

@@ -47,14 +47,14 @@ class DailyWishes_TypeFrag : Fragment(), View.OnClickListener {
 
         when (v) {
             b.typeBtns.gifBtn -> {
-                move("Gif")
+                move("Gifs")
             }
 
             b.typeBtns.imgBtn ->
-                move("Card")
+                move("Cards")
 
             b.typeBtns.quotes ->
-                move("Quote")
+                move("Quotes")
         }
 
     }

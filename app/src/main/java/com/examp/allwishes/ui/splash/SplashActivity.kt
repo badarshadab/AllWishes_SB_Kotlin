@@ -18,6 +18,7 @@ class SplashActivity : LibSplashActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_layout)
         handler = Handler(mainLooper)
+        AdUtils.enabledisable(this)
         scheduleSplashScreen()
     }
 

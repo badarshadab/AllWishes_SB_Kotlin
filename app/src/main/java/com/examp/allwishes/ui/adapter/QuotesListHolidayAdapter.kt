@@ -32,11 +32,11 @@ class QuotesListHolidayAdapter(
     override fun onBindViewHolder(holder: ContentPreviewHolder, position: Int) {
 
 
-        if (position % 2 == 0) {
-            holder.b.card.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
-        } else {
-            holder.b.card.setCardBackgroundColor(Color.parseColor("#FFFAF8FD"));
-        }
+//        if (position % 2 == 0) {
+//            holder.b.card.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
+//        } else {
+//            holder.b.card.setCardBackgroundColor(Color.parseColor("#FFFAF8FD"));
+//        }
 
         holder.b.quotesText.text = list.get(position).toString()
         holder.b.quotesText.setOnClickListener(object : View.OnClickListener {

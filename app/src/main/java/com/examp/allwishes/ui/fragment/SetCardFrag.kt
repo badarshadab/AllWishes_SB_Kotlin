@@ -99,6 +99,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     private var stickerdialog: Dialog? = null
     lateinit var stickerImageView: StickerImageView
     var msgToAdd: String = ""
+    var isImgOrTextAdded = false
 
 
     private var colorpickdialog: Dialog? = null
@@ -543,11 +544,11 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
             msgToAdd = addtextbinding!!.textid.text.toString()
             dtextView?.text = msgToAdd
-            if (!msgToAdd.isEmpty()) {
-                b.addtextid.setText(R.string.remove_text)
-                b.create.visibility = View.GONE
-//                dtextView!!.setOnClickListener(this)
-            }
+//            if (!msgToAdd.isEmpty()) {
+//                b.addtextid.setText(R.string.remove_text)
+//                b.create.visibility = View.GONE
+////                dtextView!!.setOnClickListener(this)
+//            }
             val triple = Triple(msgToAdd, texteditcolor, fontdata);
             addStringToView(requireContext(), triple)
             addtextdialog?.dismiss()
@@ -566,8 +567,9 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
             b.addtextid -> {
 
-                addOrRemove(b.addtextid, getString(R.string.add_text),
-                    { addTextClick() })
+//                addOrRemove(b.addtextid, getString(R.string.add_text),
+//                    { addTextClick() })
+                addTextClick()
 
             }
 
@@ -585,8 +587,9 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
             b.stickersid -> {
                 b.toolbartitle.setText(R.string.stickers)
-                addOrRemove(b.stickersid, getString(R.string.stickers),
-                    { stickersDilog() })
+//                addOrRemove(b.stickersid, getString(R.string.stickers),
+//                    { stickersDilog() })
+                stickersDilog()
             }
 
             b.create -> {
@@ -848,7 +851,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
                     override fun onClick(view: View, position: Int) {
                         stickerImageView = StickerImageView(requireContext())
                         println("onTouch stickerImageView" + stickerImageView.getTag())
-                        b.stickersid.text = getString(R.string.remove)
+//                        b.stickersid.text = getString(R.string.remove)
 
 //                        stickerImageView.setImageResource(R.drawable.ic_stickers)
                         stickerImageView.imageBitmap = view?.drawToBitmap()
@@ -905,7 +908,8 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     }
 
     fun nextBtnClick() {
-        if (b.createimageview.drawable != null || (dtextView != null && !msgToAdd.isEmpty())) {
+        var msg = msgToAdd
+        if (b.createimageview.drawable != null || (dtextView != null || !msgToAdd.isEmpty())) {
             var viewdata = AppUtils.getBitmapFromView(b.cardsharesaveid)
             val bun = Bundle()
             bun.putString("bitimgkey", saveBitmap(viewdata))

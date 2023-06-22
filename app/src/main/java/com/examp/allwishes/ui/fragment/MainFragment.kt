@@ -16,7 +16,6 @@ import com.examp.allwishes.ui.util.AppUtils
 import com.examp.allwishes.ui.viewmodel.DailyWishesViewModel
 import com.greetings.allwishes.util.AdUtils
 
-
 class MainFragment : Fragment(), View.OnClickListener {
     private lateinit var b: MainFragmentLayoutNewBinding
     private val mainViewModel: DailyWishesViewModel by activityViewModels()
@@ -32,10 +31,6 @@ class MainFragment : Fragment(), View.OnClickListener {
         b.shimmerLay.startShimmer()
 
         AdUtils.showNative(requireActivity() , b.nativeAdContainer.nativeAdContainer)
-//        b.sharepanel.privacy.setOnClickListener(this)
-//        b.sharepanel.rate.setOnClickListener(this)
-//        b.sharepanel.sharePkg.setOnClickListener(this)
-//        b.sharepanel.saveItems.setOnClickListener(this)
         b.createCardRv.layoutManager =
             LinearLayoutManager(
                 requireContext(),
@@ -92,8 +87,6 @@ class MainFragment : Fragment(), View.OnClickListener {
             }
 
             b.holidayBtn -> {
-//                val inten1 = Intent(requireContext(), Holidays_List::class.java)
-//                startActivity(inten1)
                 val b = Bundle()
                 AppUtils.changeFragment(requireActivity(), R.id.nav_home, b)
             }
@@ -102,14 +95,6 @@ class MainFragment : Fragment(), View.OnClickListener {
                 val b = Bundle()
                 AppUtils.changeFragment(requireActivity(), R.id.nav_view_create_cards, b)
             }
-//            b.sharepanel.privacy -> AppUtils.openUrl(
-//                requireContext(),
-//                resources.getString(R.string.pp_url)
-//            )
-//            b.sharepanel.rate -> AppUtils.rateUs(requireContext())
-//            b.sharepanel.sharePkg -> AppUtils.shareApp(requireContext())
-//            b.sharepanel.saveItems -> AppUtils.selectSavedTypeDialog(requireActivity())
-
         }
     }
 

@@ -35,7 +35,7 @@ class ContentListFragment : Fragment() {
     lateinit var activity: Activity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.title = name + " " + type + "s"
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = name + " " + type
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -61,7 +61,7 @@ class ContentListFragment : Fragment() {
         nameType = "DailyWishes/" + name + "/" + type
         setupObservers(nameType)
 
-        if (type.equals("Quote")) {
+        if (type.equals("Quotes")) {
             b.shimmerLayImages.visibility = View.GONE
             b.rv.layoutManager = GridLayoutManager(requireContext(), 1)
 //            b.shimmerLayQuotes.startShimmer()
@@ -74,7 +74,7 @@ class ContentListFragment : Fragment() {
     }
 
     override fun onResume() {
-        if (type.equals("Quote")) {
+        if (type.equals("Quotes")) {
             b.shimmerLayImages.visibility = View.GONE
             b.shimmerLayQuotes.visibility = View.VISIBLE
                 b.rv.layoutManager = GridLayoutManager(requireContext(), 1)
@@ -153,7 +153,7 @@ class ContentListFragment : Fragment() {
 
     private fun setupObservers(categoryName: String) {
         mainViewModel.loadImagesStorage(categoryName)
-        if (type.equals("Quote")) {
+        if (type.equals("Quotes")) {
             quotesViewModel.getQuotes(categoryName)
             quotesViewModel.quotes.observe(requireActivity()) { list ->
                 setQuotesAdapter(list)
@@ -164,11 +164,9 @@ class ContentListFragment : Fragment() {
             mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
             { resource ->
                 // if we use `Dispatchers.Main` as a coroutine context next two lines will be executed on UI thread.
-                setImageAdapter(resource)
+                setImageAdapter(resource.asReversed())
             }
         }
-
-
     }
 
 }
