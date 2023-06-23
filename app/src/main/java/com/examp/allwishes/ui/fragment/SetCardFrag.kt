@@ -142,7 +142,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         cat_addrs = "CreateCards/" + name
         createCardViewModel = ViewModelProvider(this)[CreateCardViewModel::class.java]
         setupViewModel()
-        mainViewModel.loadImagesStorage(cat_addrs + "/cards")
+//        mainViewModel.loadImagesStorage(cat_addrs + "/cards")
         quotetext = TextView(requireContext())
         quotetext?.layoutParams = RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -238,7 +238,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         }
         addbgbinding!!.chooseBg.setText(name)
 //        addbgbinding!!.catname.setText(name)
-
+        mainViewModel.loadImagesStorage(cat_addrs + "/cards")
         mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
         { resource ->
             createAdapter(resource)
@@ -543,14 +543,15 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         addtextbinding?.addokbtn?.setOnClickListener {
 
             msgToAdd = addtextbinding!!.textid.text.toString()
-            dtextView?.text = msgToAdd
+//            dtextView?.text = msgToAdd
 //            if (!msgToAdd.isEmpty()) {
 //                b.addtextid.setText(R.string.remove_text)
 //                b.create.visibility = View.GONE
 ////                dtextView!!.setOnClickListener(this)
 //            }
-            val triple = Triple(msgToAdd, texteditcolor, fontdata);
-            addStringToView(requireContext(), triple)
+            val triple = Triple(msgToAdd, texteditcolor, fontdata)
+            AppUtils.addStringToView(b.cardsharesaveid ,requireContext(), triple)
+//            addStringToView(requireContext(), triple)
             addtextdialog?.dismiss()
         }
 
@@ -833,19 +834,18 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 
             mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
             { resource ->
+                stickerBinding.backgroundpbarid.progresbarid.visibility = View.GONE
                 setStickersAdapter(resource)
             }
-
         }
-
 
         stickerdialog?.show()
     }
 
-    fun setStickersAdapter(resource: List<StorageReference>) {
+    fun setStickersAdapter(resourceSticker: List<StorageReference>) {
         val stickerAdpter =
             StickerAdpter(
-                resource,
+                resourceSticker,
                 activity,
                 object : StickerOnItemClick {
                     override fun onClick(view: View, position: Int) {
@@ -908,8 +908,12 @@ class SetCardFrag : Fragment(), View.OnClickListener {
     }
 
     fun nextBtnClick() {
-        var msg = msgToAdd
-        if (b.createimageview.drawable != null || (dtextView != null || !msgToAdd.isEmpty())) {
+        var msg = dtextView?.text
+        var isft = msg?.length
+        val itemCount = b.cardsharesaveid.childCount
+
+//        if (b.createimageview.drawable != null || (dtextView != null || msg!!.isNotEmpty())) {
+        if(itemCount > 1){
             var viewdata = AppUtils.getBitmapFromView(b.cardsharesaveid)
             val bun = Bundle()
             bun.putString("bitimgkey", saveBitmap(viewdata))

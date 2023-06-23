@@ -1,254 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:fillViewport="true">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/ad_lay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <include
+            android:id="@+id/nativeAdContainer"
+            layout="@layout/native_ad_container"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/card"
-            android:layout_alignParentTop="true"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_margin="3dp" />
+    </LinearLayout>
 
-            <include
-                android:id="@+id/nativeAdContainer"
-                layout="@layout/native_ad_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="3dp" />
-        </LinearLayout>
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_lay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/main_lay">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_shimmer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/main_lay"
-                android:layout_margin="5dp"
-                android:focusable="true"
-                android:padding="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                app:strokeColor="@color/white"
-                app:strokeWidth="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <include layout="@layout/create_cards_shimmer" />
-
-                    <include layout="@layout/create_cards_shimmer" />
-
-                    <include layout="@layout/create_cards_shimmer" />
-
-                    <include layout="@layout/create_cards_shimmer" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/main_lay"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:focusable="true"
-            android:padding="10dp"
-            android:visibility="gone"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="5dp"
-            app:strokeColor="@color/white"
-            app:strokeWidth="2dp">
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:text="Create Cards"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/view_all"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:text="View All"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/create_card_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_all" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ad_lay">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main_lay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_shimmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/main_lay"
+                    android:layout_margin="5dp"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="5dp"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/create_cards_shimmer" />
+
+                        <include layout="@layout/create_cards_shimmer" />
+
+                        <include layout="@layout/create_cards_shimmer" />
+
+                        <include layout="@layout/create_cards_shimmer" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/start_card"
-                android:layout_width="0dp"
+                android:id="@+id/card"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
+                android:layout_above="@+id/main_lay"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:focusable="true"
                 android:padding="10dp"
-                app:cardBackgroundColor="@color/cardbg"
+                android:visibility="gone"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
-                app:layout_constraintBottom_toTopOf="@id/daily_tv"
-                app:layout_constraintEnd_toStartOf="@+id/holiday_card"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:strokeColor="@color/white"
                 app:strokeWidth="2dp">
 
-                <ImageView
-                    android:id="@+id/startBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_daily_wishes"
-                    app:layout_constraintWidth_percent="0.46" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Create Cards"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/view_all"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:text="View All"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/create_card_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_all" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
 
-            <TextView
-                android:id="@+id/daily_tv"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_lay"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:text="@string/go_to_cat"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/holiday_card"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/holiday_card"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/cardbg"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toTopOf="@id/holiday_tv"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/start_card"
-                app:strokeColor="@color/white"
-                app:strokeWidth="2dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card">
 
-                <ImageView
-                    android:id="@+id/holidayBtn"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/start_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toTopOf="@id/daily_tv"
+                    app:layout_constraintEnd_toStartOf="@+id/holiday_card"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp">
+
+                    <ImageView
+                        android:id="@+id/startBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_daily_wishes"
+                        app:layout_constraintWidth_percent="0.46" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <TextView
+                    android:id="@+id/daily_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_holiday_list"
-                    app:layout_constraintWidth_percent="0.46" />
-            </com.google.android.material.card.MaterialCardView>
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/go_to_cat"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_18ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/holiday_card"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/holiday_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:text="@string/go_to_holidays"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/holiday_card" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/holiday_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toTopOf="@id/holiday_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/start_card"
+                    app:strokeColor="@color/white"
+                    app:strokeWidth="2dp">
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/startBtn"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_centerHorizontal="true"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:layout_margin="@dimen/_5sdp"-->
-            <!--                android:clickable="true"-->
-            <!--                android:drawableTop="@drawable/ic_daily_wishes"-->
-            <!--                android:gravity="center"-->
-            <!--                android:padding="@dimen/_5sdp"-->
-            <!--                android:text="@string/go_to_cat"-->
-            <!--                android:textAlignment="center"-->
-            <!--                android:textColor="@android:color/black"-->
-            <!--                android:textSize="@dimen/_18ssp"-->
-            <!--                android:textStyle="bold"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toStartOf="@+id/holidayBtn"-->
-            <!--                app:layout_constraintHeight_percent="0.45"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintWidth_percent="0.45" />-->
+                    <ImageView
+                        android:id="@+id/holidayBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_holiday_list"
+                        app:layout_constraintWidth_percent="0.46" />
+                </com.google.android.material.card.MaterialCardView>
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/holidayBtn"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="center"-->
-            <!--                android:layout_margin="@dimen/_5sdp"-->
-            <!--                android:drawableTop="@drawable/ic_holiday_list"-->
-            <!--                android:gravity="center"-->
-            <!--                android:padding="@dimen/_5sdp"-->
-            <!--                android:text="@string/go_to_holidays"-->
-            <!--                android:textAlignment="center"-->
-            <!--                android:textColor="@android:color/black"-->
-            <!--                android:textSize="@dimen/_18ssp"-->
-            <!--                android:textStyle="bold"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintHeight_percent="0.45"-->
-            <!--                app:layout_constraintStart_toEndOf="@+id/startBtn"-->
-            <!--                app:layout_constraintWidth_percent="0.45" />-->
+                <TextView
+                    android:id="@+id/holiday_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="@string/go_to_holidays"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_18ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/holiday_card" />
 
+                <!--            <TextView-->
+                <!--                android:id="@+id/startBtn"-->
+                <!--                android:layout_width="0dp"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_centerHorizontal="true"-->
+                <!--                android:layout_gravity="center"-->
+                <!--                android:layout_margin="@dimen/_5sdp"-->
+                <!--                android:clickable="true"-->
+                <!--                android:drawableTop="@drawable/ic_daily_wishes"-->
+                <!--                android:gravity="center"-->
+                <!--                android:padding="@dimen/_5sdp"-->
+                <!--                android:text="@string/go_to_cat"-->
+                <!--                android:textAlignment="center"-->
+                <!--                android:textColor="@android:color/black"-->
+                <!--                android:textSize="@dimen/_18ssp"-->
+                <!--                android:textStyle="bold"-->
+                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                app:layout_constraintEnd_toStartOf="@+id/holidayBtn"-->
+                <!--                app:layout_constraintHeight_percent="0.45"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintWidth_percent="0.45" />-->
+
+                <!--            <TextView-->
+                <!--                android:id="@+id/holidayBtn"-->
+                <!--                android:layout_width="0dp"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_gravity="center"-->
+                <!--                android:layout_margin="@dimen/_5sdp"-->
+                <!--                android:drawableTop="@drawable/ic_holiday_list"-->
+                <!--                android:gravity="center"-->
+                <!--                android:padding="@dimen/_5sdp"-->
+                <!--                android:text="@string/go_to_holidays"-->
+                <!--                android:textAlignment="center"-->
+                <!--                android:textColor="@android:color/black"-->
+                <!--                android:textSize="@dimen/_18ssp"-->
+                <!--                android:textStyle="bold"-->
+                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintHeight_percent="0.45"-->
+                <!--                app:layout_constraintStart_toEndOf="@+id/startBtn"-->
+                <!--                app:layout_constraintWidth_percent="0.45" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </RelativeLayout>
+
+    </ScrollView>
 
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

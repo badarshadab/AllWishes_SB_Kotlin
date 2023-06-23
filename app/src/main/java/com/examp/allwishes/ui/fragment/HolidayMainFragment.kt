@@ -72,7 +72,7 @@ class HolidayMainFragment : Fragment() {
             observEvents()
         } else {
             _binding.shimmerLay.stopShimmer()
-            _binding.vp.visibility = View.VISIBLE
+            viewpager.visibility = View.VISIBLE
             _binding.shimmerLay.visibility = View.GONE
             _binding.progressBar.visibility = View.GONE
             getMonthName(arrayList)

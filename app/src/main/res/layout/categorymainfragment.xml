@@ -10,15 +10,14 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl"
-        android:layout_width="wrap_content"
-        app:tabTextAppearance="@style/MyCustomTabTextAppearance"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabBackground="@color/bg"
         app:tabGravity="center"
-        app:tabMode="scrollable" />
+        app:tabMode="scrollable"
+        app:tabTextAppearance="@style/MyCustomTabTextAppearance" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp"

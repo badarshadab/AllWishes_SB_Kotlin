@@ -48,10 +48,7 @@ class HolidayAdapter(val activity: Activity, val msgList: ArrayList<Event>?) :
         holder.b.quotesText.setText(festival_name)
         holder.b.dateText.setText((date))
         AppUtils.setImageWithRoundCorner(msgList!![position].icon.toString(), holder.b.iv, 40, 200)
-//        AppUtils.setScaleAnimation(holder.itemView);
-        //        AppUtils.setScaleAnimation(holder.itemView);
         holder.itemView.setOnClickListener(View.OnClickListener { v: View? ->
-//            println("clicked here $position")
             val b = Bundle()
             b.putInt("pos", position)
             b.putString("trending_cat", festival_name)

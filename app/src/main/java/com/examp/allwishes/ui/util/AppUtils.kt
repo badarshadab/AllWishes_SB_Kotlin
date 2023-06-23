@@ -12,6 +12,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -44,6 +45,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.examp.allwishes.BuildConfig
 import com.examp.allwishes.R
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.util.AdUtils
@@ -596,6 +598,52 @@ object AppUtils {
 //        tabLayout!!.getTabAt(4)!!.customView = tabfive
 
 
+    }
+
+    fun addStringToView(mainView: MaterialCardView ,context: Context, triple: Triple<String, Int, Typeface>) {
+        val string = triple.first
+        val tv_sticker = BubbleTextView(context, triple.second, triple.third, 0, string)
+        removeAddedView(mainView ,tv_sticker)
+        tv_sticker.setOperationListener(object : BubbleTextView.OperationListener {
+            override fun onDeleteClick() {
+                removeAddedView(mainView ,tv_sticker)
+            }
+
+            override fun onEdit(bubbleTextView: BubbleTextView?) {
+                bubbleTextView.let {
+                    val onEdit = !bubbleTextView?.isInEditMode!!
+                    tv_sticker.setInEdit(onEdit)
+                }
+            }
+
+            override fun onClick(bubbleTextView: BubbleTextView?) {
+            }
+
+            override fun onTop(bubbleTextView: BubbleTextView?) {
+            }
+        })
+
+        if (string.length <= 200) {
+            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_250)
+        } else if (string.length > 200 && string.length < 400) {
+            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_100)
+        } else if (string.length >= 400 && string.length < 800) {
+            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_500_200)
+        } else {
+            tv_sticker.setImageResource(R.mipmap.bubble_7_rb)
+        }
+
+        tv_sticker.setText(string)
+        addMovableItemOnView(mainView ,tv_sticker)
+
+    }
+
+    private fun addMovableItemOnView(mainView: MaterialCardView ,any: View) {
+        mainView.addView(any)
+    }
+
+    private fun removeAddedView(mainView: MaterialCardView ,view: View) {
+        mainView.removeView(view)
     }
 
 }
