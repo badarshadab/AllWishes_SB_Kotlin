@@ -8,10 +8,9 @@ import com.examp.allwishes.ui.fragment.HolidayFragment
 
 
 class HolidayViewpagerAdapter(
-    fragmentManager: FragmentManager,
-    lifecycle: Lifecycle,
+    fragment: Fragment,
     val array: ArrayList<String>
-) : FragmentStateAdapter(fragmentManager, lifecycle) {
+) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
         return array.size

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,13 +23,13 @@ import com.greetings.allwishes.modelfactory.MyViewModelFactory
 
 class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
     ImageAdapter.ImageClickListener {
+
     private lateinit var b: FragmentCategoryBinding
     private var type: String = ""
     private lateinit var mainViewModel: HomeViewModel
 
     private lateinit var quotesViewModel: QuoteViewModel
-    private var list: List<StorageReference>? = null
-    lateinit var toolbar: Toolbar
+    private lateinit var list: List<StorageReference>
 
     lateinit var activity: Activity
     override fun onAttach(context: Context) {
@@ -50,19 +49,24 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
 //        AdUtils.showBanner(requireActivity(), b.adContainer.nativeAdContainer)
         type = when (pos) {
             0 -> "Gifs"
-            1 -> "Frames"
-            2 -> "Cards"
-            3 -> "Quotes"
+            1 -> "Cards"
+            2 -> "Quotes"
+            3 -> "Frames"
             else -> { // Note the block
                 ""
             }
-
-
         }
         b.progressBar.visibility = View.VISIBLE
         setupObservers(catName + "/" + type, pos)
-        println("position of the tab $pos")
+//        println("position of the tab $pos")
         return b.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(this.list != null){
+
+        }
     }
 
     private fun setupViewModel() {
@@ -74,11 +78,13 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
 
     private fun setupObservers(categoryName: String, cat: Int) {
         mainViewModel.loadImagesStorage(categoryName)
-        if (cat != 3) {
+
+        if (cat != 2) {
             mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()) { resource ->
                 this.list = resource.asReversed()
-                setCatCards(this.list)
                 b.progressBar.visibility = View.GONE
+                setCatCards(this.list)
+
             }
 
         } else {
@@ -106,7 +112,7 @@ class CategoryFrag(val pos: Int, val catName: String) : Fragment(),
         } else {
             activity?.let {
             }
-            if (pos != 3) {
+            if (pos != 2) {
                 b.rv.layoutManager = GridLayoutManager(activity, 3)
             } else {
                 b.rv.layoutManager = GridLayoutManager(activity, 1)

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import com.android.volley.AuthFailureError
 import com.android.volley.NetworkError
 import com.android.volley.ParseError
@@ -32,12 +31,15 @@ object AdUtils {
     var isAdsCheck = false
 
     fun showEntryFullAd(activity: Activity, listener: AdListener) {
-
-        AdsHandler.showEntryInterstitialAds(activity, object : FullAdListener {
-            override fun onComplete(isAdDisplay: Boolean, adNetwork: String) {
-                listener.onComplete()
-            }
-        })
+        if (isAdsCheck) {
+            AdsHandler.showEntryInterstitialAds(activity, object : FullAdListener {
+                override fun onComplete(isAdDisplay: Boolean, adNetwork: String) {
+                    listener.onComplete()
+                }
+            })
+        } else {
+            listener.onComplete()
+        }
 
     }
 
@@ -60,7 +62,7 @@ object AdUtils {
         }
     }
 
-    fun showNative(activity: Activity, adContainer: CardView) {
+    fun showNative(activity: Activity, adContainer: ViewGroup) {
         if (isAdsCheck) {
             AdsHandler.showNativeAd(activity, adContainer)
         }

@@ -1,5 +1,7 @@
 package com.examp.allwishes.ui.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +25,13 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
     private val binding get() = _binding
     private lateinit var mainViewModel: HolidayViewModel
 
-
+    lateinit var activity: Activity
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity = context as Activity
+//        https://stackoverflow.com/questions/28672883/java-lang-illegalstateexception-fragment-not-attached-to-activity
+//        Fragment ContentPreviewFragment{fb22d83} (743b8906-1fa7-4828-8024-cc60ff8aac63) not attached to an activity.
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,7 +40,7 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
         val view = binding.root
         activity?.setTitle("Holiday List")
 
-        _binding.progressBar.visibility = View.VISIBLE
+//        _binding.progressBar.visibility = View.VISIBLE
         mainViewModel = ViewModelProvider(requireActivity())[HolidayViewModel::class.java]
 
 
@@ -71,7 +79,7 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
     private fun combileAll(arrayList: ArrayList<EventByMonth>) {
         var eventList = ArrayList<Event>()
         if (eventList != null) {
-            _binding.progressBar.visibility = View.GONE
+//            _binding.progressBar.visibility = View.GONE
         }
         for (events in arrayList) {
             events.events?.let { eventList.addAll(it) }
@@ -81,10 +89,10 @@ class HolidayFragment(val pos: Int, val title: String) : Fragment() {
 
     private fun setDataInList(event: ArrayList<Event>?) {
         GlobalScope.launch(Dispatchers.Main) {
-            val adapter = HolidayAdapter(requireActivity(), event)
+            val adapter = HolidayAdapter(activity, event)
             _binding.rv.adapter = adapter
             _binding.rv.layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         }
     }
 }

@@ -62,10 +62,19 @@ class HolidayMainFragment : Fragment() {
         viewpager = _binding.vp
         tablayout = _binding.tl
 
-        _binding.progressBar.visibility = View.VISIBLE
+//        _binding.progressBar.visibility = View.VISIBLE
         mainViewModel = ViewModelProvider(requireActivity())[HolidayViewModel::class.java]
 
         AdUtils.showNativeBanner(requireActivity(), _binding.nativeAdContainer)
+
+        tablayout.setSelectedTabIndicatorColor(Color.parseColor("#1B7DE6"))
+        tablayout.setSelectedTabIndicatorHeight(((7 * getResources().getDisplayMetrics().density).toInt()))
+        tablayout.setTabTextColors(Color.parseColor("#A3A0A0"), Color.parseColor("#1B7DE6"))
+
+        return _binding.root
+    }
+
+    override fun onResume() {
 
         val arrayList = mainViewModel.getComModel()
         if (arrayList == null) {
@@ -74,18 +83,10 @@ class HolidayMainFragment : Fragment() {
             _binding.shimmerLay.stopShimmer()
             viewpager.visibility = View.VISIBLE
             _binding.shimmerLay.visibility = View.GONE
-            _binding.progressBar.visibility = View.GONE
+//            _binding.progressBar.visibility = View.GONE
             getMonthName(arrayList)
         }
-
-
-        tablayout.setSelectedTabIndicatorColor(Color.parseColor("#1B7DE6"))
-        tablayout.setSelectedTabIndicatorHeight(((7 * getResources().getDisplayMetrics().density).toInt()))
-        tablayout.setTabTextColors(Color.parseColor("#A3A0A0"), Color.parseColor("#1B7DE6"))
-
-
-
-        return _binding.root
+        super.onResume()
     }
 
     private fun observEvents() {
@@ -117,10 +118,12 @@ class HolidayMainFragment : Fragment() {
                         monthtablist.add(month)
                         arraylistLocal.add(month)
                     }
+                    _binding.shimmerLay.stopShimmer()
+                    viewpager.visibility = View.VISIBLE
+                    _binding.shimmerLay.visibility = View.GONE
 
                     viewpager.adapter = HolidayViewpagerAdapter(
-                        requireActivity().supportFragmentManager,
-                        lifecycle,
+                        this@HolidayMainFragment,
                         arraylistLocal
                     )
                     for (month in monthtablist) {

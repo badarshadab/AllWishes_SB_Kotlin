@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:layout_marginStart="15dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginEnd="15dp"
+    android:layout_margin="@dimen/_5sdp"
+    android:padding="@dimen/_10sdp"
+    app:cardElevation="@dimen/_10sdp"
     app:cardBackgroundColor="@color/cardbg"
     app:cardCornerRadius="15dp">
 
@@ -28,11 +27,11 @@
             android:id="@+id/quotesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="3"
             android:text="Eid Ul Adha"
-            android:layout_marginEnd="@dimen/_20sdp"
             android:textAlignment="textEnd"
             android:textColor="@android:color/white"
             android:textSize="25sp"
@@ -43,9 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/quotesText"
+            android:layout_marginEnd="@dimen/_20sdp"
             android:shadowDx="2"
             android:shadowDy="2"
-            android:layout_marginEnd="@dimen/_20sdp"
             android:shadowRadius="3"
             android:text="28th June"
             android:textAlignment="textEnd"
@@ -55,6 +54,6 @@
     </RelativeLayout>
 
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
 
 

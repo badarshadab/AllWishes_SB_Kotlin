@@ -33,7 +33,6 @@ class Gifs(var catName: String) : Fragment() {
         activity = context as Activity
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,9 +63,9 @@ class Gifs(var catName: String) : Fragment() {
 
     private fun setupObservers(categoryName: String) {
         mainViewModel.loadImagesStorage(categoryName)
-
         mainViewModel.repositoryResponseLiveData_ImageStore.observe(viewLifecycleOwner) { resource ->
             this.list = resource.asReversed()
+            binding.inclidegifid.progresbarid.visibility = View.GONE
             setAdapter(list!!)
         }
 

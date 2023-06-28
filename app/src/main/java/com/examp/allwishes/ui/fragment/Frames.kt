@@ -69,6 +69,7 @@ class Frames(var catName: String) : Fragment() {
 
         mainViewModel.repositoryResponseLiveData_ImageStore.observe(viewLifecycleOwner) { resource ->
             this.list = resource.asReversed()
+            binding.inclidegifid.progresbarid.visibility = View.GONE
             setAdapter(list!!)
         }
 

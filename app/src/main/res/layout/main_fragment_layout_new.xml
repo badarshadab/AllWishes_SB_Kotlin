@@ -19,7 +19,7 @@
         <include
             android:id="@+id/nativeAdContainer"
             layout="@layout/native_ad_container"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="3dp" />
@@ -27,8 +27,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/_8sdp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,60 +36,21 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sview_const_lay"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmer_lay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_shimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/main_lay"
-                    android:layout_margin="5dp"
-                    android:focusable="true"
-                    android:padding="10dp"
-                    app:cardCornerRadius="15dp"
-                    app:cardElevation="5dp"
-                    app:strokeColor="@color/white"
-                    app:strokeWidth="2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <include layout="@layout/create_cards_shimmer" />
-
-                        <include layout="@layout/create_cards_shimmer" />
-
-                        <include layout="@layout/create_cards_shimmer" />
-
-                        <include layout="@layout/create_cards_shimmer" />
-
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </com.facebook.shimmer.ShimmerFrameLayout>
 
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/main_lay"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginVertical="@dimen/_8sdp"
                 android:focusable="true"
                 android:padding="10dp"
-                android:visibility="gone"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -125,12 +86,52 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmer_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_all">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/card_shimmer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@+id/main_lay"
+                            android:layout_margin="5dp"
+                            android:focusable="true"
+                            android:padding="10dp"
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="5dp"
+                            app:strokeColor="@color/white"
+                            app:strokeWidth="2dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <include layout="@layout/create_cards_shimmer" />
+
+                                <include layout="@layout/create_cards_shimmer" />
+
+                                <include layout="@layout/create_cards_shimmer" />
+
+                                <include layout="@layout/create_cards_shimmer" />
+
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/create_card_rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view_all" />
@@ -159,9 +160,9 @@
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="5dp"
-                    app:layout_constraintBottom_toTopOf="@id/daily_tv"
                     app:layout_constraintEnd_toStartOf="@+id/holiday_card"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:strokeColor="@color/white"
                     app:strokeWidth="2dp">
 
@@ -185,9 +186,9 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/_18ssp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/holiday_card"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/start_card" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/holiday_card"
@@ -198,9 +199,9 @@
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="5dp"
-                    app:layout_constraintBottom_toTopOf="@id/holiday_tv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/start_card"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:strokeColor="@color/white"
                     app:strokeWidth="2dp">
 
@@ -222,51 +223,9 @@
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/_18ssp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/holiday_card" />
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/startBtn"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_centerHorizontal="true"-->
-                <!--                android:layout_gravity="center"-->
-                <!--                android:layout_margin="@dimen/_5sdp"-->
-                <!--                android:clickable="true"-->
-                <!--                android:drawableTop="@drawable/ic_daily_wishes"-->
-                <!--                android:gravity="center"-->
-                <!--                android:padding="@dimen/_5sdp"-->
-                <!--                android:text="@string/go_to_cat"-->
-                <!--                android:textAlignment="center"-->
-                <!--                android:textColor="@android:color/black"-->
-                <!--                android:textSize="@dimen/_18ssp"-->
-                <!--                android:textStyle="bold"-->
-                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                app:layout_constraintEnd_toStartOf="@+id/holidayBtn"-->
-                <!--                app:layout_constraintHeight_percent="0.45"-->
-                <!--                app:layout_constraintStart_toStartOf="parent"-->
-                <!--                app:layout_constraintWidth_percent="0.45" />-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/holidayBtn"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_gravity="center"-->
-                <!--                android:layout_margin="@dimen/_5sdp"-->
-                <!--                android:drawableTop="@drawable/ic_holiday_list"-->
-                <!--                android:gravity="center"-->
-                <!--                android:padding="@dimen/_5sdp"-->
-                <!--                android:text="@string/go_to_holidays"-->
-                <!--                android:textAlignment="center"-->
-                <!--                android:textColor="@android:color/black"-->
-                <!--                android:textSize="@dimen/_18ssp"-->
-                <!--                android:textStyle="bold"-->
-                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                app:layout_constraintHeight_percent="0.45"-->
-                <!--                app:layout_constraintStart_toEndOf="@+id/startBtn"-->
-                <!--                app:layout_constraintWidth_percent="0.45" />-->
+                    app:layout_constraintStart_toStartOf="@+id/holiday_card"
+                    app:layout_constraintTop_toBottomOf="@id/holiday_card" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

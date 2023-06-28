@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.examp.allwishes.R
@@ -24,19 +25,6 @@ class CategoryMainFragment : Fragment() {
 
     lateinit var tablayout: TabLayout
     lateinit var viewpager: ViewPager2
-
-    val tabIcons = intArrayOf(
-        R.drawable.ic_gif_unselected,
-        R.drawable.ic_cards_unselected,
-        R.drawable.ic_quotes_unselected,
-        R.drawable.ic_frame_unselected
-    )
-
-    val typeArray = arrayOf(
-        "Gifs", "Frames", "Cards", "Quotes"
-    )
-
-    private var myTAbAdapter: MyTAbAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.supportActionBar!!.title = trending_cat
@@ -64,12 +52,6 @@ class CategoryMainFragment : Fragment() {
         )
 
         val titles = listOf("Gifs", "Cards", "Quotes", "Frames")
-        val icon = listOf(
-            R.drawable.ic_gif_unselected,
-            R.drawable.ic_cards_unselected,
-            R.drawable.ic_quotes_unselected,
-            R.drawable.ic_frame_unselected
-        )
 
         val list = listOf(
             Gifs(trending_cat),
@@ -82,22 +64,40 @@ class CategoryMainFragment : Fragment() {
 
         TabLayoutMediator(tablayout, viewpager) { tab, position ->
 
+            when (position) {
+                0 -> {
+                    tab?.icon = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_gif_tab
+                    )
+                }
+
+                1 -> {
+                    tab?.icon = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_cards_tab
+                    )
+                }
+
+                2 -> {
+                    tab?.icon = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_quotes_tab
+                    )
+                }
+
+                else -> {
+                    tab?.icon = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_frame_tab
+                    )
+                }
+            }
 
             tab.text = titles[position]
-//            tab.setIcon(resources.getDrawable(R.drawable.ic_gif_unselected))
-//            AppUtils.createTabIcons(requireContext(), tablayout)
-
-//            tab.setIcon(resources.getDrawable(icon[position]))
         }.attach()
-//        setUpTabIcons()
         return _binding.root
     }
 
-    fun setUpTabIcons() {
-        tablayout.getTabAt(0)?.setIcon(resources.getDrawable(tabIcons[0]))
-        tablayout.getTabAt(1)?.setIcon(resources.getDrawable(tabIcons[1]))
-        tablayout.getTabAt(2)?.setIcon(resources.getDrawable(tabIcons[2]))
-        tablayout.getTabAt(3)?.setIcon(resources.getDrawable(tabIcons[3]))
-    }
 }
 

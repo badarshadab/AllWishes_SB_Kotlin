@@ -31,6 +31,7 @@ class MainFragment : Fragment(), View.OnClickListener {
         b.shimmerLay.startShimmer()
 
         AdUtils.showNative(requireActivity() , b.nativeAdContainer.nativeAdContainer)
+
         b.createCardRv.layoutManager =
             LinearLayoutManager(
                 requireContext(),
@@ -45,12 +46,17 @@ class MainFragment : Fragment(), View.OnClickListener {
         return b.root
     }
 
+    override fun onResume() {
+        AdUtils.showNative(requireActivity() , b.nativeAdContainer.nativeAdContainer)
+        super.onResume()
+    }
+
     private fun createAdapter(model: Root_HlNew) {
 
         if (model.createcards?.size!! > 0) {
             b.shimmerLay.stopShimmer()
             b.shimmerLay.visibility = View.GONE
-            b.card.visibility = View.VISIBLE
+            b.createCardRv.visibility = View.VISIBLE
         }
         val adapter = CreateCardsAdapter(
             requireActivity(),

@@ -2,8 +2,10 @@
     <string name="app_name">AllWishes_SB_Kotlin</string>
     <string name="go_to_cat">Daily Wishes</string>
     <string name="go_to_holidays">Holiday Wishes</string>
+    <string name="ad_config_url">https://www.mediafire.com/file/9yzm6haw4mf9nvt/All_wishes%2528greetings_w.txt/file</string>
+
     <string name="pp_url" translatable="false">https://s3.ap-south-1.amazonaws.com/greetingandwishes/privacypolicy.html</string>
-    <string name="enabledisable">https://www.mediafire.com/file/qfb306ynvn6emdh/AllWishes%2528greetingWishes%2529_OnOff/file</string>
+    <string name="enabledisable">https://www.mediafire.com/file_premium/ierie9oupoku4xp/testing_on_off.json/file</string>
     <string name="openSaved">Show Saved items from</string>
     <string name="no_Saved">Nothing Saved Here!!</string>
     <string name="removeConfirm">You are about to Remove this item From Saved List ?</string>

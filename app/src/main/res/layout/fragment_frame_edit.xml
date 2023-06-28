@@ -95,9 +95,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?android:selectableItemBackground"
-                        android:drawableTop="@drawable/ic_share"
+                        android:drawableTop="@drawable/ic_share_frame"
                         android:gravity="center"
                         android:text="@string/share"
+                        android:drawablePadding="@dimen/_2sdp"
                         android:textAllCaps="true"
                         android:textColor="@color/text_col"
                         android:textSize="10sp" />
