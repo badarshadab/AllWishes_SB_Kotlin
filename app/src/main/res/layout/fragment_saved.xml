@@ -4,7 +4,7 @@
     android:background="@drawable/bg"
     android:layout_height="match_parent">
 
-    <com.examp.allwishes.ui.fragment.CardRecyclerview
+    <com.greetings.allwishes.ui.fragment.CardRecyclerview
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

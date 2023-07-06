@@ -7,13 +7,10 @@
 
     <fragment
         android:id="@+id/nav_main"
-        android:name="com.examp.allwishes.ui.fragment.MainFragment"
+        android:name="com.greetings.allwishes.ui.fragment.MainFragment"
         android:label="main_frag"
         tools:layout="@layout/viewall_createcards_fragment">
 
-        <action
-            android:id="@+id/nav_home_to_nav_category"
-            app:destination="@id/nav_theme_cat" />
         <action
             android:id="@+id/action_nav_main_to_daily_catFrag"
             app:destination="@id/daily_catFrag" />
@@ -27,13 +24,11 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.examp.allwishes.ui.fragment.HolidayMainFragment"
+        android:name="com.greetings.allwishes.ui.fragment.HolidayMainFragment"
         android:label="menu_home"
         tools:layout="@layout/fragment_holiday">
 
-        <action
-            android:id="@+id/nav_home_to_nav_category"
-            app:destination="@id/nav_theme_cat" />
+
         <action
             android:id="@+id/action_nav_home_to_holiday_list"
             app:destination="@id/holiday_list" />
@@ -41,13 +36,10 @@
     </fragment>
     <fragment
         android:id="@+id/holiday_list"
-        android:name="com.examp.allwishes.ui.fragment.HolidayFragment"
+        android:name="com.greetings.allwishes.ui.fragment.HolidayFragment"
         android:label="menu_home"
         tools:layout="@layout/fragment_holiday">
 
-        <action
-            android:id="@+id/nav_home_to_nav_category"
-            app:destination="@id/nav_theme_cat" />
         <action
             android:id="@+id/action_holiday_list_to_nav_home"
             app:destination="@id/nav_home" />
@@ -59,25 +51,20 @@
 
     <fragment
         android:id="@+id/nav_saved_main"
-        android:name="com.examp.allwishes.ui.fragment.SavedMainFragment"
+        android:name="com.greetings.allwishes.ui.fragment.SavedMainFragment"
         android:label="savedMainFragment"
         tools:layout="@layout/savedmainfragment"/>
 
-    <fragment
-        android:id="@+id/nav_theme_cat"
-        android:name="com.examp.allwishes.ui.fragment.CategoryFrag"
-        android:label="themeCatFragment"
-        tools:layout="@layout/fragment_category"/>
 
     <fragment
         android:id="@+id/nav_frameEdit"
-        android:name="com.examp.allwishes.ui.fragment.FrameEditFragment"
+        android:name="com.greetings.allwishes.ui.fragment.FrameEditFragment"
         android:label="@string/contentPreview"
         tools:layout="@layout/fragment_frame_edit" />
 
     <fragment
         android:id="@+id/nav_cat_main"
-        android:name="com.examp.allwishes.ui.fragment.CategoryMainFragment"
+        android:name="com.greetings.allwishes.ui.fragment.CategoryMainFragment"
         android:label="themeCatFragment"
         tools:layout="@layout/categorymainfragment">
         <action
@@ -99,20 +86,20 @@
 
     <fragment
         android:id="@+id/nav_contentPreview"
-        android:name="com.examp.allwishes.ui.fragment.ContentPreviewFragment"
+        android:name="com.greetings.allwishes.ui.fragment.ContentPreviewFragment"
         android:label="contentPreview"
         tools:layout="@layout/fragment_content_preview"/>
 
     <fragment
         android:id="@+id/nav_quotesPreview"
-        android:name="com.examp.allwishes.ui.fragment.QuotesPreviewFragment"
+        android:name="com.greetings.allwishes.ui.fragment.QuotesPreviewFragment"
         android:label="contentPreview"
         tools:layout="@layout/fragment_content_preview"/>
 
 
     <fragment
         android:id="@+id/daily_catFrag"
-        android:name="com.examp.allwishes.ui.fragment.DailyWishes_CategoryFrag"
+        android:name="com.greetings.allwishes.ui.fragment.DailyWishes_CategoryFrag"
         android:label="daily_cat"
         tools:layout="@layout/daily_wishes_category_activity">
         <action
@@ -123,14 +110,14 @@
 
         <fragment
             android:id="@+id/nav_savedfrag"
-            android:name="com.examp.allwishes.ui.fragment.SavedFragment"
+            android:name="com.greetings.allwishes.ui.fragment.SavedFragment"
             android:label="savedmain"
             tools:layout="@layout/fragment_saved">
         </fragment>
 
     <fragment
         android:id="@+id/nav_daily_type"
-        android:name="com.examp.allwishes.ui.fragment.DailyWishes_TypeFrag"
+        android:name="com.greetings.allwishes.ui.fragment.DailyWishes_TypeFrag"
         android:label="daily_type"
         tools:layout="@layout/dailywishes_type_lay">
         <action
@@ -140,19 +127,19 @@
 
     <fragment
         android:id="@+id/nav_content_list"
-        android:name="com.examp.allwishes.ui.fragment.ContentListFragment"
+        android:name="com.greetings.allwishes.ui.fragment.ContentListFragment"
         android:label="daily_content_list"
         tools:layout="@layout/fragment_content_list"/>
 
     <fragment
         android:id="@+id/nav_view_create_cards"
-        android:name="com.examp.allwishes.ui.fragment.ViewAllCreateCardsFragment"
+        android:name="com.greetings.allwishes.ui.fragment.ViewAllCreateCardsFragment"
         android:label="viewcreatecards"
         tools:layout="@layout/viewall_createcards_fragment"/>
 
     <fragment
         android:id="@+id/nav_create_cards_list"
-        android:name="com.examp.allwishes.ui.fragment.CreateCardCatListFrag"
+        android:name="com.greetings.allwishes.ui.fragment.CreateCardCatListFrag"
         android:label="createcardslist"
         tools:layout="@layout/addbg_diloglayout">
         <action
@@ -162,7 +149,7 @@
 
     <fragment
         android:id="@+id/nav_set_cards"
-        android:name="com.examp.allwishes.ui.fragment.SetCardFrag"
+        android:name="com.greetings.allwishes.ui.fragment.SetCardFrag"
         android:label="setcards"
         tools:layout="@layout/activity_create">
         <action
@@ -172,7 +159,7 @@
 
     <fragment
         android:id="@+id/nav_card_preview"
-        android:name="com.examp.allwishes.ui.fragment.CardPreviewFragment"
+        android:name="com.greetings.allwishes.ui.fragment.CardPreviewFragment"
         android:label="card_preview"
         tools:layout="@layout/activity_cardpreview">
         <action
@@ -182,7 +169,7 @@
 
     <fragment
         android:id="@+id/nav_gif_holiday"
-        android:name="com.examp.allwishes.ui.fragment.Gifs"
+        android:name="com.greetings.allwishes.ui.fragment.Gifs"
         android:label="gif_holiday"
         tools:layout="@layout/fragment_gif">
         <action
@@ -192,7 +179,7 @@
 
     <fragment
         android:id="@+id/nav_card_holiday"
-        android:name="com.examp.allwishes.ui.fragment.Cards"
+        android:name="com.greetings.allwishes.ui.fragment.Cards"
         android:label="card_holiday"
         tools:layout="@layout/fragment_gif">
         <action
@@ -202,7 +189,7 @@
 
     <fragment
         android:id="@+id/nav_frames_holiday"
-        android:name="com.examp.allwishes.ui.fragment.Frames"
+        android:name="com.greetings.allwishes.ui.fragment.Frames"
         android:label="gif_holiday"
         tools:layout="@layout/fragment_gif">
         <action
@@ -212,7 +199,7 @@
 
     <fragment
         android:id="@+id/nav_quotes_holiday"
-        android:name="com.examp.allwishes.ui.fragment.Cards"
+        android:name="com.greetings.allwishes.ui.fragment.Cards"
         android:label="card_holiday"
         tools:layout="@layout/fragment_gif">
         <action

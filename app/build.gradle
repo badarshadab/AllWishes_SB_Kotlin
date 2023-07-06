@@ -1,25 +1,26 @@
 plugins {
+    id 'com.google.gms.google-services'
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    namespace 'com.examp.allwishes'
+    namespace 'com.greetings.allwishes'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.examp.allwishes"
+        applicationId "com.greetings.allwishes"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 15
+        versionName "2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -33,6 +34,12 @@ android {
     buildFeatures {
         dataBinding true
         viewBinding true
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 
@@ -106,7 +113,10 @@ dependencies {
     implementation 'com.google.ads.mediation:facebook:6.14.0.0'
     implementation 'com.google.ads.mediation:adcolony:4.8.0.0'
     implementation 'com.google.ads.mediation:applovin:11.10.1.0'
-//    implementation 'com.google.ads.mediation:mopub:5.18.0.0'
+
+
+
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
 }
 
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'

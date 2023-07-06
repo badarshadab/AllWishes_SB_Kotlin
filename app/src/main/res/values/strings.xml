@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name">AllWishes_SB_Kotlin</string>
+    <string name="app_name">All Wishes GIF</string>
     <string name="go_to_cat">Daily Wishes</string>
-    <string name="go_to_holidays">Holiday Wishes</string>
-    <string name="ad_config_url">https://www.mediafire.com/file/9yzm6haw4mf9nvt/All_wishes%2528greetings_w.txt/file</string>
+    <string name="go_to_holidays">Holiday Wishes</string><string name="pp_url" translatable="false">https://s3.ap-south-1.amazonaws.com/greetingandwishes/privacypolicy.html</string>
 
-    <string name="pp_url" translatable="false">https://s3.ap-south-1.amazonaws.com/greetingandwishes/privacypolicy.html</string>
-    <string name="enabledisable">https://www.mediafire.com/file_premium/ierie9oupoku4xp/testing_on_off.json/file</string>
+    <string name="default_ad_config_string">{"Admob":0,"Fb":2,"Applovin":1,"Unity":3,"Inhouse":4}</string>
+    <string name="ad_config_url">https://www.mediafire.com/file/9yzm6haw4mf9nvt/All_wishes%2528greetings_w.txt/file</string>
+    <string name="enabledisable">https://www.mediafire.com/file_premium/uuihj1vmalklvm1/AllWishes%2528sbapp%2529_28-6-23/file</string>
+    <string name="in_house_ads_url">https://www.mediafire.com/file/ksilhl63lvjhkkw/country_inhouse.json/file</string>
+    <string name="smid">1008</string>
+
     <string name="openSaved">Show Saved items from</string>
     <string name="no_Saved">Nothing Saved Here!!</string>
     <string name="removeConfirm">You are about to Remove this item From Saved List ?</string>
@@ -53,31 +56,63 @@
     <string name="yes">Yes</string>
 
     <!--admob ads ids -->
-    <string name="fb_full_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
-    <string name="fb_entry_full_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
-    <string name="fb_native_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
-    <string name="fb_native_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
-    <string name="fb_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
-    <string name="fb_med_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>
+<!--    <string name="fb_full_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>-->
+<!--    <string name="fb_entry_full_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>-->
+<!--    <string name="fb_native_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>-->
+<!--    <string name="fb_native_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>-->
+<!--    <string name="fb_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>-->
+<!--    <string name="fb_med_banner_ads_id">IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID</string>-->
 
-    <!--    admob ads ids -->
-    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_full_ad_id">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="admob_entry_full_ad_id">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="admob_open_ad_id">ca-app-pub-3940256099942544/3419835294</string>
-    <string name="admob_banner_ad_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="admob_native_advance_ad_id">ca-app-pub-3940256099942544/2247696110</string>
+<!--    &lt;!&ndash;    admob ads ids &ndash;&gt;-->
+<!--    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>-->
+<!--    <string name="admob_full_ad_id">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="admob_entry_full_ad_id">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="admob_open_ad_id">ca-app-pub-3940256099942544/3419835294</string>-->
+<!--    <string name="admob_banner_ad_id">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--    <string name="admob_native_advance_ad_id">ca-app-pub-3940256099942544/2247696110</string>-->
 
-    <string name="unity_game_id"></string>
-    <string name="unity_full_id">Android_Interstitial</string>
-    <string name="unity_entry_full_id">Android_Interstitial</string>
-    <string name="unity_banner_id">Banner_Android</string>
+<!--    <string name="unity_game_id"></string>-->
+<!--    <string name="unity_full_id">Android_Interstitial</string>-->
+<!--    <string name="unity_entry_full_id">Android_Interstitial</string>-->
+<!--    <string name="unity_banner_id">Banner_Android</string>-->
 
-    <string name="apploving_key">efS0Gr7d1lJ6oJaJteqiDHuQngxhAJ-pRf_eAAx8ds2CwfMWtCwcgLENtVrdBffXdBlXe05buiLZeTIMTnaSz0ne</string>
-    <string name="applovin_id_fullAd">sdgdfgdf</string>
-    <string name="applovin_id_banner">dffhfhfg</string>
-    <string name="applovin_id_rect">hfghfgh</string>
-    <string name="applovin_native_id">ghfghfg</string>
-    <string name="applovin_small_native_id">hfghfgh</string>
+<!--    <string name="apploving_key">efS0Gr7d1lJ6oJaJteqiDHuQngxhAJ-pRf_eAAx8ds2CwfMWtCwcgLENtVrdBffXdBlXe05buiLZeTIMTnaSz0ne</string>-->
+<!--    <string name="applovin_id_fullAd">sdgdfgdf</string>-->
+<!--    <string name="applovin_id_banner">dffhfhfg</string>-->
+<!--    <string name="applovin_id_rect">hfghfgh</string>-->
+<!--    <string name="applovin_native_id">ghfghfg</string>-->
+<!--    <string name="applovin_small_native_id">hfghfgh</string>-->
+
+        <!--admob ads ids -->
+        <string name="admob_app_id">ca-app-pub-5218630348394030~8126157678</string>
+        <string name="admob_full_ad_id">ca-app-pub-5218630348394030/5308422643</string>
+        <string name="admob_entry_full_ad_id">ca-app-pub-5218630348394030/9400367439</string>
+        <string name="admob_open_ad_id">ca-app-pub-5218630348394030/1138734038</string>
+        <string name="admob_banner_ad_id">ca-app-pub-5218630348394030/5116850952</string>
+        <string name="admob_native_advance_ad_id">ca-app-pub-5218630348394030/2643387394</string>
+
+        <!--    &lt;!&ndash; Unity ads ids &ndash;&gt;-->
+        <string name="unity_game_id">4242923</string>
+        <string name="unity_full_id">Interstitial_Android</string>
+        <string name="unity_banner_id">Banner_Android</string>
+        <string name="unity_entry_full_id">Interstitial_Android</string>
+
+        <!--    &lt;!&ndash;    &lt;!&ndash; fb ads ids &ndash;&gt;&ndash;&gt;-->
+        <string name="fb_full_ads_id">2315130605372706_2315134172039016</string>
+        <string name="fb_native_ads_id">2315130605372706_2315132005372566</string>
+        <string name="fb_native_banner_ads_id">2315130605372706_2315133675372399</string>
+        <string name="fb_entry_full_ads_id">2315130605372706_3200682006817557</string>
+        <string name="fb_banner_ads_id">2315130605372706_3070861506466275</string>
+        <string name="fb_med_banner_ads_id">2315130605372706_3110191949199897</string>
+
+        <!--    <string name="ad_attribution">Ad</string>-->
+
+
+        <string name="apploving_key">X79OrFcls94lRHOHwZxuDTTmxh9mTCyABWxzaGHEHeENLx5V01OlhxfdyKcBMfbseAed8Xsga1-Co5_CfC3RSa</string>
+        <string name="applovin_id_fullAd">60caee0586d493b3</string>
+        <string name="applovin_id_banner">cf3fcd97d26cf886</string>
+        <string name="applovin_id_rect">238518a4c8d90d1d</string>
+        <string name="applovin_native_id">1fa943dcc802ed55</string>
+        <string name="applovin_small_native_id">1083391c7a43f185</string>
 
 </resources>

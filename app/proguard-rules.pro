@@ -17,10 +17,10 @@
 #-keepattributes SourceFile,LineNumberTable
 -keepattributes SourceFile,LineNumberTable
 -keep class com.sm.newadlib.model.** {*;}
-#-keep class com.examp.allwishes.ui.model.Root_HlNew**  { *; }
-#-keep class com.examp.allwishes.ui.model.EventByMonth**  { *; }
-#-keep class com.examp.allwishes.ui.model.Event**  { *; }
-#-keep class com.examp.allwishes.ui.model.DailyWishe**  { *; }
+-keep class com.greetings.allwishes.ui.model.Root_HlNew**  { *; }
+-keep class com.greetings.allwishes.ui.model.EventByMonth**  { *; }
+-keep class com.greetings.allwishes.ui.model.Event**  { *; }
+-keep class com.greetings.allwishes.ui.model.DailyWishe**  { *; }
 #-keep class com.greetings.allwishes.models.**{ *; }
 
 -keepattributes Annotation
