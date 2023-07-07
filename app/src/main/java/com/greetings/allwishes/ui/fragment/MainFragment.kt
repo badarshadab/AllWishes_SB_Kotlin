@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -45,6 +46,12 @@ class MainFragment : Fragment(), View.OnClickListener {
         }
         return b.root
     }
+
+
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        (activity as AppCompatActivity?)!!.supportActionBar!!.title = resources.getString(R.string.app_name)
+//        super.onViewCreated(view, savedInstanceState)
+//    }
 
     override fun onResume() {
         AdUtils.showNative(requireActivity() , b.nativeAdContainer.nativeAdContainer)

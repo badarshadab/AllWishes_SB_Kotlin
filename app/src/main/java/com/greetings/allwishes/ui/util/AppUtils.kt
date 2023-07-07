@@ -317,7 +317,7 @@ object AppUtils {
         val file = getFile(context, ob)
         file?.let {
             val direct = File(
-                context.getExternalFilesDir(null).toString() + "/Collection/Frame"
+                context.getExternalFilesDir(null).toString() + "/Collection/" + extension
             )
             if (!direct.exists()) {
                 direct.mkdirs()
@@ -325,7 +325,7 @@ object AppUtils {
             val f = File(direct.absolutePath, "" + System.currentTimeMillis() + ".png")
             file.copyTo(f)
         }
-
+        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
     }
 
 

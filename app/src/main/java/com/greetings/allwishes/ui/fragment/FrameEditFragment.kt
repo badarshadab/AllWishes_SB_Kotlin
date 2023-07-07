@@ -46,6 +46,7 @@ import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.greetings.allwishes.ui.adapter.StickersAdapter
 import com.greetings.allwishes.ui.data.api.FirebaseHelper
 import com.greetings.allwishes.ui.viewmodel.HomeViewModel
+import com.sm.allwishes.greetings.util.ShareUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -174,8 +175,9 @@ class FrameEditFragment : Fragment() {
     }
 
     fun download() {
-        AppUtils.getBitMap(b.card)?.let { AppUtils.saveBitmap(it, "", requireContext()) }
-        Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
+        AppUtils.getBitMap(b.card)?.let {
+            AppUtils.saveBitmap(it, "Frames", requireContext())
+        }
     }
 
     fun shareImage() {

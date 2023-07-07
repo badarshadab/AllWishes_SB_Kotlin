@@ -40,11 +40,14 @@ class CardPreviewFragment : Fragment() {
         b.cardimgid.setImageBitmap(src)
 
         b.cardssaveBtn.setOnClickListener {
-            val bmp: Bitmap? = b.cardimgid.drawToBitmap()
-            val file = AppUtils.getFile(requireContext(), bmp)
-            if (file != null) {
-                ShareUtils.saveItem(requireActivity(), file, "Cards")
+            AppUtils.getBitMap(b.cardimgid)?.let {
+                AppUtils.saveBitmap(it, "Cards", requireContext(),)
             }
+//            val bmp: Bitmap? = b.cardimgid.drawToBitmap()
+//            val file = AppUtils.getFile(requireContext(), bmp)
+//            if (file != null) {
+//                ShareUtils.saveItem(requireActivity(), file, "Cards")
+//            }
         }
         b.cardsshareBtn.setOnClickListener {
             val bmp: Bitmap? = b.cardimgid.drawToBitmap()
