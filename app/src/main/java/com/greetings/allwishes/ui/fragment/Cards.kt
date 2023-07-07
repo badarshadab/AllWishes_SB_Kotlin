@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.greetings.allwishes.R
 import com.greetings.allwishes.databinding.FragmentGifBinding
@@ -17,6 +18,7 @@ import com.greetings.allwishes.ui.viewmodel.HomeViewModel
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.greetings.allwishes.adapters.recyclerview.CardAdapter
+import com.hindishyari.shyari.viewModels.CardViewModel
 
 
 class Cards(var catName: String) : Fragment() {
@@ -65,13 +67,21 @@ class Cards(var catName: String) : Fragment() {
 
 
     private fun setupObservers(categoryName: String) {
-        mainViewModel.loadImagesStorage(categoryName)
 
-        mainViewModel.repositoryResponseLiveData_ImageStore.observe(viewLifecycleOwner) { resource ->
+        val cardViewModel : CardViewModel by lazy { ViewModelProvider(this)[CardViewModel::class.java] }
+        cardViewModel.getCategoryWiseCards(categoryName).observe(viewLifecycleOwner, Observer { resource ->
             this.list = resource.asReversed()
             binding.inclidegifid.progresbarid.visibility = View.GONE
             setAdapter(list!!)
-        }
+        })
+
+//        mainViewModel.loadImagesStorage(categoryName)
+
+//        mainViewModel.repositoryResponseLiveData_ImageStore.observe(viewLifecycleOwner) { resource ->
+//            this.list = resource.asReversed()
+//            binding.inclidegifid.progresbarid.visibility = View.GONE
+//            setAdapter(list!!)
+//        }
 
 
     }

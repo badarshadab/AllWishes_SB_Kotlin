@@ -34,6 +34,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.card.MaterialCardView
+import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.R
 import com.greetings.allwishes.databinding.ActivityCreateBinding
 import com.greetings.allwishes.databinding.AddbgDiloglayoutBinding
@@ -41,6 +43,7 @@ import com.greetings.allwishes.databinding.AddtextDialogLayBinding
 import com.greetings.allwishes.databinding.GradentpicklayoutBinding
 import com.greetings.allwishes.databinding.QuoteslistdlayoutBinding
 import com.greetings.allwishes.databinding.StickerdiloglayoutBinding
+import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.greetings.allwishes.ui.adapter.AddbgCardAdapter
 import com.greetings.allwishes.ui.adapter.ChooseColorAdapter
 import com.greetings.allwishes.ui.adapter.ChooseGradCloreAdapter
@@ -51,7 +54,6 @@ import com.greetings.allwishes.ui.adapter.TextChooseColorAdapter
 import com.greetings.allwishes.ui.data.api.FirebaseHelper
 import com.greetings.allwishes.ui.model.ColorModel
 import com.greetings.allwishes.ui.util.AppUtils
-import com.greetings.allwishes.ui.util.BubbleTextView
 import com.greetings.allwishes.ui.util.MultiTouchListener
 import com.greetings.allwishes.ui.util.OnItemClickListener
 import com.greetings.allwishes.ui.util.OnItemClickListener_Quotes
@@ -60,9 +62,6 @@ import com.greetings.allwishes.ui.util.StickerOnItemClick
 import com.greetings.allwishes.ui.viewmodel.CreateCardViewModel
 import com.greetings.allwishes.ui.viewmodel.HomeViewModel
 import com.greetings.allwishes.ui.viewmodel.QuoteViewModel
-import com.google.android.material.card.MaterialCardView
-import com.google.firebase.storage.StorageReference
-import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.skydoves.colorpickerview.AlphaTileView
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerView
@@ -438,10 +437,10 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         colorpickview.setLifecycleOwner(this)
 
         done_btn.setOnClickListener {
-//            b.createimageview.setImageResource(0)
-//            b.cardrootlayout.setBackgroundResource(0)
-//            b.create.visibility = View.GONE
-//            b.createimageview.setBackgroundColor(envelope2!!.color)
+            b.createimageview.setImageResource(0)
+            b.cardrootlayout.setBackgroundResource(0)
+            b.create.visibility = View.GONE
+            b.createimageview.setBackgroundColor(envelope2!!.color)
             colorpickdialog?.dismiss()
         }
 
@@ -543,6 +542,9 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         addtextbinding?.addokbtn?.setOnClickListener {
 
             msgToAdd = addtextbinding!!.textid.text.toString()
+
+                b.create.visibility = View.GONE
+
 //            dtextView?.text = msgToAdd
 //            if (!msgToAdd.isEmpty()) {
 //                b.addtextid.setText(R.string.remove_text)
@@ -550,7 +552,7 @@ class SetCardFrag : Fragment(), View.OnClickListener {
 ////                dtextView!!.setOnClickListener(this)
 //            }
             val triple = Triple(msgToAdd, texteditcolor, fontdata)
-            AppUtils.addStringToView(b.cardsharesaveid ,requireContext(), triple)
+            AppUtils.addStringToView(b.cardsharesaveid, requireContext(), triple)
 //            addStringToView(requireContext(), triple)
             addtextdialog?.dismiss()
         }
@@ -911,9 +913,9 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         var msg = dtextView?.text
         var isft = msg?.length
         val itemCount = b.cardsharesaveid.childCount
-
+        println("itemCount   " + itemCount)
 //        if (b.createimageview.drawable != null || (dtextView != null || msg!!.isNotEmpty())) {
-        if(itemCount > 1){
+        if (itemCount > 0 && b.create.visibility != View.VISIBLE|| (quotetext?.text != "")) {
             var viewdata = AppUtils.getBitmapFromView(b.cardsharesaveid)
             val bun = Bundle()
             bun.putString("bitimgkey", saveBitmap(viewdata))
@@ -923,64 +925,64 @@ class SetCardFrag : Fragment(), View.OnClickListener {
         }
     }
 
-    fun addOrRemove(v: TextView, addText: String, lmbd: () -> Unit) {
-        if (v.getText().equals(addText)) {
-            lmbd()
-        } else {
-            v.text = addText
-            if (v == b.stickersid && stickerImageView != null) {
-                stickerImageView.setImageDrawable(null)
-            } else if (v == b.addtextid && dtextView != null) {
-                dtextView?.text = ""
-            }
-        }
-    }
+//    fun addOrRemove(v: TextView, addText: String, lmbd: () -> Unit) {
+//        if (v.getText().equals(addText)) {
+//            lmbd()
+//        } else {
+//            v.text = addText
+//            if (v == b.stickersid && stickerImageView != null) {
+//                stickerImageView.setImageDrawable(null)
+//            } else if (v == b.addtextid && dtextView != null) {
+//                dtextView?.text = ""
+//            }
+//        }
+//    }
 
-    private fun addStringToView(context: Context, triple: Triple<String, Int, Typeface>) {
-        val string = triple.first
-        val tv_sticker = BubbleTextView(context, triple.second, triple.third, 0, string)
-        removeAddedView(tv_sticker)
-        tv_sticker.setOperationListener(object : BubbleTextView.OperationListener {
-            override fun onDeleteClick() {
-                removeAddedView(tv_sticker)
-            }
+//    private fun addStringToView(context: Context, triple: Triple<String, Int, Typeface>) {
+//        val string = triple.first
+//        val tv_sticker = BubbleTextView(context, triple.second, triple.third, 0, string)
+//        removeAddedView(tv_sticker)
+//        tv_sticker.setOperationListener(object : BubbleTextView.OperationListener {
+//            override fun onDeleteClick() {
+//                removeAddedView(tv_sticker)
+//            }
+//
+//            override fun onEdit(bubbleTextView: BubbleTextView?) {
+//                bubbleTextView.let {
+//                    val onEdit = !bubbleTextView?.isInEditMode!!
+//                    tv_sticker.setInEdit(onEdit)
+//                }
+//            }
+//
+//            override fun onClick(bubbleTextView: BubbleTextView?) {
+//            }
+//
+//            override fun onTop(bubbleTextView: BubbleTextView?) {
+//            }
+//        })
+//
+//        if (string.length <= 200) {
+//            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_250)
+//        } else if (string.length > 200 && string.length < 400) {
+//            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_100)
+//        } else if (string.length >= 400 && string.length < 800) {
+//            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_500_200)
+//        } else {
+//            tv_sticker.setImageResource(R.mipmap.bubble_7_rb)
+//        }
+//
+//        tv_sticker.setText(string)
+//        addMovableItemOnView(tv_sticker)
+//
+//    }
 
-            override fun onEdit(bubbleTextView: BubbleTextView?) {
-                bubbleTextView.let {
-                    val onEdit = !bubbleTextView?.isInEditMode!!
-                    tv_sticker.setInEdit(onEdit)
-                }
-            }
-
-            override fun onClick(bubbleTextView: BubbleTextView?) {
-            }
-
-            override fun onTop(bubbleTextView: BubbleTextView?) {
-            }
-        })
-
-        if (string.length <= 200) {
-            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_250)
-        } else if (string.length > 200 && string.length < 400) {
-            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_100)
-        } else if (string.length >= 400 && string.length < 800) {
-            tv_sticker.setImageResource(R.mipmap.bubble_7_rb_500_200)
-        } else {
-            tv_sticker.setImageResource(R.mipmap.bubble_7_rb)
-        }
-
-        tv_sticker.setText(string)
-        addMovableItemOnView(tv_sticker)
-
-    }
-
-    private fun addMovableItemOnView(any: View) {
-        b.cardsharesaveid.addView(any)
-    }
-
-    private fun removeAddedView(view: View) {
-        b.cardsharesaveid.removeView(view)
-    }
+//    private fun addMovableItemOnView(any: View) {
+//        b.cardsharesaveid.addView(any)
+//    }
+//
+//    private fun removeAddedView(view: View) {
+//        b.cardsharesaveid.removeView(view)
+//    }
 
 
 }

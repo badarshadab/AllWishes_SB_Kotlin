@@ -8,24 +8,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.R
 import com.greetings.allwishes.databinding.FragmentContentListBinding
+import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.greetings.allwishes.ui.adapter.GifImageAdapter
 import com.greetings.allwishes.ui.adapter.QuotesListAdapter
 import com.greetings.allwishes.ui.data.api.FirebaseHelper
 import com.greetings.allwishes.ui.util.AppUtils
+import com.greetings.allwishes.ui.viewmodel.FramesViewModel
 import com.greetings.allwishes.ui.viewmodel.HomeViewModel
 import com.greetings.allwishes.ui.viewmodel.QuoteViewModel
-import com.google.firebase.storage.StorageReference
-import com.greetings.allwishes.modelfactory.MyViewModelFactory
 import com.greetings.allwishes.util.AdUtils
+import com.hindishyari.shyari.viewModels.CardViewModel
 
 
 class ContentListFragment : Fragment() {
     private lateinit var b: FragmentContentListBinding
     private lateinit var mainViewModel: HomeViewModel
+    private lateinit var cardsViewModel: FramesViewModel
     private lateinit var quotesViewModel: QuoteViewModel
     private var list: List<StorageReference>? = null
     private var name: String = ""
@@ -77,7 +81,7 @@ class ContentListFragment : Fragment() {
         if (type.equals("Quotes")) {
             b.shimmerLayImages.visibility = View.GONE
             b.shimmerLayQuotes.visibility = View.VISIBLE
-                b.rv.layoutManager = GridLayoutManager(requireContext(), 1)
+            b.rv.layoutManager = GridLayoutManager(requireContext(), 1)
 //            b.shimmerLayQuotes.startShimmer()
 
         } else {
@@ -89,6 +93,7 @@ class ContentListFragment : Fragment() {
 
     private fun setupViewModel() {
         val myViewModelFactory = MyViewModelFactory(FirebaseHelper())
+
         mainViewModel =
             ViewModelProvider(requireActivity(), myViewModelFactory)[HomeViewModel::class.java]
         quotesViewModel =
@@ -120,7 +125,7 @@ class ContentListFragment : Fragment() {
     }
 
     private fun setImageAdapter(resource: List<StorageReference>) {
-        if(resource != null){
+        if (resource != null) {
             b.shimmerLayImages.stopShimmer()
             b.rv.visibility = View.VISIBLE
             b.shimmerLayImages.visibility = View.GONE
@@ -149,10 +154,11 @@ class ContentListFragment : Fragment() {
                 }
             )
         }
+//        b.rv.adapter?.notifyDataSetChanged()
     }
 
     private fun setupObservers(categoryName: String) {
-        mainViewModel.loadImagesStorage(categoryName)
+
         if (type.equals("Quotes")) {
             quotesViewModel.getQuotes(categoryName)
             quotesViewModel.quotes.observe(requireActivity()) { list ->
@@ -160,13 +166,33 @@ class ContentListFragment : Fragment() {
             }
             // if we use `Dispatchers.Main` as a coroutine context next two lines will be executed on UI thread.
 
-        } else {
+        } else if(type.equals("Gifs")) {
+            mainViewModel.loadImagesStorage(categoryName)
             mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
             { resource ->
                 // if we use `Dispatchers.Main` as a coroutine context next two lines will be executed on UI thread.
                 setImageAdapter(resource.asReversed())
             }
         }
+        else if(type.equals("Cards")) {
+
+            val cardViewModel : CardViewModel by lazy { ViewModelProvider(this)[CardViewModel::class.java] }
+            cardViewModel.getCategoryWiseCards(categoryName).observe(viewLifecycleOwner, Observer {
+                setImageAdapter(it)
+                println("bgList$it")
+            })
+
+//            cardsViewModel.loadImagesStorage(categoryName)
+//            cardsViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity())
+//            { resource ->
+//                // if we use `Dispatchers.Main` as a coroutine context next two lines will be executed on UI thread.
+//                setImageAdapter(resource.asReversed())
+//            }
+        }
+
     }
+
+
+
 
 }

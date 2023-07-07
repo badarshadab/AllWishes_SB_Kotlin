@@ -14,8 +14,6 @@ import com.greetings.allwishes.ui.util.OnItemClickListener
 
 class ChooseColorAdapter(val list:List<ColorModel>, val context: Context, val onItemClickListener: OnItemClickListener):RecyclerView.Adapter<ChooseColorAdapter.MyViewHolder>() {
 
-
-
     class MyViewHolder(view: View, onItemClickListener: OnItemClickListener):RecyclerView.ViewHolder(view) {
         val colorview:ImageView= view.findViewById(R.id.colorimgview)
         val rowviewlayout:CardView= view.findViewById(R.id.rowcardview)

@@ -37,6 +37,10 @@ import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.core.view.drawToBitmap
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -49,6 +53,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.storage.StorageReference
 import com.greetings.allwishes.util.AdUtils
+import com.hindishyari.shyari.viewModels.CardViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -600,9 +605,11 @@ object AppUtils {
 
     }
 
+
+
     fun addStringToView(mainView: MaterialCardView ,context: Context, triple: Triple<String, Int, Typeface>) {
         val string = triple.first
-        val tv_sticker = BubbleTextView(context, triple.second, triple.third, 0, string)
+        val tv_sticker = BubbleTextView(context, triple.second, triple.third, 0, string , mainView)
         removeAddedView(mainView ,tv_sticker)
         tv_sticker.setOperationListener(object : BubbleTextView.OperationListener {
             override fun onDeleteClick() {
@@ -645,5 +652,13 @@ object AppUtils {
     private fun removeAddedView(mainView: MaterialCardView ,view: View) {
         mainView.removeView(view)
     }
+
+//    fun setUpCardData(activity: ViewModelStoreOwner , categoryName : String , viewLifecycleOwner : LifecycleOwner){
+//        val cardViewModel : CardViewModel by lazy { ViewModelProvider(activity)[CardViewModel::class.java] }
+//        cardViewModel.getCategoryWiseCards(categoryName).observe(viewLifecycleOwner, Observer {
+//            setImageAdapter(it)
+//            println("bgList$it")
+//        })
+//    }
 
 }

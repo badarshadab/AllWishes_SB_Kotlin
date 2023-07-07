@@ -22,13 +22,13 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.myallwishes3d.Utils.bubbletextview.MyTextEditerDilog;
+import com.google.android.material.card.MaterialCardView;
 import com.greetings.allwishes.R;
 import com.greetings.allwishes.ui.model.BubblePropertyModel;
-import com.example.myallwishes3d.Utils.bubbletextview.MyTextEditerDilog;
 
 
 /**
@@ -158,6 +158,8 @@ public class BubbleTextView extends ImageView {
 
     public String myquotes;
 
+    MaterialCardView mContainer;
+
 
     public BubbleTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -190,7 +192,7 @@ public class BubbleTextView extends ImageView {
      * @param typeface
      * @param bubbleId  some fuck id
      */
-    public BubbleTextView(Context context, int fontColor, Typeface typeface, long bubbleId, String mytext) {
+    public BubbleTextView(Context context, int fontColor, Typeface typeface, long bubbleId, String mytext, MaterialCardView container) {
         super(context);
         mycontext = context;
         myquotes = mytext;
@@ -198,14 +200,16 @@ public class BubbleTextView extends ImageView {
         this.fontColor = fontColor;
         this.typeface = typeface;
         this.bubbleId = bubbleId;
+        this.mContainer = container;
         init();
     }
-//    public void updateTextView(int fontColor, Typeface typeface, , String mytext) {
+
+    //    public void updateTextView(int fontColor, Typeface typeface, , String mytext) {
 //        myquotes = mytext;
 //        this.fontColor = fontColor;
 //        this.typeface = typeface;
 //    }
-    public void setColorNFont(String mytext,int fontColor, Typeface typeface){
+    public void setColorNFont(String mytext, int fontColor, Typeface typeface) {
         this.myquotes = mytext;
         this.fontColor = fontColor;
         this.typeface = typeface;
@@ -216,6 +220,7 @@ public class BubbleTextView extends ImageView {
         mFontPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mFontSize, dm));
         this.mStr = myquotes;
     }
+
     private void init() {
         dm = getResources().getDisplayMetrics();
         dst_delete = new Rect();
@@ -244,7 +249,8 @@ public class BubbleTextView extends ImageView {
         isInit = true;
         mStr = defaultStr;
     }
-    private void refresh(){
+
+    private void refresh() {
 //        localPaint.setAntiAlias(true);
 //        localPaint.setDither(true);
 //        localPaint.setStyle(Paint.Style.STROKE);
@@ -265,6 +271,7 @@ public class BubbleTextView extends ImageView {
 //        mStr = defaultStr;
 
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
         if (mBitmap != null) {
@@ -419,7 +426,7 @@ public class BubbleTextView extends ImageView {
         int w = mBitmap.getWidth();
         int h = mBitmap.getHeight();
         oringinWidth = w;
-        float topbarHeight = DensityU.INSTANCE.dip2px(getContext() , 50);
+        float topbarHeight = DensityU.INSTANCE.dip2px(getContext(), 50);
         matrix.postTranslate(mScreenwidth / 2 - w / 2, (mScreenwidth) / 2 - h / 2);
         invalidate();
     }
@@ -490,7 +497,7 @@ public class BubbleTextView extends ImageView {
 
                     FragmentManager ft = ((AppCompatActivity) mycontext).getSupportFragmentManager();
 
-                    MyTextEditerDilog myTextEditerDilog = new MyTextEditerDilog(myquotes,this);
+                    MyTextEditerDilog myTextEditerDilog = new MyTextEditerDilog(myquotes, this, mContainer);
                     myTextEditerDilog.show(ft, "dd");
 
 //                    midDiagonalPoint(localPointF);

@@ -41,6 +41,11 @@ import com.greetings.allwishes.ui.util.RecyclerViewClickListener
 import com.greetings.allwishes.ui.viewmodel.SelectedImageViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.storage.StorageReference
+import com.greetings.allwishes.databinding.AddtextDialogLayBinding
+import com.greetings.allwishes.modelfactory.MyViewModelFactory
+import com.greetings.allwishes.ui.adapter.StickersAdapter
+import com.greetings.allwishes.ui.data.api.FirebaseHelper
+import com.greetings.allwishes.ui.viewmodel.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -56,6 +61,11 @@ class FrameEditFragment : Fragment() {
     private lateinit var b: FragmentFrameEditBinding
     private lateinit var sticker: ImageView
     lateinit var imageUri: Uri
+    private var addtextbinding: AddtextDialogLayBinding? = null
+    private var addtextdialog: Dialog? = null
+    lateinit var fontdata: Typeface
+    var texteditcolor: Int = 0
+    private lateinit var mainViewModel: HomeViewModel
 
     private val contract = registerForActivityResult(ActivityResultContracts.TakePicture()) {
         b.galleryImageView.setImageURI(null)
@@ -112,6 +122,7 @@ class FrameEditFragment : Fragment() {
         initializeView(b)
         imageUri = createImageUri()!!
         b.galleryImageView.setOnTouchListener(MultiTouchListener())
+        setupViewModel()
         if (any is StorageReference) {
             AppUtils.setImage(requireContext(), any as StorageReference, b.cakeImageView)
         } else if (any is String) {
@@ -131,7 +142,8 @@ class FrameEditFragment : Fragment() {
         })
         b.addText.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                addTextFrame()
+//                addTextFrame()
+                addTextDilog()
             }
         })
         b.addStickers.setOnClickListener(object : View.OnClickListener {
@@ -176,55 +188,84 @@ class FrameEditFragment : Fragment() {
     }
 
     fun addTextFrame() {
-        val colorPicker = PicColor()
-        var addText = AddText(colorPicker)
-        addText(requireContext()) {
-            val string = it.first
+//        val colorPicker = PicColor()
+//        var addText = AddText(colorPicker)
+//        addText(requireContext()) {
+//            val string = it.first
+////            val bubbleTextView = BubbleTextView(
+////                context,
+////                it.second,
+////                it.third,
+////                0
+////            )
 //            val bubbleTextView = BubbleTextView(
-//                context,
-//                it.second,
-//                it.third,
-//                0
+//                context
 //            )
-            val bubbleTextView = BubbleTextView(
-                context
-            )
-            bubbleTextView.setOperationListener(object : BubbleTextView.OperationListener {
-                override fun onDeleteClick() {
-                    b.card.removeView(bubbleTextView)
-                }
+//            bubbleTextView.setOperationListener(object : BubbleTextView.OperationListener {
+//                override fun onDeleteClick() {
+//                    b.card.removeView(bubbleTextView)
+//                }
+//
+//                override fun onEdit(bubbleTextView: BubbleTextView?) {
+//                    bubbleTextView.let {
+//                        val onEdit = !bubbleTextView?.isInEditMode!!
+//                        bubbleTextView.setInEdit(onEdit)
+//                    }
+//                }
+//
+//                override fun onClick(bubbleTextView: BubbleTextView?) {
+//                }
+//
+//                override fun onTop(bubbleTextView: BubbleTextView?) {
+//                }
+//            })
+//
+//            if (string.length <= 200) {
+//                bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_250)
+//            } else if (string.length > 200 && string.length < 400) {
+//                bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_100)
+//            } else if (string.length >= 400 && string.length < 800) {
+//                bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_500_200)
+//            } else {
+//                bubbleTextView.setImageResource(R.mipmap.bubble_7_rb)
+//            }
+//            bubbleTextView.setText(string)
+//            GlobalScope.launch {
+//                delay(500)
+//                withContext(Dispatchers.Main) {
+//                    b.card.addView(bubbleTextView)
+//                }
+//            }
+//        }
 
-                override fun onEdit(bubbleTextView: BubbleTextView?) {
-                    bubbleTextView.let {
-                        val onEdit = !bubbleTextView?.isInEditMode!!
-                        bubbleTextView.setInEdit(onEdit)
-                    }
-                }
 
-                override fun onClick(bubbleTextView: BubbleTextView?) {
-                }
 
-                override fun onTop(bubbleTextView: BubbleTextView?) {
-                }
-            })
+    }
 
-            if (string.length <= 200) {
-                bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_250)
-            } else if (string.length > 200 && string.length < 400) {
-                bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_100)
-            } else if (string.length >= 400 && string.length < 800) {
-                bubbleTextView.setImageResource(R.mipmap.bubble_7_rb_500_200)
-            } else {
-                bubbleTextView.setImageResource(R.mipmap.bubble_7_rb)
-            }
-            bubbleTextView.setText(string)
-            GlobalScope.launch {
-                delay(500)
-                withContext(Dispatchers.Main) {
-                    b.card.addView(bubbleTextView)
-                }
-            }
+    fun addTextDilog() {
+        addtextbinding = AddtextDialogLayBinding.inflate(layoutInflater)
+        addtextdialog = Dialog(requireContext(), R.style.WideDialog)
+        addtextdialog?.getWindow()?.getAttributes()?.windowAnimations = R.style.DialogTheme2
+
+        addtextdialog?.setContentView(addtextbinding!!.root)
+        addtextdialog?.setCancelable(true)
+        addtextdialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        fontdata = Typeface.createFromAsset(requireContext().assets, "1.ttf")
+        texteditcolor = Color.parseColor("#FF000000")
+
+        addtextbinding?.cancelBtn?.setOnClickListener {
+            addtextdialog?.dismiss()
         }
+        addtextbinding?.addokbtn?.setOnClickListener {
+
+            var msgToAdd = addtextbinding!!.textid.text.toString()
+            val triple = Triple(msgToAdd, texteditcolor, fontdata)
+            AppUtils.addStringToView(b.card ,requireContext(), triple)
+            addtextdialog?.dismiss()
+        }
+
+
+        addtextdialog?.show()
     }
 
     private fun addText(triple: Triple<String, Int, Typeface>) {
@@ -356,6 +397,12 @@ class FrameEditFragment : Fragment() {
         dialog.show()
     }
 
+    private fun setupViewModel() {
+        val myViewModelFactory = MyViewModelFactory(FirebaseHelper())
+        mainViewModel =
+            ViewModelProvider(this, myViewModelFactory)[HomeViewModel::class.java]
+    }
+
     private fun showStickersDialog(context: Context, isCancelable: Boolean) {
         val dialog = Dialog(context, R.style.Theme_Dialog)
         dialog.setCancelable(isCancelable)
@@ -366,8 +413,8 @@ class FrameEditFragment : Fragment() {
         val stickersRv = dialog.findViewById<RecyclerView>(R.id.rv)
         val gridLayoutManager = GridLayoutManager(requireContext(), 5)
         stickersRv.layoutManager = gridLayoutManager
-        val viewModel = ViewModelProvider(this)[SelectedImageViewModel::class.java]
-        viewModel.getAllImage()!!.observe(this) { storageReferenceList ->
+        mainViewModel.loadImagesStorage("Stickers")
+        mainViewModel.repositoryResponseLiveData_ImageStore.observe(requireActivity()) {storageReferenceList ->
             val listener =
                 RecyclerViewClickListener { view, position ->
 //                    UtilFunctions.setImage(
@@ -380,11 +427,30 @@ class FrameEditFragment : Fragment() {
                     )
                     dialog.dismiss()
                 }
-            stickersRv.adapter = com.greetings.allwishes.ui.adapter.StickersAdapter(
+            stickersRv.adapter = StickersAdapter(
                 storageReferenceList,
                 listener
             )
         }
+//        val viewModel = ViewModelProvider(this)[SelectedImageViewModel::class.java]
+//        viewModel.getAllImage()!!.observe(this) { storageReferenceList ->
+//            val listener =
+//                RecyclerViewClickListener { view, position ->
+////                    UtilFunctions.setImage(
+////                        sticker,
+////                        storageReferenceList!![position]
+////                    )
+//                    AppUtils.setImage(
+//                        sticker,
+//                        storageReferenceList!![position]
+//                    )
+//                    dialog.dismiss()
+//                }
+//            stickersRv.adapter = com.greetings.allwishes.ui.adapter.StickersAdapter(
+//                storageReferenceList,
+//                listener
+//            )
+//        }
         dialog.show()
     }
 

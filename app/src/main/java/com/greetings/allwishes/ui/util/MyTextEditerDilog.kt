@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.card.MaterialCardView
 import com.greetings.allwishes.R
 import com.greetings.allwishes.databinding.TexteditordialogBinding
 import com.greetings.allwishes.ui.adapter.ChooseColorAdapter
@@ -20,7 +21,7 @@ import com.greetings.allwishes.ui.fragment.SetCardFrag
 import com.greetings.allwishes.ui.util.BubbleTextView
 import com.greetings.allwishes.ui.util.OnItemClickListener
 
-class MyTextEditerDilog(val myquote:String,val bubbleTextView: BubbleTextView ): DialogFragment() {
+class MyTextEditerDilog(val myquote:String,val bubbleTextView: BubbleTextView , val container: MaterialCardView ): DialogFragment() {
 
     lateinit var myedittext:String
     var myqotesdata:String=""
@@ -150,10 +151,10 @@ class MyTextEditerDilog(val myquote:String,val bubbleTextView: BubbleTextView ):
     }
     private fun addMovableItemOnView(any: View) {
         removeAddedView(any)
-        SetCardFrag.mainContainer.addView(any)
+        container.addView(any)
     }
     private fun removeAddedView(view: View) {
-        SetCardFrag.mainContainer.removeView(view)
+        container.removeView(view)
     }
     fun DialogFragment.setupWidthToMatchParent() {
         dialog?.window?.setLayout(
